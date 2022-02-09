@@ -1,19 +1,25 @@
 # Team A-04 Repository
----
 
 Sp22 CS 3240 Repository for Team A-04
 
-Project:
-*Word of Mouth*, a place to post recipies without the stories or ads. Made with Python 3 and Django 3.
+### Team Members:
 
-Team Members:
-**Scrum Master**: Samuel Ahn, \<sya5jv\>
-**Requirements Manager**: Matthew Bonner, \<mkb2dxw\>
-**Testing Manager**: Daniel Xue, \<dlx3ud\>
-**DevOps Manager**: Alex Yu, \<ay3xqa\>
-**UX Designer**: Asher Saunders, \<aas9x\>
-TA:
-Darrel Zhang
+**[Scrum Master]** *Samuel Ahn*, \<sya5jv\>
+
+**[Requirements Manager]** *Matthew Bonner*, \<mkb2dxw\>
+
+**[Testing Manager]** *Daniel Xue*, \<dlx3ud\>
+
+**[DevOps Manager]** *Alex Yu*, \<ay3xqa\>
+
+**[UX Designer]** *Asher Saunders*, \<aas9x\>
+
+TA: Darrel Zhang
+
+---
+
+# *Word of Mouth*
+A app where you can post and read recipies without the stories or ads. Made with Python 3 and Django 3.
 
 ## Table of Contents
 
@@ -22,15 +28,21 @@ Darrel Zhang
 + [Launch](#launch)
 + [Features](#features)
 + [Development Status](#development-status)
+
 [//]: # (Setup page to describe how to run the project TBD)
 
-### Introduction
 ---
+
+### Introduction
 
 A place to post recipes, but without the pages and pages of backstory that all cooking webpages now have to force you to scroll through ads. Recipes would include a set of ingredients and directions, as well as images, possible videos, etc.
 
-### Technologies
+Users are ables to add new recipies, ingredients, quantities, directions, and images; "favorite", "like", and review recipes; and "fork" recipes — meaning taking an existing recipes, modifying it, and references the original recipe.
+
 ---
+
+### Technologies
+
 + Python 3
 + Django 3
 + GitHub
@@ -40,15 +52,17 @@ A place to post recipes, but without the pages and pages of backstory that all c
 + SQLite (maybe)
 + Some API (TBD)
 
-### Launch
 ---
+
+### Launch
 
 This project will have a live master GitHub repository hosted on Heroku, use Postgres database engine for production, and GitHub Actions for continuous integration.
 
-### Features
 ---
 
-###### To-do:
+### Features
+
+##### To-do:
 
 + Add a new recipe
     + Add ingredients
@@ -62,45 +76,46 @@ This project will have a live master GitHub repository hosted on Heroku, use Pos
 + Fork Recipies
     + Reference the original recipe
 
-### Development Status
 ---
 
-###### S1
+### Development Status
 
-+ \[ \] Project Organization
+##### S1 — Project Preparation
 
-###### S1.5
++ [X] Project Organization
 
-+ \[ \] GitHub Setup
+##### S1.5
 
-###### S2 — Hosting on Heroku
++ [ ] GitHub Setup
 
-+ \[ \] Requirements Elicitation
-+ \[ \] Working Basic Django App Hosted on Heroku
+##### S2 — Hosting on Heroku
 
-###### S3 — Login Integration
++ [ ] Requirements Elicitation
++ [ ] Working Basic Django App Hosted on Heroku
 
-+ \[ \] Login Integration Using Google Accounts
-+ \[ \] GitHub Actions CI Operational w/ 1 Test Case
+##### S3 — Login Integration
 
-###### S4 — First Major Feature
++ [ ] Login Integration Using Google Accounts
++ [ ] GitHub Actions CI Operational w/ 1 Test Case
 
-+ \[ \] Recipe Adding Feature
-+ \[ \] GitHub Actions CI Operational w/ Multiple Test Cases
+##### S4 — First Major Feature
 
-###### S5 — Next Major Feature
++ [ ] Recipe Adding Feature
++ [ ] GitHub Actions CI Operational w/ Multiple Test Cases
 
-+ \[ \] Feature TBD
-+ \[ \] GHA CI Test Cases
+##### S5 — Next Major Feature
 
-###### S6 — Beta Version
++ [ ] Feature ***(TBD)***
++ [ ] More GitHub Actions CI Test Cases Operational
 
-+ \[ \] Features TBD
-+ \[ \] GHA CI Test Cases
+##### S6 — Beta Version
 
-###### Final — Project Completion
++ [ ] Features ***(TBD)***
++ [ ] Extra Features ***(TBD)***
++ [ ] More GitHub Actions CI Test Cases Operational
 
-+ \[ \] All Features Functional
-+ \[ \] Bug Fixes
+##### Final — Project Completion
 
-[//]: # (###### Sources (just in case be reference other work))
++ [ ] All Features Functional
++ [ ] All GitHub Actions CI Test Cases Operational
++ [ ] Bug Fixes
