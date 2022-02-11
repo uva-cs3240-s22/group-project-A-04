@@ -14,7 +14,7 @@ Sp22 CS 3240 Repository for Team A-04
 
 **[UX Designer]** *Asher Saunders*, \<aas9x\>
 
-TA: Darrel Zhang
+TA: *Darrel Zhang*
 
 ---
 
@@ -56,7 +56,7 @@ Users are ables to add new recipies, ingredients, quantities, directions, and im
 
 ### Launch
 
-This project will have a live master GitHub repository hosted on Heroku, use Postgres database engine for production, and GitHub Actions for continuous integration.
+This project will have all project files on GitHub with a stable version (master branch) hosted on Heroku, use Postgres database engine for production, and GitHub Actions for continuous integration.
 
 ---
 
@@ -75,6 +75,8 @@ This project will have a live master GitHub repository hosted on Heroku, use Pos
     + Review
 + Fork Recipies
     + Reference the original recipe
+
+More requirements TBD
 
 ---
 
