@@ -88,7 +88,7 @@ More requirements TBD
 
 ##### S1.5
 
-+ [ ] GitHub Setup
++ [X] GitHub Setup
 
 ##### S2 — Hosting on Heroku
 
