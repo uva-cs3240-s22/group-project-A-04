@@ -20,3 +20,6 @@ psycopg2
 
 # keep trying stuff for static files
 whitenoise
+
+# OAuth
+django-allauth
