@@ -16,8 +16,12 @@ Including another URLconf
 from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
+from django.contrib import admin
 
 urlpatterns = [
+    # add the admin site view as a path
+    path('admin/', admin.site.urls),
+
     # taken from the OAuth tutorial, God bless Geoffrey Mungai
     path('', TemplateView.as_view(template_name="index.html")),
     path('accounts/', include('allauth.urls')),
