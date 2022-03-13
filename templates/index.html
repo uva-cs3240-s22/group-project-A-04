@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 
+<!--load up the appropriate social account code-->
 {% load socialaccount %}
 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Eats Home</title>
 </head>
 <body>
 
-<h1>My Google OAuth Project for recipe sharing</h1>
+<h1>My Google OAuth Project for Recipe Sharing (for real this time!) </h1>
 {% if user.is_authenticated %}
   <p>Welcome, You are logged in as {{ user.username }}</p>
 {% else %}
