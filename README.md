@@ -19,7 +19,7 @@ TA: *Darrel Zhang*
 ---
 
 # *Word of Mouth*
-A app where you can post and read recipies without the stories or ads. Made with Python 3 and Django 3.
+A app where you can post and read recipes without the stories or ads. Made with Python 3 and Django 3.
 
 ## Table of Contents
 
@@ -73,7 +73,7 @@ This project will have all project files on GitHub with a stable version (master
     + Favorite
     + Like
     + Review
-+ Fork Recipies
++ Fork Recipes
     + Reference the original recipe
 
 More requirements TBD
@@ -92,8 +92,8 @@ More requirements TBD
 
 ##### S2 — Hosting on Heroku
 
-+ [ ] Requirements Elicitation
-+ [ ] Working Basic Django App Hosted on Heroku
++ [X] Requirements Elicitation
++ [X] Working Basic Django App Hosted on Heroku
 
 ##### S3 — Login Integration
 
