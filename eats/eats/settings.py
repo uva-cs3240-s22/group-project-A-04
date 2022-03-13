@@ -145,7 +145,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 2
+SITE_ID = 3
 
 # These URLs are where the users are redirected to after login and logout
 # Right now both are set to the base url of the website
