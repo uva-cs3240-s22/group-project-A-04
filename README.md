@@ -37,7 +37,7 @@ A app where you can post and read recipes without the stories or ads. Made with 
 
 A place to post recipes, but without the pages and pages of backstory that all cooking webpages now have to force you to scroll through ads. Recipes would include a set of ingredients and directions, as well as images, possible videos, etc.
 
-Users are ables to add new recipies, ingredients, quantities, directions, and images; "favorite", "like", and review recipes; and "fork" recipes — meaning taking an existing recipes, modifying it, and references the original recipe.
+Users are ables to add new recipes, ingredients, quantities, directions, and images; "favorite", "like", and review recipes; and "fork" recipes — meaning taking an existing recipes, modifying it, and references the original recipe.
 
 ---
 
