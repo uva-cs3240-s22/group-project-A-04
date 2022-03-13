@@ -179,8 +179,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-# change it to 3 since we already had 2 before
-SITE_ID = 3
+# change it to 4 since we already had 2 and 3 before
+SITE_ID = 4
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
