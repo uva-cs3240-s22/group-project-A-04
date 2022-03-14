@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--load bootstrap 5-->
+{% load bootstrap5 %}
+
+<!--- load CSS and javascript --->
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!--- generates absolute URL of static files --->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style4.css' %}">
+
+<head>
+    {% block bootstrap5 %}
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container text-center">
+        <a class="navbar-brand" href="#">Daniel's Polls and d e e p Thoughts.</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'polls:index' %}">Polls</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                d e e p Thoughts
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'polls:deepthoughts' %}">Submission</a></li>
+                <li><a class="dropdown-item" href="{% url 'polls:deepthoughtslist' %}">List</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+<!--    For the above navigation bar used for the header -->
+<!--    Title: Navbar | Bootstrap 5 Documentation -->
+<!--    Author: Bootstrap 5 Team: https://getbootstrap.com/docs/5.1/about/team/ -->
+<!--    Date: 02/22/2022-->
+<!--    Code version: 5.02-->
+<!--    URL: https://getbootstrap.com/docs/5.0/components/navbar/ -->
+<!--    Software License: MIT, docs CC BY 3.0-->
+
+<!--        center the text on the page-->
+        <div class="container text-center">
+
+            <!--            some extra spaces for, well, space-->
+            <br>
+
+    <!--        keep trying stuff-->
+            {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+
+            {% block content %}(no content){% endblock %}
+
+        </div>
+
+    {% endblock %}
+
+    <!--    keep trying stuff (thanks stack overflow)-->
+    {% block extrahead %}
+    {% endblock %}
+
+</head>
+
+<!--The above code for centering text was sourced from the base template used for the django-bootstrap 5 demo-->
+<!--    Title: Django-Bootstrap V5 Sample Base HTML Template-->
+<!--    Author: Original: Zostera and Dylan Verheul, Maintained by: Andre Bar'yudin-->
+<!--    Date: 02/22/2022-->
+<!--    Code version: 5-->
+<!--    URL: https://github.com/zelenij/django-bootstrap-v5/blob/main/example/templates/app/base.html -->
+<!--    Software License: BSD 3-Clause -->
+
+<!--Footer Content Start-->
+<footer>
+    <nav class="navbar fixed-bottom navbar-dark bg-dark">
+      <div class="container text-center">
+        © Copyright 2022 danielspollsanddeepthoughts.com, Inc. or his imaginary affiliates
+      </div>
+    </nav>
+</footer>
+<!--Footer Content End-->
+
+<!--    For the above navigation bar used for the footer  -->
+<!--    Title: Navbar | Bootstrap 5 Documentation -->
+<!--    Author: Bootstrap 5 Team: https://getbootstrap.com/docs/5.1/about/team/ -->
+<!--    Date: 02/22/2022-->
+<!--    Code version: 5.02-->
+<!--    URL: https://getbootstrap.com/docs/5.0/components/navbar/ -->
+<!--    Software License: MIT, docs CC BY 3.0-->
+
+</body>
+</html>
