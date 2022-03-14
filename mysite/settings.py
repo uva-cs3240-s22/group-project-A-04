@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-qvh8j0j_0v2zrgg12m1zcw296-)g94gwp^ytr7^xgjg+80q8+q
 DEBUG = True
 
 # Add both the local host and herokuapp.com to handle DisallowedHost error
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'django-practice-d3n1al.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'stormy-retreat-80978.herokuapp.com']
 
 
 # Application definition
