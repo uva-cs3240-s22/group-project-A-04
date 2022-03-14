@@ -6,7 +6,7 @@ Sp22 CS 3240 Repository for Team A-04
 
 **[Scrum Master]** *Samuel Ahn*, \<sya5jv\>
 
-**[Requirements Manager]** *Matthew Bonner*, \<mkb2dxw\>
+**[Requirements Manager]** *Matthew Kevin Bonner*, \<mkb2dxw\>
 
 **[Testing Manager]** *Daniel Xue*, \<dlx3ud\>
 
