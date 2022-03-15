@@ -45,11 +45,13 @@ Users are ables to add new recipes, ingredients, quantities, directions, and ima
 
 + Python 3
 + Django 3
++ HTML5
++ CSS
 + GitHub
 + GitHub Actions CI
 + Heroku
-+ Postgres
-+ SQLite (maybe)
++ PostgreSQL
++ Google OAuth API
 + Some API (TBD)
 
 ---
