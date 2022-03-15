@@ -62,6 +62,29 @@ This project will have all project files on GitHub with a stable version (master
 
 ### Features
 
+##### Features Roadmap:
++ Sprint 4
+    + Main Feature: Posting Recipes
+        + Adding Ingredients
+        + Adding Quantities
+        + Adding Procedure
+        + Extra Recipe Functions
+            + Pictures
+            + Videos
+    + Additional Features:
+        + Fluid UX/UI
+            + Pretty Recipe Component
+            + Pretty website
+            + Usable menu interfaces for smoother switching between views
+        + Recipe Forking
++ Sprint 5
+    + Additional Main Feature: Recipe Forking
+        + Link back to original source recipe
+        + All recipes are forkable
+        + All recipes can have multiple independent forks
+        + Manage forked recipes (different components or different pages?)
++ More features for Sprints 4, 5, and further sprints TBD
+
 ##### To-do:
 
 + Add a new recipe
@@ -97,8 +120,8 @@ More requirements TBD
 
 ##### S3 — Login Integration
 
-+ [ ] Login Integration Using Google Accounts
-+ [ ] GitHub Actions CI Operational w/ 1 Test Case
++ [X] Login Integration Using Google Accounts
++ [X] GitHub Actions CI Operational w/ 1 Test Case
 
 ##### S4 — First Major Feature
 
@@ -107,7 +130,7 @@ More requirements TBD
 
 ##### S5 — Next Major Feature
 
-+ [ ] Feature ***(TBD)***
++ [ ] Feature Recipe Forking
 + [ ] More GitHub Actions CI Test Cases Operational
 
 ##### S6 — Beta Version
