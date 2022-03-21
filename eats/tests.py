@@ -1,4 +1,10 @@
+import datetime
+
+from django.db import models
 from django.test import TestCase
+from django.utils import timezone
+
+from .models import Recipe
 
 # Create your tests here.
 
@@ -23,3 +29,40 @@ class SampleTests(TestCase):
         This sample test always returns True.
         """
         self.assertTrue("Alright, who changed this assertion to False out of spite?", True)
+
+
+class RecipeModelTests(TestCase):
+    r = None
+
+    def setUp(self):
+        global r
+        r = Recipe(title="Potatoes")
+
+    # recipes have title
+    def test_title(self):
+        """
+        Checks that recipe has title
+        """
+        global r
+        self.assertIs("Recipe constructor does not set title to that passed into the function", r.title, "Potatoes")
+
+    # recipes have author
+    # recipes have publish date
+    # recipes have description (optional --> test for this)
+
+    # recipes have list of ingredients/quantities
+    # recipes have list of steps/procedure
+
+    # publishing
+    # recipes cannot be published without: title, author, ingredients/quantities, and steps
+    # recipes can be published without: description
+    # only the author can access the URL until it is published
+
+    # editing
+    # only the author can edit the recipe
+    # editable fields: title, description, ingredients/quantities, steps
+    # think about creating a separate update date field?
+
+    # deleting
+    # only the author can delete the recipe
+    # author should be prompted for a second time before deleting the recipe
