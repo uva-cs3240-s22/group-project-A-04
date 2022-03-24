@@ -89,8 +89,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd3m9i07j8jrlp2',
+        'USER': 'kojxuqxbbqlimh',
+        'PASSWORD': 'a552a6a5949a798d72509dbaebd38a3eb92491e849f66b86d5d9caeafdc05fb2',
+        'HOST': 'ec2-18-215-8-186.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
@@ -131,12 +135,12 @@ USE_TZ = True
 
 # Add static_root variable to fix error with static files not being found
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Extra place for collectstatic to find static files
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Enable gzip?
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
