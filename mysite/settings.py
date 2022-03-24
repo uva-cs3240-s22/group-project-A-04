@@ -154,17 +154,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # and avoid the psycopg2 / django-heroku error
 # do NOT import django-heroku above
 
-try:
-    if 'HEROKU' in os.environ:
-        import django_heroku
-        django_heroku.settings(locals())
-except ImportError:
-    found = False
-
-# keep trying stuff?
-if 'DATABASE_URL' in os.environ:
-    import dj_database_url
-    DATABASES = {'default': dj_database_url.config()}
+# try:
+#     if 'HEROKU' in os.environ:
+#         import django_heroku
+#         django_heroku.settings(locals())
+# except ImportError:
+#     found = False
+#
+# # keep trying stuff?
+# if 'DATABASE_URL' in os.environ:
+#     import dj_database_url
+#     DATABASES = {'default': dj_database_url.config()}
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
