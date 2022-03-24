@@ -19,7 +19,7 @@ dj-database-url
 psycopg2
 
 # keep trying stuff for static files
-whitenoise
+# whitenoise
 
 # install django-allauth for Google authentication
 django-allauth
