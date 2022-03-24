@@ -131,12 +131,12 @@ USE_TZ = True
 
 # Add static_root variable to fix error with static files not being found
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Extra place for collectstatic to find static files
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
 
 # Enable gzip?
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
