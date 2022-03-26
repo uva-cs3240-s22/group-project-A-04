@@ -86,6 +86,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# Configured for postgreSQL for Heroku
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
