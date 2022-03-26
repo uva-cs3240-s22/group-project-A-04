@@ -1,0 +1,15 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'recipes/style.css' %}">
+
+{% if latest_recipe_list %}
+    <ul>
+    {% for recipe in latest_recipe_list %}
+        <li><a href="/recipes/{{ recipe.id }}/">{{ recipe.recipe_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No recipes are available.</p>
+{% endif %}
+
+

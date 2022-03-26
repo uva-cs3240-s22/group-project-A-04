@@ -9,7 +9,7 @@
 __pycache__/
 local_settings.py
 db.sqlite3
-db.sqlite3-journal
+db.sqlite3-journa
 media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
@@ -273,4 +273,4 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/12206-codestream
 .idea/codestream.xml
 
-# End of https://www.toptal.com/developers/gitignore/api/pycharm,django
+# End of https://www.toptal.com/developers/gitignore/api/pycharm,djangol
