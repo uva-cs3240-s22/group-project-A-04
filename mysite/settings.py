@@ -21,31 +21,28 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ls6l6@@53^kfn+8851ls^@3q*8mt@j=u9rf+i9==b+hbxbmy#*'
+SECRET_KEY = 'django-insecure-qvh8j0j_0v2zrgg12m1zcw296-)g94gwp^ytr7^xgjg+80q8+q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', 'herokuapp.com']
+# Add both the local host and herokuapp.com to handle DisallowedHost error
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'stormy-retreat-80978.herokuapp.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    # Project installed apps
-    'recipes.apps.RecipesConfig',       # recipes app
-
-    # Django library installed apps
+    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap5',
     'django.contrib.sites',
-
-    # Google all-auth
-    'oauth_app',
+    'eats',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -60,6 +57,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # for simplified static file serving
+    # https://warehouse.python.org/project/whitenoise/
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -88,8 +89,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd3m9i07j8jrlp2',
+        'USER': 'kojxuqxbbqlimh',
+        'PASSWORD': 'a552a6a5949a798d72509dbaebd38a3eb92491e849f66b86d5d9caeafdc05fb2',
+        'HOST': 'ec2-18-215-8-186.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
@@ -118,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/New_York'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 
@@ -128,20 +133,38 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# Add static_root variable to fix error with static files not being found
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Extra place for collectstatic to find static files
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+# Enable gzip?
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-try:
-    if 'HEROKU' in os.environ:
-        import django_heroku
-        django_heroku.settings(locals())
-except ImportError:
-    found = False
+# Activate Django-Heroku.
+# and avoid the psycopg2 / django-heroku error
+# do NOT import django-heroku above
+
+# try:
+#     if 'HEROKU' in os.environ:
+#         import django_heroku
+#         django_heroku.settings(locals())
+# except ImportError:
+#     found = False
+#
+# # keep trying stuff?
+# if 'DATABASE_URL' in os.environ:
+#     import dj_database_url
+#     DATABASES = {'default': dj_database_url.config()}
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -160,8 +183,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 3
+# change it to 4 since we already had 2 and 3 before
+SITE_ID = 4
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-

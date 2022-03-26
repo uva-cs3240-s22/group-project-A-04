@@ -1,0 +1,21 @@
+li a {
+    color: green;
+}
+
+body {
+    background: white url("images/background.ac505db857bf.jpg") no-repeat;
+    color: white;
+}
+
+title {
+    color: white;
+}
+
+tr {
+    color: white;
+}
+
+.center {
+  margin: auto;
+  text-align: center;
+}
