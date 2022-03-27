@@ -27,7 +27,7 @@ class Recipe(models.Model):
     # see: https://learndjango.com/tutorials/django-best-practices-referencing-user-model
     # default value is primary key of a generic user, but note that this is will not migrate since it is null
     # changed to one to one such that each recipe can only have one author
-    author = models.OneToOneField(User, on_delete=models.CASCADE, default=User().pk)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=User().pk)
 
     def __str__(self):
         return self.recipe_name
