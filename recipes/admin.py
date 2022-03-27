@@ -11,7 +11,7 @@ from .models import Recipe, Ingredient
 class IngredientInline(admin.TabularInline):
     # make ingredients like choices in polls app
     model = Ingredient
-    extra = 3
+    extra = 1
 
 class RecipeAdmin(admin.ModelAdmin):
     fieldsets = [
