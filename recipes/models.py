@@ -30,3 +30,14 @@ class Recipe(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
+
+# each ingredient has its own name and quantity
+# in addition to being associated with a recipe
+class Ingredient(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    ingredient_name = models.CharField(max_length=200)
+    quantity = models.CharField(max_length=200)
+
+    # change string representation to show choice text
+    def __str__(self):
+        return self.ingredient_name + ",  " + self.quantity
