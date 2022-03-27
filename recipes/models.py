@@ -9,6 +9,7 @@ import datetime
 from django.db import models
 from django.utils import timezone
 from django.contrib import admin
+from django.contrib.auth.models import User     # for recipe authors
 
 
 class Recipe(models.Model):
@@ -16,7 +17,12 @@ class Recipe(models.Model):
     # recipe_ingredients = models.CharField(max_length=200)
     # recipe_procedure = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
-    
+
+    # reference the main user model anyways because allauth is like that
+    # see: https://learndjango.com/tutorials/django-best-practices-referencing-user-model
+    # default value is primary key of a generic user --> this will have to changed in admin later
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=User().pk)
+
     def __str__(self):
         return self.recipe_name
 

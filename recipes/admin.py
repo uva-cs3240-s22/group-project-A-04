@@ -16,6 +16,7 @@ class IngredientInline(admin.TabularInline):
 class RecipeAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,                  {'fields': ['recipe_name']}),
+        (None,                  {'fields': ['author']}),
         ('Date information',    {'fields': ['pub_date'], 'classes':['collapse']}),
     ]
     inlines = [IngredientInline]
