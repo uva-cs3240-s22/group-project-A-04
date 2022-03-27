@@ -25,8 +25,9 @@ class Recipe(models.Model):
 
     # reference the main user model anyways because allauth is like that
     # see: https://learndjango.com/tutorials/django-best-practices-referencing-user-model
-    # default value is primary key of a generic user --> this will have to changed in admin later
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=User().pk)
+    # default value is primary key of a generic user, but note that this is will not migrate since it is null
+    # changed to one to one such that each recipe can only have one author
+    author = models.OneToOneField(User, on_delete=models.CASCADE, default=User().pk)
 
     def __str__(self):
         return self.recipe_name
@@ -47,7 +48,7 @@ class Recipe(models.Model):
 class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     ingredient_name = models.CharField(max_length=200)
-    quantity = models.CharField(max_length=200)
+    quantity = models.CharField(max_length=200, blank=True)
 
     # change string representation to show choice text
     def __str__(self):
