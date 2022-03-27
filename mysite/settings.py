@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import sys
 from pathlib import Path
 import os
 
@@ -93,17 +93,26 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# Configured for postgreSQL for Heroku
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd3m9i07j8jrlp2',
-        'USER': 'kojxuqxbbqlimh',
-        'PASSWORD': 'a552a6a5949a798d72509dbaebd38a3eb92491e849f66b86d5d9caeafdc05fb2',
-        'HOST': 'ec2-18-215-8-186.compute-1.amazonaws.com',
-        'PORT': '5432',
+# use SQLite for testing
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'mydatabase'
+        }
     }
-}
+else:
+    # Configure postgreSQL for Heroku
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'd3m9i07j8jrlp2',
+            'USER': 'kojxuqxbbqlimh',
+            'PASSWORD': 'a552a6a5949a798d72509dbaebd38a3eb92491e849f66b86d5d9caeafdc05fb2',
+            'HOST': 'ec2-18-215-8-186.compute-1.amazonaws.com',
+            'PORT': '5432',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -183,4 +192,3 @@ SITE_ID = 3
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
