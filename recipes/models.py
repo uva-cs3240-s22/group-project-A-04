@@ -14,9 +14,14 @@ from django.contrib.auth.models import User     # for recipe authors
 
 class Recipe(models.Model):
     recipe_name = models.CharField(max_length=200)
-    # recipe_ingredients = models.CharField(max_length=200)
-    # recipe_procedure = models.CharField(max_length=200)
+    # add option description field for recipe
+    description = models.TextField(blank=True)
+
+    # procedure can be a list of steps or paragraphs --> just textfield
+    procedure = models.TextField(blank=True)
+
     pub_date = models.DateTimeField('date published')
+    mod_date = models.DateTimeField('date modified')
 
     # reference the main user model anyways because allauth is like that
     # see: https://learndjango.com/tutorials/django-best-practices-referencing-user-model
