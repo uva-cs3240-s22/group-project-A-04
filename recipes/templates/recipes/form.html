@@ -6,7 +6,7 @@
     {% csrf_token %}
     {{form}}
     <input type = "submit" class="btn btn-primary" value = "Submit" >
-<form>
+</form>
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
 {% endif %}
