@@ -61,17 +61,28 @@ def recipe_create_view(request):
 
     # make a form for recipes and ingredients
     recipe_form = RecipeForm(request.POST or None)
+    ingredient_form = IngredientForm(request.POST or None)
 
     # for loading html
     context = {
         "recipe_form": recipe_form,
+        "ingredient_form": ingredient_form,
     }
 
     # check that the form is valid, if so, submit
-    if all([recipe_form.is_valid()]):
+    if all([recipe_form.is_valid(), ingredient_form.is_valid()]):
         recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
         recipe.author = request.user
+
+        ingredient = ingredient_form.save(commit=False)
+        ingredient.recipe = recipe
+
         recipe.save()
+        ingredient.save()
+
+        # confirmation message
+        context['message'] = 'Recipe saved!'
+
         return redirect(reverse('recipes:index'))
 
     # otherwise redirect to original form
