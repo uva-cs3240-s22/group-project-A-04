@@ -3,15 +3,17 @@
 # views for the recipe app
 
 # Imports from Django library
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.template import loader
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.utils import timezone
 
 # Importing models from current directory
 from .models import Recipe
+from .forms import RecipeForm, IngredientForm
+
+# make login required before any of these views can be accessed
+# taken from this youtube video: https://youtu.be/PICYTJqj__o
 
 
 class RecipeIndex(ListView):
@@ -36,16 +38,41 @@ class RecipeModify(UpdateView):
     model = Recipe
     template_name = 'recipes/edit.html'
 
-class RecipeCreate(CreateView):
-    model = Recipe
-    template_name = 'recipes/form.html'
-    fields = ["recipe_name", "description", "procedure"]
+
+# class RecipeCreate(CreateView):
+#     model = Recipe
+#     template_name = 'recipes/form.html'
+#     fields = ["recipe_name", "description", "procedure"]
+#
+#
+#     def get_success_url(self):
+#         return reverse('recipes:index')
+#
+#
+#     def form_valid(self, form):
+#         form.instance.author = self.request.user
+#         return super().form_valid(form)
 
 
-    def get_success_url(self):
-        return reverse('recipes:index')
+@login_required
+def recipe_create_view(request):
+    # specify template
+    template = 'recipes/form.html'
 
+    # make a form for recipes and ingredients
+    recipe_form = RecipeForm(request.POST or None)
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+    # for loading html
+    context = {
+        "recipe_form": recipe_form,
+    }
+
+    # check that the form is valid, if so, submit
+    if all([recipe_form.is_valid()]):
+        recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
+        recipe.author = request.user
+        recipe.save()
+        return redirect(reverse('recipes:index'))
+
+    # otherwise redirect to original form
+    return render(request, template, context)

@@ -1,12 +1,20 @@
 {% load socialaccount %}
 {% if user.is_authenticated %}
-<h1>Form</h1>
+<h1>Create Recipe Form</h1>
 
-<form method="post">
+<!--Referenced from this youtube video:-->
+<!--https://youtu.be/PICYTJqj__o-->
+
+{% if message %}
+<p> {{ message }} </p>
+{% endif %}
+
+<form action="." method="POST">
     {% csrf_token %}
-    {{form}}
+    {{ recipe_form.as_p }}
     <input type = "submit" class="btn btn-primary" value = "Submit" >
 </form>
+
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
 {% endif %}
