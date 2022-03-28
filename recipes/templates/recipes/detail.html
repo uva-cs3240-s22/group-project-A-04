@@ -1,1 +1,9 @@
 <h1>{{ recipe.recipe_name }}</h1>
+<h2>{{recipe.mod_date}}</h2>
+
+<h2>{{recipe.description}}</h2>
+<h2>{{recipe.procedure}}</h2>
+
+{% for ingredient in recipe.ingredient_set.all %}
+<p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}<p>
+{% endfor %}

@@ -1,0 +1,26 @@
+{% load socialaccount %}
+{% if user.is_authenticated %}
+<h1>Create Recipe Form</h1>
+
+<!--Referenced from this youtube video:-->
+<!--https://youtu.be/PICYTJqj__o-->
+
+{% if message %}
+<p> {{ message }} </p>
+{% endif %}
+
+<form action="." method="POST">
+    {% csrf_token %}
+    {{ recipe_form.as_p }}
+
+    {% if ingredient_form %}
+    <h4>Add Ingredients:</h4>
+    {{ ingredient_form.as_p }}
+    {% endif %}
+
+    <input type = "submit" class="btn btn-primary" value = "Submit" >
+</form>
+
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}
