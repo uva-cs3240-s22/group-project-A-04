@@ -13,9 +13,9 @@
     {% csrf_token %}
     {{ recipe_form.as_p }}
 
-    {% if ingredient_form %}
+    {% if ingredient_set %}
     <h4>Add Ingredients:</h4>
-    {{ ingredient_form.as_p }}
+    {{ ingredient_set.as_p }}
     {% endif %}
 
     <input type = "submit" class="btn btn-primary" value = "Submit" >
