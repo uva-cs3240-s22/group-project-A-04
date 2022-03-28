@@ -17,5 +17,6 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     path('<int:pk>/edit/', views.EditView.as_view(), name='edit'),
+    path('form/', views.FormView.as_view(), name="form"),
 ]
 

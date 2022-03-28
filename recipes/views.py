@@ -23,10 +23,19 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Recipe
-    template_name = 'recipes/details.html'
+    template_name = 'recipes/detail.html'
+    def get_queryset(self):
+        """
+        Excludes any questions that aren't published yet.
+        """
+        return Recipe.objects
 
 
 class EditView(generic.DetailView):
     model = Recipe
     template_name = 'recipes/edit.html'
 
+class FormView(generic.CreateView):
+    model = Recipe
+    template_name = 'recipes/form.html'
+    fields = ["recipe_name", "description", "procedure","pub_date"]
