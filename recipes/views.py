@@ -8,6 +8,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
 
 # Importing models from current directory
 from .models import Recipe
@@ -38,4 +39,7 @@ class EditView(generic.DetailView):
 class FormView(generic.CreateView):
     model = Recipe
     template_name = 'recipes/form.html'
-    fields = ["recipe_name", "description", "procedure","pub_date"]
+    fields = ["recipe_name", "description", "procedure","author"]
+    def get_success_url(self):
+        return reverse('recipes:index')
+    # initial = {"pub_date": str(timezone.now()), "mod_date": str(timezone.now())}

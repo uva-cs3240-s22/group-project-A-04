@@ -1,3 +1,5 @@
+{% load socialaccount %}
+{% if user.is_authenticated %}
 <h1>Form</h1>
 
 <form method="post">
@@ -5,3 +7,6 @@
     {{form}}
     <input type = "submit" class="btn btn-primary" value = "Submit" >
 <form>
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}

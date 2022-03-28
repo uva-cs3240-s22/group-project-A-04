@@ -20,8 +20,8 @@ class Recipe(models.Model):
     # procedure can be a list of steps or paragraphs --> just textfield
     procedure = models.TextField(blank=True)
 
-    pub_date = models.DateTimeField('date published')
-    mod_date = models.DateTimeField('date modified')
+    pub_date = models.DateTimeField(auto_now_add=True)
+    mod_date = models.DateTimeField(auto_now=True)
 
     # reference the main user model anyways because allauth is like that
     # see: https://learndjango.com/tutorials/django-best-practices-referencing-user-model
