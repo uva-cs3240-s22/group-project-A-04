@@ -7,14 +7,14 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-from django.views import generic
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.utils import timezone
 
 # Importing models from current directory
 from .models import Recipe
 
 
-class IndexView(generic.ListView):
+class RecipeIndex(ListView):
     template_name = 'recipes/index.html'
     context_object_name = 'latest_recipe_list'
 
@@ -22,7 +22,7 @@ class IndexView(generic.ListView):
         return Recipe.objects.order_by('-pub_date')[:5]
 
 
-class DetailView(generic.DetailView):
+class RecipeDetail(DetailView):
     model = Recipe
     template_name = 'recipes/detail.html'
     def get_queryset(self):
@@ -32,14 +32,20 @@ class DetailView(generic.DetailView):
         return Recipe.objects
 
 
-class EditView(generic.DetailView):
+class RecipeModify(UpdateView):
     model = Recipe
     template_name = 'recipes/edit.html'
 
-class FormView(generic.CreateView):
+class RecipeCreate(CreateView):
     model = Recipe
     template_name = 'recipes/form.html'
-    fields = ["recipe_name", "description", "procedure","author"]
+    fields = ["recipe_name", "description", "procedure"]
+
+
     def get_success_url(self):
         return reverse('recipes:index')
-    # initial = {"pub_date": str(timezone.now()), "mod_date": str(timezone.now())}
+
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
