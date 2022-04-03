@@ -5,5 +5,8 @@
 <h2>{{recipe.procedure}}</h2>
 
 {% for ingredient in recipe.ingredient_set.all %}
-<p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}<p>
+<p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}</p>
 {% endfor %}
+
+<a href="{% url 'recipes:index' %}">Back to index</a>
+<a href="{% url 'recipes:edit' pk=recipe.pk %}">Edit Recipe</a>

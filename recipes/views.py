@@ -143,7 +143,7 @@ def recipe_update_view(request, pk=None):
         # confirmation message
         context['message'] = 'Recipe saved!'
 
-        return redirect(reverse('recipes:detail'))
+        return redirect(reverse('recipes:detail', kwargs={"pk":recipe.pk}))
 
     # otherwise, redirect to original form
     return render(request, template, context)
