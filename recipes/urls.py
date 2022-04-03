@@ -16,7 +16,7 @@ app_name = 'recipes'
 urlpatterns = [
     path('', views.RecipeIndex.as_view(), name='index'),
     path('<int:pk>/', views.RecipeDetail.as_view(), name='detail'),
-    path('<int:pk>/edit/', views.RecipeModify.as_view(), name='edit'),
+    path('<int:pk>/edit/', views.recipe_update_view, name='edit'),
     path('create/', views.recipe_create_view, name="create"),
 ]
 

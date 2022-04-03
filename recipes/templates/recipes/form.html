@@ -1,6 +1,6 @@
 {% load socialaccount %}
 {% if user.is_authenticated %}
-<h1>Create Recipe Form</h1>
+<h1>Recipe Form</h1>
 
 <!--Referenced from this youtube video:-->
 <!--https://youtu.be/PICYTJqj__o-->
@@ -13,9 +13,9 @@
     {% csrf_token %}
     {{ recipe_form.as_p }}
 
-    {% if ingredient_set %}
+    {% if ingredient_formset %}
     <h4>Add Ingredients:</h4>
-    {{ ingredient_set.as_p }}
+    {{ ingredient_formset.as_p }}
     {% endif %}
 
     <input type = "submit" class="btn btn-primary" value = "Submit" >

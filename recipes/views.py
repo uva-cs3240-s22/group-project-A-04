@@ -73,22 +73,22 @@ def recipe_create_view(request):
     IngredientInlineFormset = inlineformset_factory(Recipe, Ingredient,
                                                     fields=('ingredient_name', 'quantity'),
                                                     extra=1)
-    ingredient_set = IngredientInlineFormset(request.POST or None)
+    ingredient_formset = IngredientInlineFormset(request.POST or None)
 
     # for loading html
     context = {
         "recipe_form": recipe_form,
         # "ingredient_form": ingredient_form,
-        "ingredient_set": ingredient_set,
+        "ingredient_formset": ingredient_formset,
     }
 
     # check that the form is valid, if so, submit
-    if all([recipe_form.is_valid(), ingredient_set.is_valid()]):
+    if all([recipe_form.is_valid(), ingredient_formset.is_valid()]):
         recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
         recipe.author = request.user
         recipe.save()
 
-        for ingredient_form in ingredient_set:
+        for ingredient_form in ingredient_formset:
             ingredient = ingredient_form.save(commit=False)
             ingredient.recipe = recipe
             ingredient.save()
@@ -97,6 +97,53 @@ def recipe_create_view(request):
         context['message'] = 'Recipe saved!'
 
         return redirect(reverse('recipes:index'))
+
+    # otherwise, redirect to original form
+    return render(request, template, context)
+
+# cited from this youtube tutorial:
+# https://youtu.be/6wHx-X1tEiY
+@login_required
+def recipe_update_view(request, pk=None):
+    # specify template
+    template = 'recipes/form.html'
+
+    # get recipe
+    recipe = get_object_or_404(Recipe, pk=pk)
+
+    # make a form for recipes and ingredients
+    recipe_form = RecipeForm(request.POST or None, instance=recipe)
+    # ingredient_form = IngredientForm(request.POST or None)
+
+    # make instance of Formset
+    IngredientInlineFormset = inlineformset_factory(Recipe, Ingredient,
+                                                    fields=('ingredient_name', 'quantity'),
+                                                    extra=1)
+    ingredient_formset = IngredientInlineFormset(request.POST or None, instance=recipe)
+
+    # for loading html
+    context = {
+        "recipe_form": recipe_form,
+        # "ingredient_form": ingredient_form,
+        "ingredient_formset": ingredient_formset,
+        "recipe": recipe,
+    }
+
+    # check that the form is valid, if so, submit
+    if all([recipe_form.is_valid(), ingredient_formset.is_valid()]):
+        recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
+        recipe.author = request.user
+        recipe.save()
+
+        for ingredient_form in ingredient_formset:
+            ingredient = ingredient_form.save(commit=False)
+            ingredient.recipe = recipe
+            ingredient.save()
+
+        # confirmation message
+        context['message'] = 'Recipe saved!'
+
+        return redirect(reverse('recipes:detail'))
 
     # otherwise, redirect to original form
     return render(request, template, context)
