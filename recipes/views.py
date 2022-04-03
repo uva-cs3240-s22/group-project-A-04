@@ -71,7 +71,8 @@ def recipe_create_view(request):
 
     # make instance of Formset
     IngredientInlineFormset = inlineformset_factory(Recipe, Ingredient,
-                                                    fields=('ingredient_name', 'quantity'))
+                                                    fields=('ingredient_name', 'quantity'),
+                                                    extra=1)
     ingredient_set = IngredientInlineFormset(request.POST or None)
 
     # for loading html
