@@ -18,12 +18,13 @@ class RecipeAdmin(admin.ModelAdmin):
         (None,                  {'fields': ['recipe_name', 'description']}),
         (None,                  {'fields': ['author']}),
         (None,                  {'fields': ['procedure']}),
-        ('Date information',    {'fields': ['pub_date', 'mod_date'], 'classes':['collapse']}),
+        # date information removed since these fields are no longer editable as auto-now/add is true
+        # ('Date information',    {'fields': ['pub_date', 'mod_date'], 'classes':['collapse']}),
     ]
     inlines = [IngredientInline]
-    list_display = ('recipe_name', 'pub_date', 'was_published_recently')
+    list_display = ('recipe_name', 'pub_date', 'mod_date')
     list_filter = ['pub_date', 'mod_date']
-    search_fields = ['recipe_name', 'author', 'description', 'procedure']
+    search_fields = ['recipe_name', 'description', 'procedure']
     
 
 admin.site.register(Recipe, RecipeAdmin)

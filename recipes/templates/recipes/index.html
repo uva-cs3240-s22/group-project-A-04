@@ -2,6 +2,8 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'recipes/style.css' %}">
 
+<a href="{% url 'recipes:create' %}">Add Recipe</a> <br>
+
 {% if latest_recipe_list %}
     <ul>
     {% for recipe in latest_recipe_list %}
