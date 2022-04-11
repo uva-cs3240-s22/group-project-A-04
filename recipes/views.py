@@ -14,7 +14,7 @@ from django.forms.models import inlineformset_factory
 # https://youtu.be/6wHx-X1tEiY
 
 # Importing models from current directory
-from .models import Recipe, Ingredient
+from .models import Recipe, Ingredient, RecipeImage
 from .forms import RecipeForm, IngredientForm, RecipeImageForm
 
 # make login required before any of these views can be accessed
@@ -120,6 +120,9 @@ def recipe_update_view(request, pk=None):
 
     # make a form for recipes and ingredients
     recipe_form = RecipeForm(request.POST or None, instance=recipe)
+    # get first image found, might change this inline later
+    recipe_image_form = RecipeImageForm(request.POST or None, request.FILES, instance=RecipeImage.objects.filter(recipe=recipe)[0])
+
     # ingredient_form = IngredientForm(request.POST or None)
 
     # make instance of Formset
@@ -131,6 +134,7 @@ def recipe_update_view(request, pk=None):
     # for loading html
     context = {
         "recipe_form": recipe_form,
+        "recipe_image_form": recipe_image_form,
         # "ingredient_form": ingredient_form,
         "ingredient_formset": ingredient_formset,
         "recipe": recipe,
@@ -140,12 +144,17 @@ def recipe_update_view(request, pk=None):
     if all([recipe_form.is_valid(), ingredient_formset.is_valid()]):
         recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
         recipe.author = request.user
-        recipe.save()
+
+        recipe_image = recipe_image_form.save(commit=False)
+        recipe_image.recipe = recipe
 
         for ingredient_form in ingredient_formset:
             ingredient = ingredient_form.save(commit=False)
             ingredient.recipe = recipe
             ingredient.save()
+
+        recipe.save()
+        recipe_image.save()
 
         # confirmation message
         context['message'] = 'Recipe saved!'
