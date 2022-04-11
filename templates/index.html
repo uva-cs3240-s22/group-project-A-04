@@ -1,5 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
 {% load socialaccount %}
-<html>
+
 <body>
 <h1>My Google OAuth Project </h1>
 {% if user.is_authenticated %}
@@ -10,4 +12,5 @@
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
 {% endif %}
 </body>
-</html>
+
+{% endblock %}
