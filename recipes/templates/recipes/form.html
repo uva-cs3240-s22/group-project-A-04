@@ -1,6 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
 {% load socialaccount %}
 {% if user.is_authenticated %}
-<h1>Create Recipe Form</h1>
+<h1>Recipe Form</h1>
 
 <!--Referenced from this youtube video:-->
 <!--https://youtu.be/PICYTJqj__o-->
@@ -18,14 +20,16 @@
     {{ recipe_image_form.as_p }}
     {% endif %}
 
-    {% if ingredient_form %}
+    {% if ingredient_formset %}
     <h4>Add Ingredients:</h4>
-    {{ ingredient_form.as_p }}
+    {{ ingredient_formset.as_p }}
     {% endif %}
 
     <input type = "submit" class="btn btn-primary" value = "Submit" >
 </form>
 
+
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
 {% endif %}
+{% endblock %}
