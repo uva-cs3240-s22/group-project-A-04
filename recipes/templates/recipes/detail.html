@@ -4,6 +4,10 @@
 <h2>{{recipe.description}}</h2>
 <h2>{{recipe.procedure}}</h2>
 
+{% for image in recipe.recipeimage_set.all %}
+<img src="{{image.image.url}}">
+{% endfor %}
+
 {% for ingredient in recipe.ingredient_set.all %}
 <p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}<p>
 {% endfor %}

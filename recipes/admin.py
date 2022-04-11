@@ -6,12 +6,19 @@
 from django.contrib import admin
 
 # Importing models from local files
-from .models import Recipe, Ingredient
+from .models import Recipe, Ingredient, RecipeImage
 
 class IngredientInline(admin.TabularInline):
     # make ingredients like choices in polls app
     model = Ingredient
     extra = 1
+
+
+class RecipeImageInline(admin.TabularInline):
+    # make ingredients like choices in polls app
+    model = RecipeImage
+    extra = 1
+
 
 class RecipeAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -21,7 +28,7 @@ class RecipeAdmin(admin.ModelAdmin):
         # date information removed since these fields are no longer editable as auto-now/add is true
         # ('Date information',    {'fields': ['pub_date', 'mod_date'], 'classes':['collapse']}),
     ]
-    inlines = [IngredientInline]
+    inlines = [IngredientInline, RecipeImageInline]
     list_display = ('recipe_name', 'pub_date', 'mod_date')
     list_filter = ['pub_date', 'mod_date']
     search_fields = ['recipe_name', 'description', 'procedure']
