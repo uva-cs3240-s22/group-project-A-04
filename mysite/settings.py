@@ -160,6 +160,10 @@ AWS_S3_OBJECT_PARAMETERS = {
 }
 AWS_LOCATION = 'static'
 
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Extra place for collectstatic to find static files
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'mysite/static'),
 )
