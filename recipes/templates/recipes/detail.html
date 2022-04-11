@@ -17,6 +17,11 @@
             <p style = "color: #FE5F55; font-family: Tahoma; text-align: center;"> Recipe Procedure: </p>
             <h3>{{recipe.procedure}}</h3>
         </div>
+        <div>
+            {% for image in recipe.recipeimage_set.all %}
+            <img src="{{image.image.url}}">
+            {% endfor %}
+        </div>
         <div class="col-md-6">
             <p style = "color: #FE5F55; font-family: Tahoma;"> Ingrediants: </p>
             {% for ingredient in recipe.ingredient_set.all %}

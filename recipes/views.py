@@ -15,7 +15,7 @@ from django.forms.models import inlineformset_factory
 
 # Importing models from current directory
 from .models import Recipe, Ingredient
-from .forms import RecipeForm, IngredientForm
+from .forms import RecipeForm, IngredientForm, RecipeImageForm
 
 # make login required before any of these views can be accessed
 # taken from this YouTube video: https://youtu.be/PICYTJqj__o
@@ -67,6 +67,7 @@ def recipe_create_view(request):
 
     # make a form for recipes and ingredients
     recipe_form = RecipeForm(request.POST or None)
+    recipe_image_form = RecipeImageForm(request.POST or None, request.FILES)
     # ingredient_form = IngredientForm(request.POST or None)
 
     # make instance of Formset
@@ -78,20 +79,26 @@ def recipe_create_view(request):
     # for loading html
     context = {
         "recipe_form": recipe_form,
+        "recipe_image_form": recipe_image_form,
         # "ingredient_form": ingredient_form,
         "ingredient_formset": ingredient_formset,
     }
 
     # check that the form is valid, if so, submit
-    if all([recipe_form.is_valid(), ingredient_formset.is_valid()]):
+    if all([recipe_form.is_valid(), recipe_image_form.is_valid(), ingredient_formset.is_valid()]):
         recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
         recipe.author = request.user
-        recipe.save()
+
+        recipe_image = recipe_image_form.save(commit=False)
+        recipe_image.recipe = recipe
 
         for ingredient_form in ingredient_formset:
             ingredient = ingredient_form.save(commit=False)
             ingredient.recipe = recipe
             ingredient.save()
+
+        recipe.save()
+        recipe_image.save()
 
         # confirmation message
         context['message'] = 'Recipe saved!'

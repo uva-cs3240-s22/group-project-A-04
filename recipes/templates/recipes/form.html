@@ -11,9 +11,14 @@
 <p> {{ message }} </p>
 {% endif %}
 
-<form action="." method="POST">
+<form action="." enctype="multipart/form-data" method="POST">
     {% csrf_token %}
     {{ recipe_form.as_p }}
+
+    {% if recipe_image_form %}
+    <h4>Add Image:</h4>
+    {{ recipe_image_form.as_p }}
+    {% endif %}
 
     {% if ingredient_formset %}
     <h4>Add Ingredients:</h4>

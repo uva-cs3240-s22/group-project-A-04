@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Recipe, Ingredient
+from .models import Recipe, Ingredient, RecipeImage
 
 
 # The code for these forms were taken from this youtube video:
@@ -17,3 +17,9 @@ class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
         fields = ['ingredient_name', 'quantity']
+
+
+class RecipeImageForm(forms.ModelForm):
+    class Meta:
+        model = RecipeImage
+        fields = ['image', ]

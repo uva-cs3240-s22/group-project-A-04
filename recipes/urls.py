@@ -4,9 +4,7 @@
 
 
 # Imports from Django library
-from django.urls import path, include
-from django.views.generic import TemplateView
-from django.contrib.auth.views import LogoutView
+from django.urls import path
 
 # Importing views from current directory
 from . import views

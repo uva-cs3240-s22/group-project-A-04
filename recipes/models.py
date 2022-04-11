@@ -10,6 +10,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib import admin
 from django.contrib.auth.models import User     # for recipe authors
+from mysite.storage_backends import MediaStorage
 
 
 class Recipe(models.Model):
@@ -53,3 +54,9 @@ class Ingredient(models.Model):
     # change string representation to show choice text
     def __str__(self):
         return self.ingredient_name + ",  " + self.quantity
+
+
+# each recipe also has an image
+class RecipeImage(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    image = models.ImageField(storage=MediaStorage)
