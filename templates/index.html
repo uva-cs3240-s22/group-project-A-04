@@ -80,8 +80,8 @@
 <h3 style = "color: #FE5F55; font-family: Tahoma; text-align: center;" >An app to store and share your recipes!</h3>
 {% if user.is_authenticated %}
   <p>Welcome, You are logged in as {{ user.username }}</p>
-  <a href="{% url 'recipes:index' %}">Go to Recipes</a> <br>
-  <a href="logout">Logout</a>
+  <a class = "login-btn" href="{% url 'recipes:index' %}">Go to Recipes</a> <br>
+  <a class = "login-btn" href="logout">Logout</a>
 {% else %}
   <div style = "margin-top: 20%;"></div>
   <a class = "login-btn" href="{% provider_login_url 'google' %}">Login With Google</a>
