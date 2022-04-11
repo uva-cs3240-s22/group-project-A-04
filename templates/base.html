@@ -9,16 +9,27 @@
     <meta charset="UTF-8">
     <title>Eats Home</title>
 </head>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
-  <a>{% load static %} <img src="{% static 'polls/images/Eats.png' %}" style="height:50px; width:50px" alt="home" /></a>
-  <a class="navbar-brand btn btn-white" href="#">Home</a>
-  <a class="navbar-brand btn btn-white" href="#">Recipes</a>
-  <a class="navbar-brand btn btn-white" href="#">Forum</a>
-  <a class="navbar-brand btn btn-white" href="#">Profile</a>
+<style>
+    .navbar-custom {
+    background-color: #4f6367;
+}
+    .btn-custom {
+        color: #EEF5DB;
+    
+    }
+    a.btn-custom:hover{
+        color: #FE5F55;
+    }
+</style>
+<nav class="navbar navbar-custom justify-content-between">
+  <a>{% load static %} <img src="{% static 'recipes/Eats.png' %}" style="height:50px; width:50px" alt="home" /></a>
+  <a class="navbar-brand btn btn-custom" href="#">Home</a>
+  <a class="navbar-brand btn btn-custom" href="#">Recipes</a>
+  <a class="navbar-brand btn btn-custom" href="#">Forum</a>
+  <a class="navbar-brand btn btn-custom" href="#">Profile</a>
 </nav>
 
-<body style="background-color: #C4A484;">
+<body style="background-color: #7A9E9F;">
 
 
             {% block content %}
