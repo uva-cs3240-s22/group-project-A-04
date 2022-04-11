@@ -53,6 +53,9 @@ INSTALLED_APPS = [
 
     # Bootstrap5
     'bootstrap5',
+
+    # Django storages for aws s3
+    'storages',
 ]
 
 MIDDLEWARE = [
