@@ -23,3 +23,7 @@ whitenoise
 
 # install django-allauth for Google authentication
 django-allauth
+
+# for amazon s3 file storage
+boto3
+django-storages
