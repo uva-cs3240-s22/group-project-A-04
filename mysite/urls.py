@@ -23,6 +23,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('recipes/', include('recipes.urls')),
+    path('s3/', include('s3')),
 
     path('', TemplateView.as_view(template_name="index.html")),
     path('accounts/', include('allauth.urls')),
