@@ -53,3 +53,9 @@ class Ingredient(models.Model):
     # change string representation to show choice text
     def __str__(self):
         return self.ingredient_name + ",  " + self.quantity
+
+
+# each recipe also has an image
+class RecipeImage(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    image = models.FileField()
