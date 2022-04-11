@@ -1,10 +1,14 @@
 import datetime
 
+from django.core.files.images import ImageFile
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
+from django.db.models.fields.files import ImageFieldFile
+from django.forms import FileField, ImageField
 from django.test import TestCase
 from django.utils import timezone
 
-from .models import Recipe
+from .models import Recipe, RecipeImage
 
 
 # Create your tests here.
@@ -45,3 +49,29 @@ class RecipeModelTests(TestCase):
     # deleting
     # only the author can delete the recipe
     # author should be prompted for a second time before deleting the recipe
+
+
+
+class RecipeImageModelTests(TestCase):
+    r = None
+    i = None
+
+    def setUp(self):
+        global r, i
+        r = Recipe(recipe_name="Mashed Potatoes")
+        i = RecipeImage(recipe=r)
+
+    # recipe images have a recipe
+    def test_recipe(self):
+        global r, i
+        self.assertIs(r, i.recipe,
+                      "Recipe images constructor does not set recipe to that passed into the constructor")
+
+    # recipe images have an image
+    def test_jpg_image(self):
+        global i
+        image_path = 'mediafiles/test.jpg'
+        image = ImageFieldFile(instance=image_path, name='test.jpg', field=i.image)
+        i.image = image
+        self.assertIs(image, i.image,
+                      "Recipe images constructor does not set image to that passed into the constructor")
