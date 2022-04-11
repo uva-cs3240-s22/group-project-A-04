@@ -1,15 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{ recipe.recipe_name }}</h1>
-<h2>{{recipe.mod_date}}</h2>
+<div class="px-5">
+<div class = "bg-light">
+<div class="text-center">
+    <h1 style = "color: #FE5F55; font-family: Tahoma; text-align: center;">{{ recipe.recipe_name }}</h1>
+</div>
+<div class="text-end">
+    <p style = "color: #FE5F55; font-family: Tahoma;"> Date Published: </p>
+    <h5>{{recipe.mod_date}}</h5>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <p style = "color: #FE5F55; font-family: Tahoma; text-align: center;"> Recipe Description: </p>
+            <h3>{{recipe.description}}</h3>
+            <p style = "color: #FE5F55; font-family: Tahoma; text-align: center;"> Recipe Procedure: </p>
+            <h3>{{recipe.procedure}}</h3>
+        </div>
+        <div class="col-md-6">
+            <p style = "color: #FE5F55; font-family: Tahoma;"> Ingrediants: </p>
+            {% for ingredient in recipe.ingredient_set.all %}
+            <p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
-<h2>{{recipe.description}}</h2>
-<h2>{{recipe.procedure}}</h2>
+<div class="text-center">
+    <a href="{% url 'recipes:index' %}">Back to index</a>
+    <a href="{% url 'recipes:edit' pk=recipe.pk %}">Edit Recipe</a>
+</div>
+</div>
+</div>
 
-{% for ingredient in recipe.ingredient_set.all %}
-<p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}</p>
-{% endfor %}
-
-<a href="{% url 'recipes:index' %}">Back to index</a>
-<a href="{% url 'recipes:edit' pk=recipe.pk %}">Edit Recipe</a>
 {% endblock %}
