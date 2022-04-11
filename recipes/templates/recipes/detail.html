@@ -23,7 +23,7 @@
             {% endfor %}
         </div>
         <div class="col-md-6">
-            <p style = "color: #FE5F55; font-family: Tahoma;"> Ingrediants: </p>
+            <p style = "color: #FE5F55; font-family: Tahoma;"> Ingredients: </p>
             {% for ingredient in recipe.ingredient_set.all %}
             <p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}</p>
             {% endfor %}
