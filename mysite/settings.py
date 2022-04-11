@@ -167,6 +167,8 @@ STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_STATIC_LOCATION)
 
 AWS_MEDIA_LOCATION = 'media'
 DEFAULT_FILE_STORAGE = 'mysite.storage_backends.MediaStorage'
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_MEDIA_LOCATION)
+
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'mysite/static'),

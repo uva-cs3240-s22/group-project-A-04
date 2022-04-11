@@ -27,3 +27,6 @@ django-allauth
 # for amazon s3 file storage
 boto3
 django-storages
+
+# for using image fields
+Pillow

@@ -10,7 +10,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 # Importing models from current directory
 from .models import Recipe
-from .forms import RecipeForm, IngredientForm
+from .forms import RecipeForm, IngredientForm, RecipeImageForm
 
 # make login required before any of these views can be accessed
 # taken from this youtube video: https://youtu.be/PICYTJqj__o
@@ -61,23 +61,29 @@ def recipe_create_view(request):
 
     # make a form for recipes and ingredients
     recipe_form = RecipeForm(request.POST or None)
+    recipe_image_form = RecipeImageForm(request.POST or None, request.FILES)
     ingredient_form = IngredientForm(request.POST or None)
 
     # for loading html
     context = {
         "recipe_form": recipe_form,
+        "recipe_image_form": recipe_image_form,
         "ingredient_form": ingredient_form,
     }
 
     # check that the form is valid, if so, submit
-    if all([recipe_form.is_valid(), ingredient_form.is_valid()]):
+    if all([recipe_form.is_valid(), recipe_image_form.is_valid(), ingredient_form.is_valid()]):
         recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
         recipe.author = request.user
+
+        recipe_image = recipe_image_form.save(commit=False)
+        recipe_image.recipe = recipe
 
         ingredient = ingredient_form.save(commit=False)
         ingredient.recipe = recipe
 
         recipe.save()
+        recipe_image.save()
         ingredient.save()
 
         # confirmation message
