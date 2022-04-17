@@ -4,19 +4,21 @@
 {% if user.is_authenticated %}
 <h1>Delete Recipe?</h1>
 
-<!--Referenced from this documentation:-->
-<!--https://docs.djangoproject.com/en/4.0/ref/class-based-views/generic-editing/-->
-
 {% if message %}
 <p> {{ message }} </p>
 {% endif %}
 
+{% if user == recipe.author %}
 <form method="post">{% csrf_token %}
     <p>Are you sure you want to delete "{{ recipe.recipe_name }}"?</p>
     <p>This action cannot be undone.</p>
     {{ form }}
     <input type="submit" value="Confirm">
 </form>
+{% else %}
+<p> You are not the author of this recipe. </p>
+<a href="{% url 'recipes:detail' recipe.pk %}"> Return to Detail Page</a>
+{% endif %}
 
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
