@@ -59,4 +59,4 @@ class Ingredient(models.Model):
 # each recipe also has an image
 class RecipeImage(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    image = models.ImageField(storage=MediaStorage)
+    image = models.ImageField(storage=MediaStorage, blank=True)

@@ -19,7 +19,9 @@
 
         <div class="text-center">
             {% for image in recipe.recipeimage_set.all %}
+            {% if image.image %}
             <img src="{{image.image.url}}">
+            {% endif %}
             {% endfor %}
         </div>
 
