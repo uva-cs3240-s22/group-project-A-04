@@ -6,7 +6,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, DeleteView
 
 # model form for query sets
 from django.forms.models import inlineformset_factory
@@ -65,27 +65,8 @@ def recipe_create_view(request):
     }
 
     # check that the form is valid, if so, submit
-    if all([recipe_form.is_valid(), recipe_image_form.is_valid(), ingredient_formset.is_valid()]):
-        recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
-        recipe.author = request.user
-        recipe.save()   # save object first
-
-        recipe_image = recipe_image_form.save(commit=False)
-        recipe_image.recipe = recipe
-        recipe_image.save()
-
-        for ingredient_form in ingredient_formset:
-            ingredient = ingredient_form.save(commit=False)
-            ingredient.recipe = recipe
-            ingredient.save()
-
-        # confirmation message
-        context['message'] = 'Recipe saved!'
-
-        return redirect(reverse('recipes:index'))
-
-    # otherwise, redirect to original form
-    return render(request, template, context)
+    return validate_and_save_recipe_form(recipe_form, recipe_image_form, ingredient_formset, context,
+                                         request, template)
 
 # cited from this youtube tutorial:
 # https://youtu.be/6wHx-X1tEiY
@@ -119,8 +100,14 @@ def recipe_update_view(request, pk=None):
         "recipe": recipe,
     }
 
+    # check that the forms are valid, if so, submit
+    return validate_and_save_recipe_form(recipe_form, recipe_image_form, ingredient_formset, context,
+                                         request, template)
+
+
+def validate_and_save_recipe_form(recipe_form, recipe_image_form, ingredient_formset, context, request, template):
     # check that the form is valid, if so, submit
-    if all([recipe_form.is_valid(), ingredient_formset.is_valid()]):
+    if all([recipe_form.is_valid(), recipe_image_form.is_valid(), ingredient_formset.is_valid()]):
         recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
         recipe.author = request.user
         recipe.save()
