@@ -35,6 +35,11 @@ class Recipe(models.Model):
     # blank allows it to be blank for form validation
     parent = models.ForeignKey("self", on_delete=models.SET_NULL, null=True, blank=True)
 
+    likes = models.ManyToManyField(User, related_name='recipe_likes')
+
+    def number_of_likes(self):
+        return self.likes.count()
+
     def __str__(self):
         return self.recipe_name
 
