@@ -5,7 +5,7 @@
 # Imports from Django library
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView
 
 # model form for query sets
@@ -124,3 +124,8 @@ def validate_and_save_recipe_form(recipe_form, recipe_image_form, ingredient_for
 
     # otherwise, redirect to original form
     return render(request, template, context)
+
+
+class RecipeDelete(DeleteView):
+    model = Recipe
+    success_url = reverse_lazy('recipes:index')
