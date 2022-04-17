@@ -99,6 +99,10 @@ def recipe_fork_view(request, pk=None):
     template = 'recipes/form.html'
 
     # get parent recipe
+    recipe = get_object_or_404(Recipe, pk=pk)
+    recipe.pk = None
+
+    # get parent recipe
     parent_recipe = get_object_or_404(Recipe, pk=pk)
 
     # check that request user is not equal to parent recipe author, otherwise, redirect back to details page
@@ -106,7 +110,8 @@ def recipe_fork_view(request, pk=None):
         return redirect(reverse('recipes:detail', kwargs={"pk":parent_recipe.pk}))
 
     # make a form for recipes and ingredients
-    recipe_form = RecipeForm(request.POST or None, instance=parent_recipe)
+    recipe_form = RecipeForm(request.POST or None, instance=recipe)
+
     # get first image found, might change this inline later
     if RecipeImage.objects.filter(recipe=parent_recipe):
         recipe_image_form = RecipeImageForm(request.POST or None, request.FILES, instance=RecipeImage.objects.filter(recipe=parent_recipe)[0])
@@ -135,17 +140,13 @@ def validate_and_save_recipe_form(request, template, context, recipe_form, recip
         recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
         recipe_image = recipe_image_form.save(commit=False)
 
-        # if parent is not none, set the pk to None to indicate that a new primary key is needed for the forked recipe
-        # this effectively creates a clone in the database (same data, different primary key)
-        if parent is not None:
-            recipe.pk = None
-            recipe_image.pk = None
-            # save instance, then assign
-            parent.save()
-
         recipe.author = request.user
         recipe.parent = parent
         recipe.save()
+
+        # if forking, clone image
+        if parent is not None:
+            recipe_image.pk = None
 
         recipe_image.recipe = recipe
         recipe_image.save()
@@ -153,7 +154,7 @@ def validate_and_save_recipe_form(request, template, context, recipe_form, recip
         for ingredient_form in ingredient_formset:
             ingredient = ingredient_form.save(commit=False)
 
-            # ingredients need to be similarly clone or else the parent recipe will lose all of its ingredients
+            # if forking, clone ingredient
             if parent is not None:
                 ingredient.pk = None
 
