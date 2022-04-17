@@ -40,26 +40,6 @@ class RecipeDetail(DetailView):
         return Recipe.objects
 
 
-class RecipeModify(UpdateView):
-    model = Recipe
-    template_name = 'recipes/edit.html'
-
-
-# class RecipeCreate(CreateView):
-#     model = Recipe
-#     template_name = 'recipes/form.html'
-#     fields = ["recipe_name", "description", "procedure"]
-#
-#
-#     def get_success_url(self):
-#         return reverse('recipes:index')
-#
-#
-#     def form_valid(self, form):
-#         form.instance.author = self.request.user
-#         return super().form_valid(form)
-
-
 @login_required
 def recipe_create_view(request):
     # specify template
