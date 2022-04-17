@@ -40,7 +40,12 @@
 
 <div class="text-center">
     <a href="{% url 'recipes:index' %}">Back to index</a>
+
+    {% if user == recipe.author %}
     <a href="{% url 'recipes:edit' pk=recipe.pk %}">Edit Recipe</a>
+    <a href="{% url 'recipes:delete' pk=recipe.pk %}">Delete Recipe</a>
+    {% endif %}
+
 </div>
 </div>
 </div>
