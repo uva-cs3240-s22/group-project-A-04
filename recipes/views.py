@@ -88,17 +88,16 @@ def recipe_create_view(request):
     if all([recipe_form.is_valid(), recipe_image_form.is_valid(), ingredient_formset.is_valid()]):
         recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
         recipe.author = request.user
+        recipe.save()   # save object first
 
         recipe_image = recipe_image_form.save(commit=False)
         recipe_image.recipe = recipe
+        recipe_image.save()
 
         for ingredient_form in ingredient_formset:
             ingredient = ingredient_form.save(commit=False)
             ingredient.recipe = recipe
             ingredient.save()
-
-        recipe.save()
-        recipe_image.save()
 
         # confirmation message
         context['message'] = 'Recipe saved!'
@@ -144,17 +143,16 @@ def recipe_update_view(request, pk=None):
     if all([recipe_form.is_valid(), ingredient_formset.is_valid()]):
         recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
         recipe.author = request.user
+        recipe.save()
 
         recipe_image = recipe_image_form.save(commit=False)
         recipe_image.recipe = recipe
+        recipe_image.save()
 
         for ingredient_form in ingredient_formset:
             ingredient = ingredient_form.save(commit=False)
             ingredient.recipe = recipe
             ingredient.save()
-
-        recipe.save()
-        recipe_image.save()
 
         # confirmation message
         context['message'] = 'Recipe saved!'
