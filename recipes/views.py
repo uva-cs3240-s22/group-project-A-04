@@ -74,6 +74,10 @@ def recipe_update_view(request, pk=None):
     # get recipe
     recipe = get_object_or_404(Recipe, pk=pk)
 
+    # check that request user is equal to recipe author, otherwise, redirect back to details page
+    if request.user != recipe.author:
+        return redirect(reverse('recipes:detail', kwargs={"pk":recipe.pk}))
+
     # make a form for recipes and ingredients
     recipe_form = RecipeForm(request.POST or None, instance=recipe)
     # get first image found, might change this inline later
@@ -95,7 +99,7 @@ def recipe_update_view(request, pk=None):
     return validate_and_save_recipe_form(recipe_form, recipe_image_form, ingredient_formset, context,
                                          request, template)
 
-
+@login_required
 def validate_and_save_recipe_form(recipe_form, recipe_image_form, ingredient_formset, context, request, template):
 
     # check that the form is valid, if so, submit
