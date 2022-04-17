@@ -15,7 +15,8 @@ from django.forms.models import inlineformset_factory
 
 # Importing models from current directory
 from .models import Recipe, Ingredient, RecipeImage
-from .forms import RecipeForm, IngredientForm, RecipeImageForm
+from .forms import RecipeForm, RecipeImageForm, IngredientInlineFormset
+
 
 # make login required before any of these views can be accessed
 # taken from this YouTube video: https://youtu.be/PICYTJqj__o
@@ -48,19 +49,14 @@ def recipe_create_view(request):
     # make a form for recipes and ingredients
     recipe_form = RecipeForm(request.POST or None)
     recipe_image_form = RecipeImageForm(request.POST or None, request.FILES)
-    # ingredient_form = IngredientForm(request.POST or None)
 
     # make instance of Formset
-    IngredientInlineFormset = inlineformset_factory(Recipe, Ingredient,
-                                                    fields=('ingredient_name', 'quantity'),
-                                                    extra=1)
     ingredient_formset = IngredientInlineFormset(request.POST or None)
 
     # for loading html
     context = {
         "recipe_form": recipe_form,
         "recipe_image_form": recipe_image_form,
-        # "ingredient_form": ingredient_form,
         "ingredient_formset": ingredient_formset,
     }
 
@@ -83,19 +79,14 @@ def recipe_update_view(request, pk=None):
     # get first image found, might change this inline later
     recipe_image_form = RecipeImageForm(request.POST or None, request.FILES, instance=RecipeImage.objects.filter(recipe=recipe)[0])
 
-    # ingredient_form = IngredientForm(request.POST or None)
 
     # make instance of Formset
-    IngredientInlineFormset = inlineformset_factory(Recipe, Ingredient,
-                                                    fields=('ingredient_name', 'quantity'),
-                                                    extra=1)
     ingredient_formset = IngredientInlineFormset(request.POST or None, instance=recipe)
 
     # for loading html
     context = {
         "recipe_form": recipe_form,
         "recipe_image_form": recipe_image_form,
-        # "ingredient_form": ingredient_form,
         "ingredient_formset": ingredient_formset,
         "recipe": recipe,
     }
@@ -106,6 +97,7 @@ def recipe_update_view(request, pk=None):
 
 
 def validate_and_save_recipe_form(recipe_form, recipe_image_form, ingredient_formset, context, request, template):
+
     # check that the form is valid, if so, submit
     if all([recipe_form.is_valid(), recipe_image_form.is_valid(), ingredient_formset.is_valid()]):
         recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
