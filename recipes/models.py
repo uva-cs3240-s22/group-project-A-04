@@ -48,6 +48,9 @@ class Recipe(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
+    def number_of_forks(self):
+        return len(Recipe.objects.filter(parent=self))
+
 
 # each ingredient has its own name and quantity
 # in addition to being associated with a recipe
