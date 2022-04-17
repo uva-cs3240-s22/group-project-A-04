@@ -14,6 +14,7 @@
     <p>This action cannot be undone.</p>
     {{ form }}
     <input type="submit" value="Confirm">
+    <a href="{% url 'recipes:detail' recipe.pk %}"> Cancel </a>
 </form>
 {% else %}
 <p> You are not the author of this recipe. </p>
