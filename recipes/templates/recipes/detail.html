@@ -5,6 +5,14 @@
 <div class="text-center">
     <h1 style = "color: #FE5F55; font-family: Tahoma; text-align: center;">{{ recipe.recipe_name }}</h1>
     <h3 style = "color: #FE5F55; font-family: Tahoma; text-align: center;">By: {{ recipe.author }}</h3>
+    {% if recipe.parent is not None %}
+    <h3 style = "color: #FE5F55; font-family: Tahoma; text-align: center;">
+        Forked from:
+        <a href="{% url 'recipes:detail' pk=recipe.parent.pk %}">
+            {{ recipe.parent.recipe_name }}
+        </a>
+    </h3>
+    {% endif %}
 </div>
 <div class="text-end">
     <p style = "color: #FE5F55; font-family: Tahoma;"> Date Published: </p>
@@ -46,6 +54,8 @@
     {% if user == recipe.author %}
     <a href="{% url 'recipes:edit' pk=recipe.pk %}">Edit Recipe</a>
     <a href="{% url 'recipes:delete' pk=recipe.pk %}">Delete Recipe</a>
+    {% else %}
+    <a href="{% url 'recipes:fork' pk=recipe.pk %}">Fork Recipe</a>
     {% endif %}
 
 </div>
