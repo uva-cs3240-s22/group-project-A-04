@@ -94,12 +94,13 @@ def recipe_update_view(request, pk=None):
     return validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset)
 
 @login_required
-def validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset):
+def validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset, parent=None):
 
     # check that the form is valid, if so, submit
     if all([recipe_form.is_valid(), recipe_image_form.is_valid(), ingredient_formset.is_valid()]):
         recipe = recipe_form.save(commit=False)     # commit = False does not add to DB
         recipe.author = request.user
+        recipe.parent = parent
         recipe.save()
 
         recipe_image = recipe_image_form.save(commit=False)

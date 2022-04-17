@@ -27,8 +27,13 @@ class Recipe(models.Model):
     # reference the main user model anyways because allauth is like that
     # see: https://learndjango.com/tutorials/django-best-practices-referencing-user-model
     # default value is primary key of a generic user, but note that this is will not migrate since it is null
-    # changed to one to one such that each recipe can only have one author
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=User().pk)
+
+    # make parent foreign key for forking
+    # "self" makes it a self-referential key
+    # null allows it to be void in the database
+    # blank allows it to be blank for form validation
+    parent = models.ForeignKey("self", on_delete=models.PROTECT, null=True, blank=True)
 
     def __str__(self):
         return self.recipe_name
