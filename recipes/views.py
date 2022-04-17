@@ -56,8 +56,8 @@ def recipe_create_view(request):
     }
 
     # check that the form is valid, if so, submit
-    return validate_and_save_recipe_form(recipe_form, recipe_image_form, ingredient_formset, context,
-                                         request, template)
+    return validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset)
+
 
 # cited from this youtube tutorial:
 # https://youtu.be/6wHx-X1tEiY
@@ -91,11 +91,10 @@ def recipe_update_view(request, pk=None):
     }
 
     # check that the forms are valid, if so, submit
-    return validate_and_save_recipe_form(recipe_form, recipe_image_form, ingredient_formset, context,
-                                         request, template)
+    return validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset)
 
 @login_required
-def validate_and_save_recipe_form(recipe_form, recipe_image_form, ingredient_formset, context, request, template):
+def validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset):
 
     # check that the form is valid, if so, submit
     if all([recipe_form.is_valid(), recipe_image_form.is_valid(), ingredient_formset.is_valid()]):
