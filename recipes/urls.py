@@ -1,7 +1,7 @@
-# recipes/urls.py
-#
-# url views for recipes app
-
+"""
+recipes/urls.py
+This file contains the URL routing information for different views
+"""
 
 # Imports from Django library
 from django.urls import path
@@ -12,9 +12,25 @@ from . import views
 app_name = 'recipes'
 
 urlpatterns = [
-    path('', views.RecipeIndex.as_view(), name='index'),
-    path('<int:pk>/', views.RecipeDetail.as_view(), name='detail'),
-    path('<int:pk>/edit/', views.recipe_update_view, name='edit'),
-    path('create/', views.recipe_create_view, name="create"),
+    path(
+        '', 
+        views.RecipeIndex.as_view(), 
+        name='index'
+        ),
+    path(
+        '<int:pk>/', 
+        views.RecipeDetail.as_view(), 
+        name='detail'
+        ),
+    path(
+        '<int:pk>/edit/', 
+        views.recipe_update_view, 
+        name='edit'
+        ),
+    path(
+        'create/', 
+        views.recipe_create_view, 
+        name="create"
+        ),
 ]
 

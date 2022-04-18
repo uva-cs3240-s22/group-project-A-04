@@ -1,6 +1,7 @@
-# recipes/views.py
-# 
-# views for the recipe app
+"""
+recipes/views.py
+This file contains definitions of how specific models are viewed
+"""
 
 # Imports from Django library
 from django.contrib.auth.decorators import login_required
@@ -10,17 +11,21 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 # model form for query sets
 from django.forms.models import inlineformset_factory
-# cited from this youtube tutorial:
-# https://youtu.be/6wHx-X1tEiY
+# cited from this youtube tutorial: https://youtu.be/6wHx-X1tEiY
 
 # Importing models from current directory
 from .models import Recipe, Ingredient, RecipeImage
 from .forms import RecipeForm, IngredientForm, RecipeImageForm
 
-# make login required before any of these views can be accessed
-# taken from this YouTube video: https://youtu.be/PICYTJqj__o
+# make login required before any of these views can be accessed taken from this
+# YouTube video: https://youtu.be/PICYTJqj__o
 
 
+"""
+Recipe index view
+Displays all of the recipes using 'recipes/index.html' and inserts the the view
+into an object_list called 'latest_recipe_list'
+"""
 class RecipeIndex(ListView):
     template_name = 'recipes/index.html'
     context_object_name = 'latest_recipe_list'
@@ -29,17 +34,25 @@ class RecipeIndex(ListView):
         return Recipe.objects.order_by('-pub_date')[:5]
 
 
+"""
+Recipe detail view
+Displays the details of the recipe ysing 'recipes/detail.html'
+"""
 class RecipeDetail(DetailView):
     model = Recipe
     template_name = 'recipes/detail.html'
 
     def get_queryset(self):
         """
-        Excludes any questions that aren't published yet.
+        Excludes any recipes that aren't published yet.
         """
         return Recipe.objects
 
 
+"""
+Recipe modification view
+Displays the recipe modification page using 'recipes/edit.html'
+"""
 class RecipeModify(UpdateView):
     model = Recipe
     template_name = 'recipes/edit.html'
