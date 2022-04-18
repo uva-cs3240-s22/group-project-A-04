@@ -48,6 +48,8 @@ class RecipeDetail(DetailView):
         return data
 
 
+# like feature referenced from this tutorial:
+# https://dev.to/radualexandrub/how-to-add-like-unlike-button-to-your-django-blog-5gkg
 def recipe_like(request, pk):
     post = get_object_or_404(Recipe, id=request.POST.get('recipe_id'))
     if post.likes.filter(id=request.user.id).exists():
