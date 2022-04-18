@@ -1,126 +1,90 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
 <div class="px-5">
-	<div class="bg-light">
-		<div class="text-center">
-			<h1 style="color: #fe5f55; font-family: Tahoma; text-align: center">
-				{{ recipe.recipe_name }}
-			</h1>
-			<h3 style="color: #fe5f55; font-family: Tahoma; text-align: center">
-				By: {{ recipe.author }}
-			</h3>
-			{% if recipe.parent is not None %}
-			<h3 style="color: #fe5f55; font-family: Tahoma; text-align: center">
-				Forked from:
-				<a href="{% url 'recipes:detail' pk=recipe.parent.pk %}">
-					{{ recipe.parent.recipe_name }}
-				</a>
-			</h3>
-			{% endif %}
-			<p>Number of Forks: {{ recipe.number_of_forks }}</p>
-			<p>Number of Likes: {{ recipe.number_of_likes }}</p>
-		</div>
-		<div class="text-end">
-			<p style="color: #fe5f55; font-family: Tahoma">Date Published:</p>
-			<h5>{{recipe.mod_date}}</h5>
-		</div>
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-6">
-					<p
-						style="
-							color: #fe5f55;
-							font-family: Tahoma;
-							text-align: center;
-						"
-					>
-						Recipe Description:
-					</p>
-					<h3>{{recipe.description}}</h3>
-				</div>
+<div class = "bg-light">
+<div class="text-center">
+    <h1 style = "color: #FE5F55; font-family: Tahoma; text-align: center;">{{ recipe.recipe_name }}</h1>
+    <h3 style = "color: #FE5F55; font-family: Tahoma; text-align: center;">By: {{ recipe.author }}</h3>
+    {% if recipe.parent is not None %}
+    <h3 style = "color: #FE5F55; font-family: Tahoma; text-align: center;">
+        Forked from:
+        <a href="{% url 'recipes:detail' pk=recipe.parent.pk %}">
+            {{ recipe.parent.recipe_name }}
+        </a>
+    </h3>
+    {% endif %}
+    <p>Number of Forks: {{ recipe.number_of_forks }}</p>
+    <p>Number of Likes: {{ recipe.number_of_likes }}</p>
+</div>
+<div class="text-center">
+    <p style = "color: #FE5F55; font-family: Tahoma;"> Date Published: </p>
+    <h5>{{recipe.mod_date}}</h5>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        {% comment %} "col-md-6" {% endcomment %}
+        <div class="text-center"> 
+            <p style = "color: #FE5F55; font-family: Tahoma; text-align: center;"> Recipe Description: </p>
+            <h3>{{recipe.description}}</h3>
+        </div>
 
-				<div class="text-center">
-					{% for image in recipe.recipeimage_set.all %} {% if
-					image.image %}
-					<img src="{{image.image.url}}" />
-					{% endif %} {% endfor %}
-				</div>
+        {% comment %} "text-center" {% endcomment %}
+        <div class="text-center">
+            {% for image in recipe.recipeimage_set.all %}
+            {% if image.image %}
+            <img src="{{image.image.url}}">
+            {% endif %}
+            {% endfor %}
+        </div>
 
-				<div class="col-md-6">
-					<p style="color: #fe5f55; font-family: Tahoma">
-						Ingredients:
-					</p>
-					{% for ingredient in recipe.ingredient_set.all %}
-					<p>
-						{{ingredient.ingredient_name}} - {{ingredient.quantity}}
-					</p>
-					{% endfor %}
-				</div>
+        {% comment %} "col-md-6" {% endcomment %}
+        <div class="text-center">
+            <p style = "color: #FE5F55; font-family: Tahoma;"> Ingredients: </p>
+            {% for ingredient in recipe.ingredient_set.all %}
+            <p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}</p>
+            {% endfor %}
+        </div>
+        
+        {% comment %} "col-md-6" {% endcomment %}
+        <div class="text-center">
+            <p style = "color: #FE5F55; font-family: Tahoma; text-align: center;"> Recipe Procedure: </p>
+            <h3>{{recipe.procedure}}</h3>
+        </div>
 
-				<div class="col-md-6">
-					<p
-						style="
-							color: #fe5f55;
-							font-family: Tahoma;
-							text-align: center;
-						"
-					>
-						Recipe Procedure:
-					</p>
-					<h3>{{recipe.procedure}}</h3>
-				</div>
-			</div>
-		</div>
+    </div>
+</div>
 
-		<div class="text-center">
-			<a href="{% url 'recipes:index' %}">Back to index</a>
+    {% comment %} "text-center" {% endcomment %}
+    <div class="text-center">
+        <a href="{% url 'recipes:index' %}">Back to index</a>
 
-			{% if user == recipe.author %}
-			<a href="{% url 'recipes:edit' pk=recipe.pk %}">Edit Recipe</a>
-			<a href="{% url 'recipes:delete' pk=recipe.pk %}">Delete Recipe</a>
-			{% else %}
-			<a href="{% url 'recipes:fork' pk=recipe.pk %}">Fork Recipe</a>
-			{% endif %}
+        {% if user == recipe.author %}
+        <a href="{% url 'recipes:edit' pk=recipe.pk %}">Edit Recipe</a>
+        <a href="{% url 'recipes:delete' pk=recipe.pk %}">Delete Recipe</a>
+        {% else %}
+        <a href="{% url 'recipes:fork' pk=recipe.pk %}">Fork Recipe</a>
+        {% endif %}
 
-			<div>
-				{% if user.is_authenticated %}
-				<form
-					action="{% url 'recipes:recipe_like' object.id %}"
-					method="POST"
-				>
-					{% csrf_token %} {% if post_is_liked %}
-					<button
-						type="submit"
-						name="recipe_id"
-						value="{{object.id}}"
-						class="btn btn-info"
-					>
-						Unlike
-					</button>
-					{% else %}
-					<button
-						type="submit"
-						name="recipe_id"
-						value="{{object.id}}"
-						class="btn btn-info"
-					>
-						Like
-					</button>
-					{% endif %}
-				</form>
-				{% else %}
-				<a
-					class="btn btn-outline-info"
-					href="{% url 'login' %}?next={{request.path}}"
-					>Log in to like this recipe!</a
-				><br />
-				{% endif %}
-				<strong class="text-secondary"
-					>{{ number_of_likes }} Like{{ number_of_likes|pluralize
-					}}</strong
-				>
-			</div>
-		</div>
-	</div>
+            <div>
+                {% if user.is_authenticated %}
+                <form action="{% url 'recipes:recipe_like' object.id %}" method="POST">
+                {% csrf_token %}
+
+                {% if post_is_liked %}
+                <button type="submit" name="recipe_id" value="{{object.id}}" class="btn btn-info">Unlike</button>
+                {% else %}
+                <button type="submit" name="recipe_id" value="{{object.id}}" class="btn btn-info">Like</button>
+                {% endif %}
+                </form>
+                {% else %}
+                <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}">Log in to like this recipe!</a><br>
+                {% endif %}
+                <strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+            </div>
+
+    </div>
+
+</div>
 </div>
 
 {% endblock %}
