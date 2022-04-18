@@ -55,7 +55,7 @@ def recipe_like(request, pk):
     else:
         post.likes.add(request.user)
 
-    return HttpResponseRedirect(reverse('blogpost-detail', args=[str(pk)]))
+    return redirect(reverse('recipes:detail', kwargs={"pk":post.pk}))
 
 @login_required
 def recipe_create_view(request):
