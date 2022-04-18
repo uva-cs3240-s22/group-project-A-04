@@ -86,7 +86,7 @@
         color:#FE5F55
     }
     </style>
-    <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100vh"> 
+    <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%"> 
     
 
 
@@ -101,22 +101,31 @@
 
 <div class="container">
   {%  for recipe in latest_recipe_list  %}
-      {% if forloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
+  {% for image in recipe.recipeimage_set.all %}
+            
+            
+      {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
         <div class="col-md-4">
-            <div class="card">
-                <img src="http://placehold.it/300X150" alt="">
+            <div class="card" >
+                <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
+                 -->
+                 {% if image.image %}
+            <img src="{{image.image.url}}" width = "fit" height = "fit">
+            {% endif %}
                 <div class="card-content">
                     <br>
-                    <h4>Recipe {{ forloop.counter }}</h4>
+                    <h4><a style="text-decoration: none;" href="/recipes/{{ recipe.id }}/">Recipe {{ forloop.counter }}</a></h4>
                     <hr>
-                     <h3>{{ recipe.recipe_name }}</h3>
+                     <h3 href="/recipes/{{ recipe.id }}/">{{ recipe.recipe_name }}</h3>
+                     <p>{{recipe.number_of_likes}} likes</p>
                     <br>
 
                 </div><!-- card content -->
             </div><!-- card -->
         </div><!-- col-md-4 -->
-  {%  if forloop.counter|divisibleby:3 or forloop.last %}</div><!-- row closing --><hr>{%  endif %}
+  {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
   {%  endfor %}
+  {% endfor %}
 </div><!-- container -->
 
 {% else %}
