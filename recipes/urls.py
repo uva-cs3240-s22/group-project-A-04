@@ -32,5 +32,20 @@ urlpatterns = [
         views.recipe_create_view, 
         name="create"
         ),
+    path(
+        '<int:pk>/fork/', 
+        views.recipe_fork_view, 
+        name='fork'
+        ),
+    path(
+        '<int:pk>/delete/', 
+        views.RecipeDelete.as_view(), 
+        name='delete'
+        ),
+    path(
+        '<int:pk>/recipe_like/', 
+        views.recipe_like, 
+        name='recipe_like'
+        ),
 ]
 
