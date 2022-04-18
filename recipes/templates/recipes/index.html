@@ -78,13 +78,35 @@
         list-style-position:inside;
         margin:0;
         padding:0; 
-        text-decoration: none;}
+        text-decoration: none;
+	}
+	a {
+		color: lightseagreen;
+	}
     .recipe-link{
         color:black;
     }
     .recipe-link:hover{
         color:#FE5F55
     }
+	.card-img-top {
+		width: 100%;
+		height: 15vw;
+		object-fit: cover;
+	}
+	.card-custom-border {
+		border-radius: 8px;
+		border-width: 8px;
+		border-style: solid;
+		border-color: aquamarine;
+		margin-top: 10px;
+		margin-bottom: 10px;
+
+	}
+	.card-information {
+		margin-top: 1px:
+		margin-bottom: 1px;
+	}
     </style>
     <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%"> 
     
@@ -105,23 +127,24 @@
             
             
       {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
-        <div class="col-md-4">
-            <div class="card" >
+        <div class="col-md-4 d-flex justify-content-around align-items-center">
+            <div class="card card-custom-border" >
                 <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
                  -->
-                 {% if image.image %}
-            <img src="{{image.image.url}}" width = "fit" height = "fit">
-            {% endif %}
-                <div class="card-content">
-                    <br>
-                    <h4><a style="text-decoration: none;" href="/recipes/{{ recipe.id }}/">Recipe {{ forloop.counter }}</a></h4>
-                    <hr>
-                     <h3 href="/recipes/{{ recipe.id }}/">{{ recipe.recipe_name }}</h3>
-                     <p>{{recipe.number_of_likes}} likes</p>
-                     <p>{{recipe.number_of_forks}} forks</p>
-                    <br>
-
-                </div><!-- card content -->
+                {% if image.image %}
+				<img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+				{% endif %}
+                <div class="card-body">
+					<div>
+						<h4><a class="card-title" href="/recipes/{{ recipe.id }}/">
+							{{ recipe.recipe_name }}
+						</a></h4>
+					</div>
+					<div class="card-information d-flex flex-column">
+						<h6>{{recipe.number_of_likes}} likes</h6>
+						<h6>{{recipe.number_of_forks}} forks</h6>
+					</div>
+                </div><!-- card body -->
             </div><!-- card -->
         </div><!-- col-md-4 -->
   {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
