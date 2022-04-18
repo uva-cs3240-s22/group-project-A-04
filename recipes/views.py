@@ -120,7 +120,7 @@ def recipe_update_view(request, pk=None):
     }
 
     # check that the forms are valid, if so, submit
-    return validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset)
+    return validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset, recipe.parent)
 
 @login_required
 def recipe_fork_view(request, pk=None):
