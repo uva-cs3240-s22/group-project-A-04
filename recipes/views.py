@@ -3,6 +3,7 @@
 # views for the recipe app
 
 # Imports from Django library
+from re import template
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -17,6 +18,11 @@ from .forms import RecipeForm, RecipeImageForm, IngredientInlineFormset
 
 # make login required before any of these views can be accessed
 # taken from this YouTube video: https://youtu.be/PICYTJqj__o
+class ProfileView(ListView):
+    model = Recipe
+    template_name = 'recipes/profile.html'
+    context_object_name = 'latest_recipe_list'
+
 
 
 class RecipeIndex(ListView):

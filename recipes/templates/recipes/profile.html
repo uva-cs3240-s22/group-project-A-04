@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+{% load socialaccount %}
+{% if user.is_authenticated %}
+<div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100vh"> 
+  <p>Welcome, You are logged in as {{ user.username }}</p>
+</div>
+{% else %}
+<div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100vh"> 
+  <div style = "margin-top: 20%;"></div>
+  <a class = "login-btn" href="{% provider_login_url 'google' %}">Login With Google</a>
+  </div>
+{% endif %}
+
+{% endblock %}
