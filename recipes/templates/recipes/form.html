@@ -2,34 +2,77 @@
 {% block content %}
 {% load socialaccount %}
 {% if user.is_authenticated %}
-<h1>Recipe Form</h1>
 
-<!--Referenced from this youtube video:-->
-<!--https://youtu.be/PICYTJqj__o-->
+<div class="text-center">
+    <h1>Recipe Form</h1>
 
-{% if message %}
-<p> {{ message }} </p>
-{% endif %}
+    <!--Referenced from this youtube video:-->
+    <!--https://youtu.be/PICYTJqj__o-->
 
-<form action="." enctype="multipart/form-data" method="POST">
-    {% csrf_token %}
-    {{ recipe_form.as_p }}
-
-    {% if recipe_image_form %}
-    <h4>Add Image:</h4>
-    {{ recipe_image_form.as_p }}
+    {% if message %}
+    <p> {{ message }} </p>
     {% endif %}
+    <form id="form-container" action="." enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        {{ recipe_form.as_p }}
 
-    {% if ingredient_formset %}
-    <h4>Add Ingredients:</h4>
-    {{ ingredient_formset.as_p }}
+        {% if recipe_image_form %}
+        <h4>Add Image:</h4>
+        {{ recipe_image_form.as_p }}
+        {% endif %}
+
+        {% if ingredient_formset %}
+        <h4>Add Ingredients:</h4>
+        {{ ingredient_formset.management_form }}
+        {% for ingredient_form in ingredient_formset %}
+        <div class="ingredient-form">
+            {{ ingredient_form.as_p }}
+    <!--        <button id="delete-form" type="button">Remove Row</button>-->
+        </div>
+        {% endfor %}
+        <button id="add-form" type="button">Add Another Ingredient</button>
+        {% endif %}
+        <input type = "submit" class="btn btn-primary" value = "Submit" >
+    </form>
+
+    <!--    script cited from here: https://www.brennantymrak.com/articles/django-dynamic-formsets-javascript.html-->
+
+    <script>
+        let ingredientForm = document.querySelectorAll(".ingredient-form")
+        let container = document.querySelector("#form-container")
+        let addButton = document.querySelector("#add-form")
+    <!--    let deleteButton = document.querySelector("#delete-form")-->
+        let totalForms = document.querySelector("#id_ingredient_set-TOTAL_FORMS")
+
+        let formNum = ingredientForm.length-1
+        addButton.addEventListener('click', addForm)
+    <!--    deleteButton.addEventListener('click', deleteForm)-->
+
+        function addForm(e) {
+            e.preventDefault()
+
+            let newForm = ingredientForm[0].cloneNode(true)
+            let formRegex = RegExp(`form-(\\d){1}-`, 'g')
+
+            formNum++
+            newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
+            container.insertBefore(newForm, addButton)
+
+            totalForms.setAttribute('value', `${formNum+1}`)
+        }
+
+    <!--    function deleteForm(e) {-->
+    <!--        e.preventDefault()-->
+
+    <!--        e.target.parentElement.remove()-->
+    <!--        formNum&#45;&#45;-->
+    <!--        totalForms.setAttribute('value', `${formNum+1}`)-->
+    <!--    }-->
+
+    </script>
+
+    {% else %}
+      <a href="{% provider_login_url 'google' %}">Login With Google</a>
     {% endif %}
-
-    <input type = "submit" class="btn btn-primary" value = "Submit" >
-</form>
-
-
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
-{% endblock %}
+    {% endblock %}
+</div>

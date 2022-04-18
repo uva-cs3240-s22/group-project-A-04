@@ -86,18 +86,49 @@
         color:#FE5F55
     }
     </style>
-    <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100vh"> 
+    <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%"> 
     
 
 
 {% if latest_recipe_list %}
-<div style =  "display: inline-block;">
+<!-- <div style =  "display: inline-block;">
     <ul style = " text-align: center;">
     {% for recipe in latest_recipe_list %}
         <li><a class ="recipe-link" style = "text-decoration: none" href="/recipes/{{ recipe.id }}/">{{ recipe.recipe_name }}</a></li>
     {% endfor %}
     </ul>
-</div>
+</div> -->
+
+<div class="container">
+  {%  for recipe in latest_recipe_list  %}
+  {% for image in recipe.recipeimage_set.all %}
+            
+            
+      {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
+        <div class="col-md-4">
+            <div class="card" >
+                <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
+                 -->
+                 {% if image.image %}
+            <img src="{{image.image.url}}" width = "fit" height = "fit">
+            {% endif %}
+                <div class="card-content">
+                    <br>
+                    <h4><a style="text-decoration: none;" href="/recipes/{{ recipe.id }}/">Recipe {{ forloop.counter }}</a></h4>
+                    <hr>
+                     <h3 href="/recipes/{{ recipe.id }}/">{{ recipe.recipe_name }}</h3>
+                     <p>{{recipe.number_of_likes}} likes</p>
+                     <p>{{recipe.number_of_forks}} forks</p>
+                    <br>
+
+                </div><!-- card content -->
+            </div><!-- card -->
+        </div><!-- col-md-4 -->
+  {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
+  {%  endfor %}
+  {% endfor %}
+</div><!-- container -->
+
 {% else %}
     <p>No recipes are available.</p>
 {% endif %}

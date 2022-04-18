@@ -27,8 +27,18 @@ class Recipe(models.Model):
     # reference the main user model anyways because allauth is like that
     # see: https://learndjango.com/tutorials/django-best-practices-referencing-user-model
     # default value is primary key of a generic user, but note that this is will not migrate since it is null
-    # changed to one to one such that each recipe can only have one author
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=User().pk)
+
+    # make parent foreign key for forking
+    # "self" makes it a self-referential key
+    # null allows it to be void in the database
+    # blank allows it to be blank for form validation
+    parent = models.ForeignKey("self", on_delete=models.SET_NULL, null=True, blank=True)
+
+    likes = models.ManyToManyField(User, related_name='recipe_likes')
+
+    def number_of_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return self.recipe_name
@@ -42,6 +52,9 @@ class Recipe(models.Model):
     def was_published_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
+    def number_of_forks(self):
+        return len(Recipe.objects.filter(parent=self))
 
 
 # each ingredient has its own name and quantity
@@ -59,4 +72,4 @@ class Ingredient(models.Model):
 # each recipe also has an image
 class RecipeImage(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    image = models.ImageField(storage=MediaStorage)
+    image = models.ImageField(storage=MediaStorage, blank=True)

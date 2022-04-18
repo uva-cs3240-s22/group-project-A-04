@@ -22,11 +22,10 @@
     }
 </style>
 <nav class="navbar navbar-custom justify-content-between">
-  <a>{% load static %} <img src="{% static 'recipes/Eats.png' %}" style="height:50px; width:50px" alt="home" /></a>
-  <a class="navbar-brand btn btn-custom" href="#">Home</a>
-  <a class="navbar-brand btn btn-custom" href="#">Recipes</a>
-  <a class="navbar-brand btn btn-custom" href="#">Forum</a>
-  <a class="navbar-brand btn btn-custom" href="#">Profile</a>
+  <a href="/">{% load static %} <img src="{% static 'recipes/Eats.png' %}" style="height:50px; width:50px" alt="home" /></a>
+  <a class="navbar-brand btn btn-custom" href="/">Home</a>
+  <a class="navbar-brand btn btn-custom" href="{% url 'recipes:index' %}">Recipes</a>
+  <a class="navbar-brand btn btn-custom" href="{% url 'recipes:profile' %}">Profile</a>
 </nav>
 
 <body style="background-color: #7A9E9F;">
