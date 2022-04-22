@@ -21,7 +21,7 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('xDBEGesUy01DKCYZWH8W/', admin.site.urls),     # obscure admin path
     path('recipes/', include('recipes.urls'), name='recipes'),
 
     path('', TemplateView.as_view(template_name="index.html")),

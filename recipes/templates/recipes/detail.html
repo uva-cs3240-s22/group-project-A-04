@@ -16,19 +16,17 @@
     <p>Number of Forks: {{ recipe.number_of_forks }}</p>
     <p>Number of Likes: {{ recipe.number_of_likes }}</p>
 </div>
-<div class="text-center">
+<div class="text-end">
     <p style = "color: #FE5F55; font-family: Tahoma;"> Date Published: </p>
     <h5>{{recipe.mod_date}}</h5>
 </div>
 <div class="container">
     <div class="row justify-content-center">
-        {% comment %} "col-md-6" {% endcomment %}
-        <div class="text-center"> 
+        <div class="col-md-6"> 
             <p style = "color: #FE5F55; font-family: Tahoma; text-align: center;"> Recipe Description: </p>
             <h3>{{recipe.description}}</h3>
         </div>
 
-        {% comment %} "text-center" {% endcomment %}
         <div class="text-center">
             {% for image in recipe.recipeimage_set.all %}
             {% if image.image %}
@@ -37,8 +35,7 @@
             {% endfor %}
         </div>
 
-        {% comment %} "col-md-6" {% endcomment %}
-        <div class="text-center">
+        <div class=""col-md-6"">
             <p style = "color: #FE5F55; font-family: Tahoma;"> Ingredients: </p>
             {% for ingredient in recipe.ingredient_set.all %}
             <p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}</p>
@@ -46,7 +43,7 @@
         </div>
         
         {% comment %} "col-md-6" {% endcomment %}
-        <div class="text-center">
+        <div class=""col-md-6"">
             <p style = "color: #FE5F55; font-family: Tahoma; text-align: center;"> Recipe Procedure: </p>
             <h3>{{recipe.procedure}}</h3>
         </div>
