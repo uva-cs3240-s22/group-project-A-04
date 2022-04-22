@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ls6l6@@53^kfn+8851ls^@3q*8mt@j=u9rf+i9==b+hbxbmy#*'
+SECRET_KEY = 'chocolate$x81nyu0&9643eh)_7yz_ok3_%meq2yohp3rjpmjq!(^&v@+p*p$croissant'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if 'HEROKU' in os.environ:
