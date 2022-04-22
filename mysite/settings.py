@@ -229,10 +229,10 @@ SECURE_SSL_HOST = 'stormy-retreat-80978.herokuapp.com'
 SECURE_SSL_REDIRECT = True      # redirects all http traffic to HTTPS
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'SAMEORIGIN'
+X_FRAME_OPTIONS = 'DENY'
 
 # see also
-# SECURE_HSTS_PRELOAD
+SECURE_HSTS_PRELOAD = True      # allows site to be submitted to the browser preload list
 # CSRF_USE_SESSIONS
 # CSRF_FAILURE_VIEW
 
