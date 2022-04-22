@@ -59,6 +59,10 @@ INSTALLED_APPS = [
 
     # Django storages for aws s3
     'storages',
+
+    # for security (https://www.laurencegellert.com/2019/01/tips-and-tools-for-securing-django/)
+    'django.contrib.sitemaps',
+    'django.contrib.redirects',
 ]
 
 MIDDLEWARE = [
@@ -214,3 +218,24 @@ SITE_ID = 3
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+# security settings taken from
+# https://www.laurencegellert.com/2019/01/tips-and-tools-for-securing-django/
+# security settings
+CSRF_COOKIE_SECURE = True       # store CSRF token in session instead of cookie
+SESSION_COOKIE_SECURE = True    # only sends cookies under HTTPS connection
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_SSL_HOST = 'stormy-retreat-80978.herokuapp.com'
+SECURE_SSL_REDIRECT = True      # redirects all http traffic to HTTPS
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+# see also
+# SECURE_HSTS_PRELOAD
+# CSRF_USE_SESSIONS
+# CSRF_FAILURE_VIEW
+
+# only available in Django 2.1+
+# SESSION_COOKIE_SAMESITE
+# CSRF_COOKIE_SAMESITE
