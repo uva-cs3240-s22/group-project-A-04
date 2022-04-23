@@ -4,6 +4,7 @@ This file contains definitions of how specific models are viewed
 """
 
 # Imports from Django library
+from re import template
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -19,8 +20,13 @@ from .models import Recipe, Ingredient, RecipeImage
 from .forms import RecipeForm, RecipeImageForm, IngredientInlineFormset
 
 
-# make login required before any of these views can be accessed taken from this
-# YouTube video: https://youtu.be/PICYTJqj__o
+# make login required before any of these views can be accessed
+# taken from this YouTube video: https://youtu.be/PICYTJqj__o
+class ProfileView(ListView):
+    model = Recipe
+    template_name = 'recipes/profile.html'
+    context_object_name = 'latest_recipe_list'
+
 
 
 """
@@ -50,16 +56,6 @@ class RecipeDetail(DetailView):
         """
         return Recipe.objects
 
-<<<<<<< HEAD
-
-"""
-Recipe modification view
-Displays the recipe modification page using 'recipes/edit.html'
-"""
-class RecipeModify(UpdateView):
-    model = Recipe
-    template_name = 'recipes/edit.html'
-=======
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         likes_connected = get_object_or_404(Recipe, id=self.kwargs['pk'])
@@ -69,7 +65,6 @@ class RecipeModify(UpdateView):
         data['number_of_likes'] = likes_connected.number_of_likes()
         data['post_is_liked'] = liked
         return data
->>>>>>> b250b853edfe444066f3606f0c1b9c1f8d822101
 
 
 # like feature referenced from this tutorial:
@@ -138,7 +133,7 @@ def recipe_update_view(request, pk=None):
     }
 
     # check that the forms are valid, if so, submit
-    return validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset)
+    return validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset, recipe.parent)
 
 @login_required
 def recipe_fork_view(request, pk=None):
