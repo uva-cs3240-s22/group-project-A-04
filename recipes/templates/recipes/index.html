@@ -86,9 +86,14 @@
         color:#FE5F55
     }
     </style>
-    <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%"> 
-    
 
+<div class="d-flex flex-column align-items-center" style="margin-top: 1%; margin-bottom: 1%; margin-left:15%; margin-right: 15%; background-color:white; height:100%">
+    <form action="{% url 'recipes:SearchResults' %}" method="get">
+        <input name="search" type="text" class="form-control" id="inputdefault" placeholder="Search for recipes here!">
+    </form>
+</div>
+
+<div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%">
 
 {% if latest_recipe_list %}
 <!-- <div style =  "display: inline-block;">
@@ -135,7 +140,5 @@
 
 <a class = "login-btn" href="{% url 'recipes:create' %}">Add Recipe</a> <br>
 </div>
-<form action="{% url 'recipes:SearchResults' %}" method="get">
- 		<input name="search" type="text" placeholder="Enter Search Here">
-</form>
+
 {% endblock %}
