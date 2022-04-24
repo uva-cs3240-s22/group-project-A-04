@@ -135,4 +135,7 @@
 
 <a class = "login-btn" href="{% url 'recipes:create' %}">Add Recipe</a> <br>
 </div>
+<form action="{% url 'recipes:SearchResults' %}" method="get">
+ 		<input name="search" type="text" placeholder="Enter Search Here">
+</form>
 {% endblock %}
