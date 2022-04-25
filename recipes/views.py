@@ -44,7 +44,7 @@ class SearchResults(ListView):
         object_list = Recipe.objects.filter(
             Q(recipe_name__icontains=query) | Q(description__icontains=query)
         )
-        return object_list
+        return object_list.order_by('-pub_date')
 
 class RecipeDetail(DetailView):
     model = Recipe
