@@ -36,7 +36,8 @@ class RecipeIndex(ListView):
 # Gotten from tutorial here https://learndjango.com/tutorials/django-search-tutorial
 class SearchResults(ListView):
     model = Recipe
-    template_name = 'recipes/search_results.html'
+    template_name = 'recipes/index.html'
+    context_object_name = 'latest_recipe_list'
 
     def get_queryset(self):
         query = self.request.GET.get("search")
