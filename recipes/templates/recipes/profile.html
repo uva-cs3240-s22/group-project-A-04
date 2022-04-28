@@ -2,9 +2,24 @@
 {% block content %}
 {% load socialaccount %}
 {% if user.is_authenticated %}
+
 <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100vh"> 
   <p>Welcome, You are logged in as {{ user.username }}</p>
+
+  {% if liked_recipe_list %}
+  <h3>Liked Recipes</h3>
+    <ul>
+        {% for recipe in liked_recipe_list %}
+            <li>
+              <a href="{% url 'recipes:detail' recipe.pk %}"> {{ recipe.recipe_name }} </a>
+            </li>
+        {% endfor %}
+    </ul>
+  {% else %}
+      <p>You have no liked recipes.</p>
+  {% endif %}
 </div>
+
 {% else %}
 <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100vh"> 
   <div style = "margin-top: 20%;"></div>

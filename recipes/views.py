@@ -22,8 +22,11 @@ from .forms import RecipeForm, RecipeImageForm, IngredientInlineFormset
 class ProfileView(ListView):
     model = Recipe
     template_name = 'recipes/profile.html'
-    context_object_name = 'latest_recipe_list'
+    context_object_name = 'liked_recipe_list'
 
+    def get_queryset(self):
+        object_list = Recipe.objects.filter(Q(likes__in=[self.request.user]))
+        return object_list.order_by('-pub_date')    # order search results by publish date
 
 
 class RecipeIndex(ListView):
