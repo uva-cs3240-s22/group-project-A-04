@@ -38,45 +38,45 @@
     z-index: 0;
     text-decoration: none;
   }
-  
+
   .login-btn:hover {
     background: #F6F9FE;
     color: #FE5F55;
   }
-  
+
   .login-btn:active {
     box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
     outline: none;
   }
-  
+
   .login-btn:focus {
     outline: none;
     border: 2px solid #FE5F55;
   }
-  
+
   .login-btn:not(:disabled) {
     box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
   }
-  
+
   .login-btn:not(:disabled):hover {
     box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
   }
-  
+
   .login-btn:not(:disabled):focus {
     box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
   }
-  
+
   .login-btn:not(:disabled):active {
     box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
   }
-  
+
   .login-btn:disabled {
     box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
   }
   ul,li { list-style-type: none;
       list-style-position:inside;
       margin:0;
-      padding:0; 
+      padding:0;
       text-decoration: none;
   }
   a {
@@ -107,10 +107,14 @@
     margin-bottom: 1px;
   }
 </style>
-<div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%"> 
-    
 
+<div class="d-flex flex-column align-items-center" style="margin-top: 1%; margin-bottom: 1%; margin-left:15%; margin-right: 15%; background-color:white; height:100%">
+    <form action="{% url 'recipes:SearchResults' %}" method="get">
+        <input name="search" type="text" class="form-control" id="inputdefault" placeholder="Search for recipes here!">
+    </form>
+</div>
 
+<div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%">
 {% if latest_recipe_list %}
 <!-- <div style =  "display: inline-block;">
     <ul style = " text-align: center;">
@@ -122,7 +126,7 @@
 
 <div class="container">
   {%  for recipe in latest_recipe_list  %}
-  {% for image in recipe.recipeimage_set.all %}   
+  {% for image in recipe.recipeimage_set.all %}
       {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
         <div class="col-md-4 d-flex justify-content-around align-items-center">
             <div class="card card-custom-border" >
@@ -155,4 +159,5 @@
 
 <a class = "login-btn" href="{% url 'recipes:create' %}">Add Recipe</a> <br>
 </div>
+
 {% endblock %}

@@ -9,6 +9,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 
 # Importing models from current directory
@@ -32,6 +33,18 @@ class RecipeIndex(ListView):
     def get_queryset(self):
         return Recipe.objects.order_by('-pub_date')[:6]
 
+# Gotten from tutorial here https://learndjango.com/tutorials/django-search-tutorial
+class SearchResults(ListView):
+    model = Recipe
+    template_name = 'recipes/index.html'
+    context_object_name = 'latest_recipe_list'
+
+    def get_queryset(self):
+        query = self.request.GET.get("search")
+        object_list = Recipe.objects.filter(
+            Q(recipe_name__icontains=query) | Q(description__icontains=query)
+        )
+        return object_list.order_by('-pub_date')    # order search results by publish date
 
 class RecipeDetail(DetailView):
     model = Recipe
