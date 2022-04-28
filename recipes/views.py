@@ -30,7 +30,7 @@ class RecipeIndex(ListView):
     context_object_name = 'latest_recipe_list'
 
     def get_queryset(self):
-        return Recipe.objects.order_by('-pub_date')[:5]
+        return Recipe.objects.order_by('-pub_date')[:6]
 
 
 class RecipeDetail(DetailView):
