@@ -74,7 +74,7 @@
                 {% endif %}
                 </form>
                 {% else %}
-                <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}">Log in to like this recipe!</a><br>
+                <a class="btn btn-outline-info" href="/">Log in to like this recipe!</a><br>
                 {% endif %}
                 <strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
             </div>
