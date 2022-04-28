@@ -63,6 +63,9 @@ INSTALLED_APPS = [
     # for security (https://www.laurencegellert.com/2019/01/tips-and-tools-for-securing-django/)
     'django.contrib.sitemaps',
     'django.contrib.redirects',
+
+    # for testing on https connections
+    "sslserver",
 ]
 
 MIDDLEWARE = [

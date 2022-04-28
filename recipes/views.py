@@ -9,6 +9,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 
 # Importing models from current directory
@@ -21,8 +22,20 @@ from .forms import RecipeForm, RecipeImageForm, IngredientInlineFormset
 class ProfileView(ListView):
     model = Recipe
     template_name = 'recipes/profile.html'
-    context_object_name = 'latest_recipe_list'
+    context_object_name = 'liked_recipe_list'
 
+    def get_queryset(self):
+        object_list = Recipe.objects.filter(Q(likes__in=[self.request.user]))
+        return object_list.order_by('-pub_date')    # order search results by publish date
+
+    # for creating additional context objects
+    # cited from here: https://stackoverflow.com/questions/43387875/django-how-to-get-multiple-context-object-name-for-multiple-queryset-from-single
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context['created_recipe_list'] = Recipe.objects.filter(Q(author__id=self.request.user.id))
+        # Add any other variables to the context here
+        ...
+        return context
 
 
 class RecipeIndex(ListView):
@@ -32,6 +45,18 @@ class RecipeIndex(ListView):
     def get_queryset(self):
         return Recipe.objects.order_by('-pub_date')[:6]
 
+# Gotten from tutorial here https://learndjango.com/tutorials/django-search-tutorial
+class SearchResults(ListView):
+    model = Recipe
+    template_name = 'recipes/index.html'
+    context_object_name = 'latest_recipe_list'
+
+    def get_queryset(self):
+        query = self.request.GET.get("search")
+        object_list = Recipe.objects.filter(
+            Q(recipe_name__icontains=query) | Q(description__icontains=query)
+        )
+        return object_list.order_by('-pub_date')    # order search results by publish date
 
 class RecipeDetail(DetailView):
     model = Recipe
@@ -120,7 +145,7 @@ def recipe_update_view(request, pk=None):
     }
 
     # check that the forms are valid, if so, submit
-    return validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset)
+    return validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset, recipe.parent)
 
 @login_required
 def recipe_fork_view(request, pk=None):
