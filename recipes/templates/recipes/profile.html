@@ -18,6 +18,19 @@
   {% else %}
       <p>You have no liked recipes.</p>
   {% endif %}
+
+    {% if created_recipe_list %}
+  <h3>Created Recipes</h3>
+    <ul>
+        {% for recipe in created_recipe_list %}
+            <li>
+              <a href="{% url 'recipes:detail' recipe.pk %}"> {{ recipe.recipe_name }} </a>
+            </li>
+        {% endfor %}
+    </ul>
+  {% else %}
+      <p>You have no created recipes.</p>
+  {% endif %}
 </div>
 
 {% else %}

@@ -28,6 +28,15 @@ class ProfileView(ListView):
         object_list = Recipe.objects.filter(Q(likes__in=[self.request.user]))
         return object_list.order_by('-pub_date')    # order search results by publish date
 
+    # for creating additional context objects
+    # cited from here: https://stackoverflow.com/questions/43387875/django-how-to-get-multiple-context-object-name-for-multiple-queryset-from-single
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context['created_recipe_list'] = Recipe.objects.filter(Q(author__id=self.request.user.id))
+        # Add any other variables to the context here
+        ...
+        return context
+
 
 class RecipeIndex(ListView):
     template_name = 'recipes/index.html'
