@@ -30,3 +30,6 @@ django-storages
 
 # for using image fields
 Pillow
+
+# for testing locally using https
+django-sslserver
