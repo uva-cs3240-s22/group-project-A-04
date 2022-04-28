@@ -21,6 +21,7 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 
 urlpatterns = [
+<<<<<<< HEAD
     path(
         # Home page
         '', 
@@ -51,5 +52,13 @@ urlpatterns = [
         LogoutView.as_view(), 
         name='logout'
         ),
+=======
+    path('xDBEGesUy01DKCYZWH8W/', admin.site.urls),     # obscure admin path
+    path('recipes/', include('recipes.urls'), name='recipes'),
+
+    path('', TemplateView.as_view(template_name="index.html")),
+    path('accounts/', include('allauth.urls')),
+    path('logout', LogoutView.as_view()),
+>>>>>>> 27e9fbe8441b19049f02c6b3e48f9e5d02071f6c
 ]
 

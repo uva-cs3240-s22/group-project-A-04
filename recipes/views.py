@@ -10,6 +10,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 # model form for query sets
 from django.forms.models import inlineformset_factory
@@ -25,8 +26,20 @@ from .forms import RecipeForm, RecipeImageForm, IngredientInlineFormset
 class ProfileView(ListView):
     model = Recipe
     template_name = 'recipes/profile.html'
-    context_object_name = 'latest_recipe_list'
+    context_object_name = 'liked_recipe_list'
 
+    def get_queryset(self):
+        object_list = Recipe.objects.filter(Q(likes__in=[self.request.user]))
+        return object_list.order_by('-pub_date')    # order search results by publish date
+
+    # for creating additional context objects
+    # cited from here: https://stackoverflow.com/questions/43387875/django-how-to-get-multiple-context-object-name-for-multiple-queryset-from-single
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context['created_recipe_list'] = Recipe.objects.filter(Q(author__id=self.request.user.id))
+        # Add any other variables to the context here
+        ...
+        return context
 
 
 """
@@ -39,8 +52,20 @@ class RecipeIndex(ListView):
     context_object_name = 'latest_recipe_list'
 
     def get_queryset(self):
-        return Recipe.objects.order_by('-pub_date')[:5]
+        return Recipe.objects.order_by('-pub_date')[:6]
 
+# Gotten from tutorial here https://learndjango.com/tutorials/django-search-tutorial
+class SearchResults(ListView):
+    model = Recipe
+    template_name = 'recipes/index.html'
+    context_object_name = 'latest_recipe_list'
+
+    def get_queryset(self):
+        query = self.request.GET.get("search")
+        object_list = Recipe.objects.filter(
+            Q(recipe_name__icontains=query) | Q(description__icontains=query)
+        )
+        return object_list.order_by('-pub_date')    # order search results by publish date
 
 """
 Recipe detail view

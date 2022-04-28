@@ -21,10 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ls6l6@@53^kfn+8851ls^@3q*8mt@j=u9rf+i9==b+hbxbmy#*'
+SECRET_KEY = 'chocolate$x81nyu0&9643eh)_7yz_ok3_%meq2yohp3rjpmjq!(^&v@+p*p$croissant'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if 'HEROKU' in os.environ:
+    DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', 'stormy-retreat-80978.herokuapp.com']
 
@@ -56,6 +59,13 @@ INSTALLED_APPS = [
 
     # Django storages for aws s3
     'storages',
+
+    # for security (https://www.laurencegellert.com/2019/01/tips-and-tools-for-securing-django/)
+    'django.contrib.sitemaps',
+    'django.contrib.redirects',
+
+    # for testing on https connections
+    "sslserver",
 ]
 
 MIDDLEWARE = [
@@ -211,3 +221,24 @@ SITE_ID = 3
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+# security settings taken from
+# https://www.laurencegellert.com/2019/01/tips-and-tools-for-securing-django/
+# security settings
+CSRF_COOKIE_SECURE = True       # store CSRF token in session instead of cookie
+SESSION_COOKIE_SECURE = True    # only sends cookies under HTTPS connection
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_SSL_HOST = 'stormy-retreat-80978.herokuapp.com'
+SECURE_SSL_REDIRECT = True      # redirects all http traffic to HTTPS
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+
+# see also
+SECURE_HSTS_PRELOAD = True      # allows site to be submitted to the browser preload list
+# CSRF_USE_SESSIONS
+# CSRF_FAILURE_VIEW
+
+# only available in Django 2.1+
+# SESSION_COOKIE_SAMESITE
+# CSRF_COOKIE_SAMESITE

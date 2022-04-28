@@ -6,91 +6,104 @@
 	href="{% static 'recipes/style.css' %}"
 />
 <style>
-  
-    .login-btn {
-      align-items: center;
-      appearance: none;
-      background-color: #fff;
-      border-radius: 24px;
-      border-style: none;
-      box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
-      box-sizing: border-box;
-      color: #3c4043;
-      cursor: pointer;
-      display: inline-flex;
-      fill: currentcolor;
-      font-family: "Google Sans",Roboto,Arial,sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      height: 48px;
-      justify-content: center;
-      letter-spacing: .25px;
-      line-height: normal;
-      max-width: 100%;
-      overflow: visible;
-      padding: 2px 24px;
-      position: relative;
-      text-align: center;
-      text-transform: none;
-      transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: manipulation;
-      width: auto;
-      will-change: transform,opacity;
-      z-index: 0;
+  .login-btn {
+    align-items: center;
+    appearance: none;
+    background-color: #fff;
+    border-radius: 24px;
+    border-style: none;
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+    box-sizing: border-box;
+    color: #3c4043;
+    cursor: pointer;
+    display: inline-flex;
+    fill: currentcolor;
+    font-family: "Google Sans",Roboto,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    justify-content: center;
+    letter-spacing: .25px;
+    line-height: normal;
+    max-width: 100%;
+    overflow: visible;
+    padding: 2px 24px;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: auto;
+    will-change: transform,opacity;
+    z-index: 0;
+    text-decoration: none;
+  }
+
+  .login-btn:hover {
+    background: #F6F9FE;
+    color: #FE5F55;
+  }
+
+  .login-btn:active {
+    box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+    outline: none;
+  }
+
+  .login-btn:focus {
+    outline: none;
+    border: 2px solid #FE5F55;
+  }
+
+  .login-btn:not(:disabled) {
+    box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+  }
+
+  .login-btn:not(:disabled):hover {
+    box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+  }
+
+  .login-btn:not(:disabled):focus {
+    box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+  }
+
+  .login-btn:not(:disabled):active {
+    box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+  }
+
+  .login-btn:disabled {
+    box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+  }
+  ul,li { list-style-type: none;
+      list-style-position:inside;
+      margin:0;
+      padding:0;
       text-decoration: none;
-    }
-    
-    .login-btn:hover {
-      background: #F6F9FE;
-      color: #FE5F55;
-    }
-    
-    .login-btn:active {
-      box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
-      outline: none;
-    }
-    
-    .login-btn:focus {
-      outline: none;
-      border: 2px solid #FE5F55;
-    }
-    
-    .login-btn:not(:disabled) {
-      box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
-    }
-    
-    .login-btn:not(:disabled):hover {
-      box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
-    }
-    
-    .login-btn:not(:disabled):focus {
-      box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
-    }
-    
-    .login-btn:not(:disabled):active {
-      box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
-    }
-    
-    .login-btn:disabled {
-      box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
-    }
-    ul,li { list-style-type: none;
-        list-style-position:inside;
-        margin:0;
-        padding:0; 
-        text-decoration: none;}
+  }
+  a {
+    color: lightseagreen;
+  }
     .recipe-link{
         color:black;
     }
     .recipe-link:hover{
         color:#FE5F55
     }
-    </style>
-    <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%"> 
-    
+  .card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+  }
+  .card-custom-border {
+    border-radius: 8px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: aquamarine;
+    margin-top: 10px;
+    margin-bottom: 10px;
 
+<<<<<<< HEAD
 	.login-btn:hover {
 		background: #f6f9fe;
 		color: #fe5f55;
@@ -179,6 +192,22 @@
 </div>
 {% endblock %}
 =======
+=======
+  }
+  .card-information {
+    margin-top: 1px:
+    margin-bottom: 1px;
+  }
+</style>
+
+<div class="d-flex flex-column align-items-center" style="margin-top: 1%; margin-bottom: 1%; margin-left:15%; margin-right: 15%; background-color:white; height:100%">
+    <form action="{% url 'recipes:SearchResults' %}" method="get">
+        <input name="search" type="text" class="form-control" id="inputdefault" placeholder="Search for recipes here!">
+    </form>
+</div>
+
+<div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%">
+>>>>>>> 27e9fbe8441b19049f02c6b3e48f9e5d02071f6c
 {% if latest_recipe_list %}
 <!-- <div style =  "display: inline-block;">
     <ul style = " text-align: center;">
@@ -191,26 +220,25 @@
 <div class="container">
   {%  for recipe in latest_recipe_list  %}
   {% for image in recipe.recipeimage_set.all %}
-            
-            
       {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
-        <div class="col-md-4">
-            <div class="card" >
+        <div class="col-md-4 d-flex justify-content-around align-items-center">
+            <div class="card card-custom-border" >
                 <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
                  -->
-                 {% if image.image %}
-            <img src="{{image.image.url}}" width = "fit" height = "fit">
-            {% endif %}
-                <div class="card-content">
-                    <br>
-                    <h4><a style="text-decoration: none;" href="/recipes/{{ recipe.id }}/">Recipe {{ forloop.counter }}</a></h4>
-                    <hr>
-                     <h3 href="/recipes/{{ recipe.id }}/">{{ recipe.recipe_name }}</h3>
-                     <p>{{recipe.number_of_likes}} likes</p>
-                     <p>{{recipe.number_of_forks}} forks</p>
-                    <br>
-
-                </div><!-- card content -->
+                {% if image.image %}
+				<img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+				{% endif %}
+                <div class="card-body">
+					<div>
+						<h4><a class="card-title" href="/recipes/{{ recipe.id }}/">
+							{{ recipe.recipe_name }}
+						</a></h4>
+					</div>
+					<div class="card-information d-flex flex-column">
+						<h6>{{recipe.number_of_likes}} likes</h6>
+						<h6>{{recipe.number_of_forks}} forks</h6>
+					</div>
+                </div><!-- card body -->
             </div><!-- card -->
         </div><!-- col-md-4 -->
   {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
@@ -224,5 +252,10 @@
 
 <a class = "login-btn" href="{% url 'recipes:create' %}">Add Recipe</a> <br>
 </div>
+<<<<<<< HEAD
 {% endblock %}
 >>>>>>> 7fca21ce11b8ccaafcf9e12b614b3ca7765b513b
+=======
+
+{% endblock %}
+>>>>>>> 27e9fbe8441b19049f02c6b3e48f9e5d02071f6c
