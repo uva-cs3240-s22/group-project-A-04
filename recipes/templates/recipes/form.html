@@ -13,10 +13,16 @@
     <p> {{ message }} </p>
     {% endif %}
     <form id="form-container" action="." enctype="multipart/form-data" method="POST">
+
+
+        <div class="flexbox-container" style="display:flex;">
+        <div class="sidebar" style="flex:1;">
         {% csrf_token %}
         {{ recipe_form.as_p }}
+        </div>
+        <div class="main" style="flex:1;">
 
-        {% if recipe_image_form %}
+            {% if recipe_image_form %}
         <h4>Add Image:</h4>
         {{ recipe_image_form.as_p }}
         {% endif %}
@@ -32,6 +38,11 @@
         {% endfor %}
         <button id="add-form" type="button">Add Another Ingredient</button>
         {% endif %}
+        </div>
+        </div>
+
+
+
         <input type = "submit" class="btn btn-primary" value = "Submit" >
     </form>
 

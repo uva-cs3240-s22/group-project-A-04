@@ -104,16 +104,20 @@ def recipe_create_view(request):
 
     # make a form for recipes and ingredients
     recipe_form = RecipeForm(request.POST or None)
-    recipe_image_form = RecipeImageForm(request.POST or None, request.FILES)
 
     # make instance of Formset
     ingredient_formset = IngredientInlineFormset(request.POST or None)
 
+    recipe_image_form = RecipeImageForm(request.POST or None, request.FILES)
+
+
+
     # for loading html
     context = {
         "recipe_form": recipe_form,
-        "recipe_image_form": recipe_image_form,
         "ingredient_formset": ingredient_formset,
+        "recipe_image_form": recipe_image_form,
+
     }
 
     # check that the form is valid, if so, submit
