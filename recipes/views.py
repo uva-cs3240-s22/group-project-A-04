@@ -15,6 +15,8 @@ from django.db.models import Q
 # Importing models from current directory
 from .models import Recipe, Ingredient, RecipeImage
 from .forms import RecipeForm, RecipeImageForm, IngredientInlineFormset
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
 # make login required before any of these views can be accessed
@@ -36,6 +38,11 @@ class ProfileView(ListView):
         # Add any other variables to the context here
         ...
         return context
+    # This way of making sure the profile page requires you to be logged in comes from
+    # https://docs.djangoproject.com/en/1.8/topics/class-based-views/intro/#decorating-the-class
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ProfileView, self).dispatch(*args, **kwargs)
 
 
 class RecipeIndex(ListView):
