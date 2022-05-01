@@ -225,8 +225,11 @@ def validate_and_save_recipe_form(request, template, context, recipe_form, recip
             if parent is not None:
                 ingredient.pk = None
 
-            ingredient.recipe = recipe
-            ingredient.save()
+            # ingredient.recipe = recipe
+            # ingredient.save()
+
+        ingredient_formset.instance = recipe
+        ingredient_formset.save()
 
         # confirmation message
         context['message'] = 'Recipe saved!'
