@@ -18,7 +18,7 @@
 
         {% if recipe_image_form %}
         <h4>Add Image:</h4>
-        {{ recipe_image_form.as_table }}
+        {{ recipe_image_form.as_p }}
         {% endif %}
 
         {% if ingredient_formset %}
@@ -26,7 +26,7 @@
         {{ ingredient_formset.management_form }}
         {% for ingredient_form in ingredient_formset %}
         <div class="ingredient-form">
-            {{ ingredient_form.as_p }}
+            {{ ingredient_form.as_table }}
     <!--        <button id="delete-form" type="button">Remove Row</button>-->
         </div>
         {% endfor %}
