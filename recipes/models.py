@@ -82,12 +82,9 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return self.ingredient_name + ",  " + self.quantity
-<<<<<<< HEAD
-=======
 
 
 # each recipe also has an image
 class RecipeImage(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     image = models.ImageField(storage=MediaStorage, blank=True)
->>>>>>> b250b853edfe444066f3606f0c1b9c1f8d822101
