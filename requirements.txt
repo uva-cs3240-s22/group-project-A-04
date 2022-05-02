@@ -33,3 +33,8 @@ Pillow
 
 # for testing locally using https
 django-sslserver
+
+# for styling using SCSS files
+# django-compressor
+# django-libass
+# django-sass-processor

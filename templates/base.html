@@ -1,4 +1,9 @@
+{% load socialaccount %}
+
 <!DOCTYPE html>
+
+
+{% comment %} {% load sass_tags %} {% endcomment %}
 
 <!--load up the appropriate social account code-->
 
@@ -19,37 +24,75 @@
 		<title>Eats Home</title>
 	</head>
 	<style>
+		body {
+			font-family: Comic Sans MS;
+		}
 		.navbar-custom {
-			background-color: #4f6367;
+			z-index: 1000;
+			position: sticky;
+			top: 0;
+			background-color: #36393B;
 		}
 		.btn-custom {
-			color: #eef5db;
+			color: #F6F6F6;
+			transition: transform 0.5s;
 		}
 		a.btn-custom:hover {
-			color: #fe5f55;
+			color: #FFF275;
+			transform: scale(1.15);
+		}
+		.header {
+			padding: 30px;
+			text-align: center;
+			background: #F87060;
+			color: white;
+			font-size: 30px;
+		}
+		.eatslogo {
+			border-radius: 75px;
+		}
+
+		.container {
+			background: #F6F6F6;
+			backdrop-filter: saturate(180%) blur(10px);
+			margin-left: 10px;
+			margin-right: 10px;
 		}
 	</style>
-	<nav class="navbar navbar-custom d-flex justify-content-around">
+
+	<div class="header">
 		<a href="/"
-			>{% load static %}
-			<img
-				src="{% static 'recipes/Eats.png' %}"
-				style="height: 50px; width: 50px"
-				alt="home"
+		>{% load static %}
+		<img
+			class="eatslogo"
+			src="{% static 'recipes/eats(dot).png' %}"
+			alt="home"
 		/></a>
-		<a class="navbar-brand btn btn-custom" href="/">Home</a>
-		<a class="navbar-brand btn btn-custom" href="{% url 'recipes:index' %}">
-			Recipes
-		</a>
-		<a
+	</div>
+
+	<nav class="navbar navbar-custom d-flex justify-content-evenly">
+		<div class="d-flex justify-content-center">
+			<a class="navbar-brand btn btn-custom" href="/">Home</a>
+			<a class="navbar-brand btn btn-custom" href="{% url 'recipes:index' %}">
+				Recipes
+			</a>
+			<a
 			class="navbar-brand btn btn-custom"
 			href="{% url 'recipes:profile' %}"
-		>
+			>
 			Profile
 		</a>
+	</div>
+	<div>
+		{% if user.is_authenticated %}
+		<a class="navbar-brand btn btn-custom" href="logout">({{ user.username }}) Logout</a>
+		{% else %}
+		<a class="navbar-brand btn btn-custom" href="{% provider_login_url 'google' %}">Signup/Login</a>
+		{% endif %}
+	</div>
 	</nav>
 
-	<body style="background-color: #7a9e9f">
+	<body style="background-color: #F6F6F6">
 		{% block content %} {% endblock %}
 	</body>
 </html>
