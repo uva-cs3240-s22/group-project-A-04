@@ -95,26 +95,36 @@
 		gap: 20px;
 		min-height: 200px;
 		min-width: 33%;
+
 	}
+	.card:hover .card-img-top {
+		transform: scale(1.02);
+	}
+
 	.card-img-top {
 		border-radius: 10px;
 		width: 100%;
 		min-height: 300px;
 		height: 15vw;
 		object-fit: cover;
+		outline: 1px solid #F6F6F6;
+		outline-offset: -8px;
+		transition: transform 0.75s;
 	}
 	.card-custom-border {
 		border-radius: 18px;
 		border-width: 8px;
 		border-style: solid;
-		border-color: #0FF4C6;
+		border-color: #F87060;
 		margin-top: 10px;
 		margin-bottom: 10px;
 		max-width: 90%;
+		transition: transform 0.75s;
 	}
 	.card-information {
 		margin-top: 1px;
 		margin-bottom: 1px;
+		transition: transform 0.75s;
 	}
 	.main-content {
 		margin: 0 auto;
@@ -140,7 +150,7 @@
 
 
 
-<div class="container-fluid margin-colo" id=main-container>
+<div class="container-fluid margin-color" id=main-container>
 	
 	
 	
@@ -182,16 +192,21 @@
 	
 			<div id="latest-recipes">
 				
-				<a class = "login-btn" href="{% url "recipes:index" %}">Go to Recipes</a>
+
 				
 				{% if latest_recipe_list %}
 
 				<div 
-					class="row align-items-left"
+					class="d-flex justify-content-between"
 					style="color: #F87060; font-family: Tahoma;"
 				>
 					<h2 class="p-3">Latest Recipes</h2>
+					{% endif %}
+
+					<a class = "login-btn" href="{% url "recipes:index" %}">Go to Recipes</a>
 				</div>
+
+				{% if latest_recipe_list %}
 				
 				{%  for recipe in latest_recipe_list  %}
 				{% for image in recipe.recipeimage_set.all %}
@@ -208,7 +223,7 @@
 				{% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
 					
 					<div class="col-md-4 cards">
-						<div class="card card-custom-border">
+						<div class="card card-animation card-custom-border">
 							<!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
 							-->
 							
@@ -217,7 +232,7 @@
 							{% endif %}
 							<div class="card-body">
 								<div>
-									<h4><a class="card-title" href="/recipes/{{ recipe.id }}/">
+									<h4><a class="card-title stretched-link" href="/recipes/{{ recipe.id }}/">
 										{{ recipe.recipe_name }}
 									</a></h4>
 								</div>
