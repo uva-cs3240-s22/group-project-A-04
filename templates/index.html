@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block content %} {% load socialaccount %}
+{% extends "base.html" %} {% block content %} {% load socialaccount %} {% load static %}
 
 <style>
 	.login-btn {
@@ -148,6 +148,10 @@
 	.small-font {
 		font-size: 9px;
 	}
+	.dev-pictures {
+		height: 100px;
+		width: 100px;
+	}
 </style>
 
 
@@ -259,7 +263,7 @@
 
 
 
-			<div class="d-flex justify-content-center" id="about-section">
+			<div class="d-flex flex-column justify-content-center" id="about-section">
 				<dl>
 					<dt>
 						Mission Statement
@@ -273,25 +277,62 @@
 					<dd>
 						This is our <emphasis>Word of Mouth</emphasis> website.
 					</dd>
-					<dt>
-						Developer Information
-					</dt>
-					<dd>
-						Samuel Ahn
-					</dd>
-					<dd>
-						Daniel Xue
-					</dd>
-					<dd>
-						Matthew Bonner
-					</dd>
-					<dd>
-						Alex Yu
-					</dd>
-					<dd>
-						Asher Saunders?
-					</dd>
 				</dl>
+
+
+				<h3>Developers</h3>
+				<div class="row d-flex justify-content-between">
+					<div class="col-1"></div>
+
+					<div class="col-xs-2">
+						<img
+							src="{% static 'recipes/sam.png' %}"
+							class="dev-pictures"
+						/>
+						<h5>Samuel Ahn - Scrum Master</h5>
+						<p><q>I think I was Scrum Master</q></p>
+						<p>The reality is I'm actually 40% DevOps, 40% UX/UI, and 20% more UX/UI. Who the heck did my job?</p>
+					</div>
+					<div class="col-xs-2">
+						<img
+							src="{% static 'recipes/daniel.png' %}"
+							class="dev-pictures"
+						/>
+						<h5>Daniel Xue - Testing Manager</h5>
+						<p><q>I don't know, because there aren't any tests...</q></p>
+						<p>I think we should put down, "Algorithms" as the biggest obstacle to our web development.</p>
+					</div>
+					<div class="col-xs-2">
+						<img
+							src="{% static 'recipes/matthew.png' %}"
+							class="dev-pictures"
+						/>
+						<h5>Matthew Bonner - Requirements Manager</h5>
+						<p><q>It was a mess really. No one really knew what they were doing.</q></p>
+						<p>Our website is required to work. I think it is capable of doing that.</p>
+					</div>
+					<div class="col-xs-2">
+						<img
+							src="{% static 'recipes/alex.png' %}"
+							class="dev-pictures"
+						/>
+						<h5>Alex Yu - DevOps</h5>
+						<p><q>Hey guys, I got the thing working.</q></p>
+						<p>Just casually fixed a few parts of our website. The cards? That was me.</p>
+					</div>
+					<div class="col-xs-2">
+						<img
+							src="{% static 'recipes/asher.png' %}"
+							class="dev-pictures"
+						/>
+						<h5>Asher Saunders - UX/UI</h5>
+						<p><q>MIA</q></p>
+						<p>We haven't heard from Asher in a while. We hope he's doing alright.</p>
+					</div>
+
+					<div class="col-1"></div>
+
+				</div>
 			</div><!-- about-section -->
 		</div>
 
