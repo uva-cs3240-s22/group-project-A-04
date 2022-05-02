@@ -144,21 +144,31 @@
 		background-color: #36393B;
 		color: #F6F6F6;
   }
+  .action-bar {
+    background-color: #1AC8ED;
+    position: sticky;
+    bottom: 0;
+  }
+  .small-font {
+		font-size: 9px;
+	}
 </style>
 
 
 
-<div class="container-fluid margin-color" id=main-container>
-	
-	
-	
-	<div class="row">
-		<div class="col-md-2" id="left-margin">
-		</div>
+<div class="container-fluid margin-color" id="main-container">  
+  
+  
+  
+  <div class="row">
+    <div class="col-md-2" id="left-margin">
+    </div>
 		<div class="col-md-8 main-content p-5" id="main-content">
+      
+      
 
-			
-	
+
+      
 			<div id="recipes">
 				
 
@@ -217,13 +227,30 @@
 
 
 
+<div class="action-bar p-2">
+  <div class="d-flex flex-row justify-content-center align-items-center" id="action-bar-content">
+    <form class="p-3" action="{% url 'recipes:SearchResults' %}" method="get">
+      <input 
+        name="search" 
+        type="text" 
+        class="form-control" 
+        id="inputdefault" 
+        placeholder="Search for recipes here!"
+      >
+    </form>
+    <a class = "login-btn" href="{% url 'recipes:create' %}">Add Recipe</a>
+  </div><!-- action-bar-content -->
+</div><!-- action-bar -->
+
+
+
 <div class="row">
-  <div class="col-md-3 footer-color p-5" id="footer-left-margin">
+  <div class="col-md-2 footer-color p-5" id="footer-left-margin">
   </div>
 
 
 
-  <div class="text-center col-md-3 footer-color p-5" id="footer-left-column">
+  <div class="text-center col-md-4 footer-color p-5" id="footer-left-column">
     <p>
       If you have any qualms with our <strike>shitty</strike> website, please contact us by <a href="tel:123-456-7890">Telephone</a> or <a href="mailto:a04@virginia.edu">Email</a>
     </p>
@@ -231,15 +258,23 @@
 
 
 
-  <div class="text-center col-md-3 footer-color p-5" id="footer-right-column">
+  <div class="text-center col-md-4 footer-color p-5 small-font" id="footer-right-column">
     <p>
-      MIT License
+      Copyright 2022, University of Virginia
+    </p>
+
+    <p>
+      Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+      The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     </p>
   </div>
 
 
 
-  <div class="col-md-3 footer-color p-5" id="footer-right-margin">
+  <div class="col-md-2 footer-color p-5" id="footer-right-margin">
   </div>
 
 
