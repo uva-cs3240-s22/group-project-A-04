@@ -41,12 +41,12 @@
         let ingredientForm = document.querySelectorAll(".ingredient-form")
         let container = document.querySelector("#form-container")
         let addButton = document.querySelector("#add-form")
-    <!--    let deleteButton = document.querySelector("#delete-form")-->
+    // <!--    let deleteButton = document.querySelector("#delete-form")-->
         let totalForms = document.querySelector("#id_ingredient_set-TOTAL_FORMS")
 
         let formNum = ingredientForm.length-1
         addButton.addEventListener('click', addForm)
-    <!--    deleteButton.addEventListener('click', deleteForm)-->
+    // <!--    deleteButton.addEventListener('click', deleteForm)-->
 
         function addForm(e) {
             e.preventDefault()
@@ -61,13 +61,13 @@
             totalForms.setAttribute('value', `${formNum+1}`)
         }
 
-    <!--    function deleteForm(e) {-->
-    <!--        e.preventDefault()-->
+    // <!--    function deleteForm(e) {-->
+    // <!--        e.preventDefault()-->
 
-    <!--        e.target.parentElement.remove()-->
-    <!--        formNum&#45;&#45;-->
-    <!--        totalForms.setAttribute('value', `${formNum+1}`)-->
-    <!--    }-->
+    // <!--        e.target.parentElement.remove()-->
+    // <!--        formNum&#45;&#45;-->
+    // <!--        totalForms.setAttribute('value', `${formNum+1}`)-->
+    // <!--    }-->
 
     </script>
 
