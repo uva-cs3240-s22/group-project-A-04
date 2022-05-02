@@ -50,7 +50,7 @@ class RecipeIndex(ListView):
     context_object_name = 'latest_recipe_list'
 
     def get_queryset(self):
-        return Recipe.objects.order_by('-pub_date')[:6]
+        return Recipe.objects.order_by('-pub_date')[:]
 
 # Gotten from tutorial here https://learndjango.com/tutorials/django-search-tutorial
 class SearchResults(ListView):
