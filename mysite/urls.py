@@ -20,11 +20,13 @@ from django.contrib.auth.views import LogoutView
 from django.urls import include, path
 from django.views.generic import TemplateView
 
+from . import views
+
 urlpatterns = [
     path('xDBEGesUy01DKCYZWH8W/', admin.site.urls),     # obscure admin path
     path('recipes/', include('recipes.urls'), name='recipes'),
 
-    path('', TemplateView.as_view(template_name="index.html")),
+    path('', views.HomeIndex.as_view(), name ="index"),
     path('accounts/', include('allauth.urls')),
     path('logout', LogoutView.as_view()),
 ]
