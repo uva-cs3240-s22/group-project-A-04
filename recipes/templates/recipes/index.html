@@ -1,10 +1,8 @@
-{% extends "base.html" %} {% block content %} {% load static %}
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
 
-<link
-	rel="stylesheet"
-	type="text/css"
-	href="{% static 'recipes/style.css' %}"
-/>
+<link rel="stylesheet" type="text/css" href="{% static 'recipes/style.css' %}">
 <style>
   .login-btn {
     align-items: center;
@@ -105,38 +103,61 @@
 
   }
   .card-information {
-    margin-top: 1px;
+    margin-top: 1px:
     margin-bottom: 1px;
   }
 </style>
-<div
-	class="d-flex flex-column align-items-center"
-	style="
-		margin-left: 15%;
-		margin-right: 15%;
-		background-color: white;
-		height: 100vh;
-	"
-  >
-	{% if latest_recipe_list %}
-	<div style="display: inline-block">
-		<ul style="text-align: center">
-			{% for recipe in latest_recipe_list %}
-			<li>
-				<a
-					class="recipe-link"
-					style="text-decoration: none"
-					href="/recipes/{{ recipe.id }}/"
-					>{{ recipe.recipe_name }}</a
-				>
-			</li>
-			{% endfor %}
-		</ul>
-	</div>
-	{% else %}
-	<p>No recipes are available.</p>
-	{% endif %}
 
-	<a class="login-btn" href="{% url 'recipes:create' %}">Add Recipe</a> <br />
+<div class="d-flex flex-column align-items-center" style="margin-top: 1%; margin-bottom: 1%; margin-left:15%; margin-right: 15%; background-color:white; height:100%">
+    <form action="{% url 'recipes:SearchResults' %}" method="get">
+        <input name="search" type="text" class="form-control" id="inputdefault" placeholder="Search for recipes here!">
+    </form>
 </div>
+
+<div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%">
+{% if latest_recipe_list %}
+<!-- <div style =  "display: inline-block;">
+    <ul style = " text-align: center;">
+    {% for recipe in latest_recipe_list %}
+        <li><a class ="recipe-link" style = "text-decoration: none" href="/recipes/{{ recipe.id }}/">{{ recipe.recipe_name }}</a></li>
+    {% endfor %}
+    </ul>
+</div> -->
+
+<div class="container">
+  {%  for recipe in latest_recipe_list  %}
+  {% for image in recipe.recipeimage_set.all %}
+      {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
+        <div class="col-md-4 d-flex justify-content-around align-items-center">
+            <div class="card card-custom-border" >
+                <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
+                 -->
+                {% if image.image %}
+				<img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+				{% endif %}
+                <div class="card-body">
+					<div>
+						<h4><a class="card-title" href="/recipes/{{ recipe.id }}/">
+							{{ recipe.recipe_name }}
+						</a></h4>
+					</div>
+					<div class="card-information d-flex flex-column">
+						<h6>{{recipe.number_of_likes}} likes</h6>
+						<h6>{{recipe.number_of_forks}} forks</h6>
+					</div>
+                </div><!-- card body -->
+            </div><!-- card -->
+        </div><!-- col-md-4 -->
+  {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
+  {%  endfor %}
+  {% endfor %}
+</div><!-- container -->
+
+{% else %}
+    <p>No recipes are available.</p>
+{% endif %}
+
+<a class = "login-btn" href="{% url 'recipes:create' %}">Add Recipe</a> <br>
+</div>
+
 {% endblock %}

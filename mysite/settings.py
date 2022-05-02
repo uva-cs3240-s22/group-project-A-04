@@ -84,12 +84,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'mysite.urls'
 
-# Over riding allauth came from
-# https://stackoverflow.com/questions/39009638/how-to-edit-django-allauth-default-templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'allauth')],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -183,7 +181,7 @@ MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_MEDIA_LOCATION)
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'mysite\static'),
+    os.path.join(BASE_DIR, 'mysite/static'),
 ]
 
 # Enable gzip

@@ -5,16 +5,13 @@
 
 <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100vh"> 
   <p>Welcome, You are logged in as {{ user.username }}</p>
- <div class="flexbox-container" style="display:flex;">
-        <div class="sidebar" style="flex:1;">
-            <h3>Liked Recipes</h3>
-        {% if liked_recipe_list %}
 
+  {% if liked_recipe_list %}
+  <h3>Liked Recipes</h3>
     <ul>
         {% for recipe in liked_recipe_list %}
             <li>
               <a href="{% url 'recipes:detail' recipe.pk %}"> {{ recipe.recipe_name }} </a>
-
             </li>
         {% endfor %}
     </ul>
@@ -22,11 +19,8 @@
       <p>You have no liked recipes.</p>
   {% endif %}
 
-        </div>
-        <div class="main" style="flex:1;">
-        <h3>Your Recipes</h3>
-            {% if created_recipe_list %}
-
+    {% if created_recipe_list %}
+  <h3>Created Recipes</h3>
     <ul>
         {% for recipe in created_recipe_list %}
             <li>
@@ -37,10 +31,7 @@
   {% else %}
       <p>You have no created recipes.</p>
   {% endif %}
-
-        </div>
-        </div>
-
+</div>
 
 {% else %}
 <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100vh"> 

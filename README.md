@@ -127,19 +127,19 @@ More requirements TBD
 
 ##### S4 — First Major Feature
 
-+ [X] Recipe Adding Feature
-+ [X] GitHub Actions CI Operational w/ Multiple Test Cases
++ [ ] Recipe Adding Feature
++ [ ] GitHub Actions CI Operational w/ Multiple Test Cases
 
 ##### S5 — Next Major Feature
 
-+ [X] Feature Recipe Forking
-+ [X] More GitHub Actions CI Test Cases Operational
++ [ ] Feature Recipe Forking
++ [ ] More GitHub Actions CI Test Cases Operational
 
 ##### S6 — Beta Version
 
-+ [X] Features
-+ [X] Extra Features
-+ [X] More GitHub Actions CI Test Cases Operational
++ [ ] Features ***(TBD)***
++ [ ] Extra Features ***(TBD)***
++ [ ] More GitHub Actions CI Test Cases Operational
 
 ##### Final — Project Completion
 

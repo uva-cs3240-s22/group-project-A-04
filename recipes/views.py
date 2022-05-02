@@ -1,7 +1,6 @@
-"""
-recipes/views.py
-This file contains definitions of how specific models are viewed
-"""
+# recipes/views.py
+# 
+# views for the recipe app
 
 # Imports from Django library
 from re import template
@@ -12,15 +11,10 @@ from django.views.generic import ListView, DetailView, DeleteView
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 
-# model form for query sets
-from django.forms.models import inlineformset_factory
-# cited from this youtube tutorial: https://youtu.be/6wHx-X1tEiY
 
 # Importing models from current directory
 from .models import Recipe, Ingredient, RecipeImage
 from .forms import RecipeForm, RecipeImageForm, IngredientInlineFormset
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 
 
 # make login required before any of these views can be accessed
@@ -42,18 +36,8 @@ class ProfileView(ListView):
         # Add any other variables to the context here
         ...
         return context
-    # This way of making sure the profile page requires you to be logged in comes from
-    # https://docs.djangoproject.com/en/1.8/topics/class-based-views/intro/#decorating-the-class
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(ProfileView, self).dispatch(*args, **kwargs)
 
 
-"""
-Recipe index view
-Displays all of the recipes using 'recipes/index.html' and inserts the the view
-into an object_list called 'latest_recipe_list'
-"""
 class RecipeIndex(ListView):
     template_name = 'recipes/index.html'
     context_object_name = 'latest_recipe_list'
@@ -74,17 +58,13 @@ class SearchResults(ListView):
         )
         return object_list.order_by('-pub_date')    # order search results by publish date
 
-"""
-Recipe detail view
-Displays the details of the recipe ysing 'recipes/detail.html'
-"""
 class RecipeDetail(DetailView):
     model = Recipe
     template_name = 'recipes/detail.html'
 
     def get_queryset(self):
         """
-        Excludes any recipes that aren't published yet.
+        Excludes any questions that aren't published yet.
         """
         return Recipe.objects
 
@@ -117,20 +97,16 @@ def recipe_create_view(request):
 
     # make a form for recipes and ingredients
     recipe_form = RecipeForm(request.POST or None)
+    recipe_image_form = RecipeImageForm(request.POST or None, request.FILES)
 
     # make instance of Formset
     ingredient_formset = IngredientInlineFormset(request.POST or None)
 
-    recipe_image_form = RecipeImageForm(request.POST or None, request.FILES)
-
-
-
     # for loading html
     context = {
         "recipe_form": recipe_form,
-        "ingredient_formset": ingredient_formset,
         "recipe_image_form": recipe_image_form,
-
+        "ingredient_formset": ingredient_formset,
     }
 
     # check that the form is valid, if so, submit
@@ -236,11 +212,8 @@ def validate_and_save_recipe_form(request, template, context, recipe_form, recip
             if parent is not None:
                 ingredient.pk = None
 
-            # ingredient.recipe = recipe
-            # ingredient.save()
-
-        ingredient_formset.instance = recipe
-        ingredient_formset.save()
+            ingredient.recipe = recipe
+            ingredient.save()
 
         # confirmation message
         context['message'] = 'Recipe saved!'

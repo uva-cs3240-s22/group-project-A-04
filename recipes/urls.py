@@ -1,7 +1,7 @@
-"""
-recipes/urls.py
-This file contains the URL routing information for different views
-"""
+# recipes/urls.py
+#
+# url views for recipes app
+
 
 # Imports from Django library
 from django.urls import path

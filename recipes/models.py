@@ -13,18 +13,14 @@ from django.contrib.auth.models import User     # for recipe authors
 from mysite.storage_backends import MediaStorage
 
 
-"""
-Recipe model
-Model containing name, description, procedure, publication date,
-modification date, and author.
-"""
 class Recipe(models.Model):
-    # Recipe content fields
     recipe_name = models.CharField(max_length=200)
+    # add option description field for recipe
     description = models.TextField(blank=True)
+
+    # procedure can be a list of steps or paragraphs --> just textfield
     procedure = models.TextField(blank=True)
-    
-    # Publication information fields
+
     pub_date = models.DateTimeField(auto_now_add=True)
     mod_date = models.DateTimeField(auto_now=True)
 
@@ -61,25 +57,14 @@ class Recipe(models.Model):
         return len(Recipe.objects.filter(parent=self))
 
 
-"""
-Recipe Image model
-Contains the image for a parent recipe
-"""
-class RecipeImage(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    image = models.ImageField(storage=MediaStorage)
-
-
-"""
-Ingredients model
-Contains parent recipe, ingredient name, and ingredient quantity
-"""
+# each ingredient has its own name and quantity
+# in addition to being associated with a recipe
 class Ingredient(models.Model):
-    # Ingredient content fields
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     ingredient_name = models.CharField(max_length=200)
     quantity = models.CharField(max_length=200, blank=True)
 
+    # change string representation to show choice text
     def __str__(self):
         return self.ingredient_name + ",  " + self.quantity
 
