@@ -51,7 +51,7 @@
         function addForm(e) {
             e.preventDefault()
 
-            let newForm = ingredientForm[0].cloneNode(true)
+            let newForm = ingredientForm[ingredientForm.length-1].cloneNode(true)
             let formRegex = RegExp(`form-(\\d){1}-`, 'g')
 
             formNum++
