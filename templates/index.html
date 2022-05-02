@@ -183,7 +183,7 @@
 				>
 				An app to store and share your recipes!
 				</h3> 
-				{% if user.is_authenticated %}
+				{% comment %} {% if user.is_authenticated %}
 				<p style = "text-align: center;">
 					Logged in as: {{ user.username }}
 				</p>
@@ -191,8 +191,8 @@
 					<a class="login-btn" href="logout">Logout</a>
 				</div>
 				{% else %}
-				<a class="login-btn" href="{% provider_login_url "google" %}">Login With Google</a> 
-				{% endif %}
+				<a class="login-btn" href="{% provider_login_url "google" %}">Login With Google</a>  
+				{% endif %} {% endcomment %}
 			</div><!-- welcome-message -->
 			
 			

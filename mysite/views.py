@@ -37,3 +37,7 @@ class HomeIndex(ListView):
     #     ...
     #     return context
 
+
+@login_required
+def login_redirect_view(request):
+    return redirect('/')
