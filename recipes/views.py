@@ -206,14 +206,15 @@ def validate_and_save_recipe_form(request, template, context, recipe_form, recip
         recipe_image.save()
 
         for ingredient_form in ingredient_formset:
-            ingredient = ingredient_form.save(commit=False)
+            if ingredient_form.is_valid():
+                ingredient = ingredient_form.save(commit=False)
 
-            # if forking, clone ingredient
-            if parent is not None:
-                ingredient.pk = None
+                # if forking, clone ingredient
+                if parent is not None:
+                    ingredient.pk = None
 
-            ingredient.recipe = recipe
-            ingredient.save()
+        ingredient_formset.instance = recipe
+        ingredient_formset.save()
 
         # confirmation message
         context['message'] = 'Recipe saved!'
