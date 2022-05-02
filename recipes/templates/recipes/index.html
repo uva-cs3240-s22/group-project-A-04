@@ -109,9 +109,12 @@
 </style>
 
 <div class="d-flex flex-column align-items-center" style="margin-top: 1%; margin-bottom: 1%; margin-left:15%; margin-right: 15%; background-color:white; height:100%">
-    <form action="{% url 'recipes:SearchResults' %}" method="get">
+  <br>  
+  <form action="{% url 'recipes:SearchResults' %}" method="get">
         <input name="search" type="text" class="form-control" id="inputdefault" placeholder="Search for recipes here!">
     </form>
+    <br>
+    <a class = "login-btn" href="{% url 'recipes:create' %}">Add Recipe</a> <br>
 </div>
 
 <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%">
@@ -157,7 +160,7 @@
     <p>No recipes are available.</p>
 {% endif %}
 
-<a class = "login-btn" href="{% url 'recipes:create' %}">Add Recipe</a> <br>
+
 </div>
 
 {% endblock %}
