@@ -272,3 +272,5 @@ SECURE_HSTS_PRELOAD = True      # allows site to be submitted to the browser pre
 # only available in Django 2.1+
 # SESSION_COOKIE_SAMESITE
 # CSRF_COOKIE_SAMESITE
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
