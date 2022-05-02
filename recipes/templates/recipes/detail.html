@@ -30,7 +30,7 @@
         <div class="text-center">
             {% for image in recipe.recipeimage_set.all %}
             {% if image.image %}
-            <img src="{{image.image.url}}">
+            <img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
             {% endif %}
             {% endfor %}
         </div>
