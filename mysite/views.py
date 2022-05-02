@@ -36,3 +36,4 @@ class HomeIndex(ListView):
     #     # Add any other variables to the context here
     #     ...
     #     return context
+
