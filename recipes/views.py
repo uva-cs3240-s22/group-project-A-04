@@ -57,7 +57,7 @@ class RandomRecipe(ListView):
 
     template_name = 'recipes/random.html'
     context_object_name = 'random_recipe'
-
+    # Referenced https://stackoverflow.com/questions/22816704/django-get-a-random-object
     def get_queryset(self):
         # There better be at least 3 items in the database or else there will be repeats
         all = list(Recipe.objects.all())
