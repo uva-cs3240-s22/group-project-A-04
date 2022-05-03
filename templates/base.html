@@ -86,9 +86,9 @@
 	</div>
 	<div>
 		{% if user.is_authenticated %}
-		<a class="navbar-brand btn btn-custom" href="logout">({{ user.username }}) Logout</a>
+		<a class="navbar-brand btn btn-custom" href={% url 'logout' %}>({{ user.username }}) Logout</a>
 		{% else %}
-		<a class="navbar-brand btn btn-custom" href="{% provider_login_url 'google' %}">Signup/Login</a>
+		<a class="navbar-brand btn btn-custom" href={% url 'login' %}>Signup/Login</a>
 		{% endif %}
 	</div>
 	</nav>

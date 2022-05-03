@@ -41,7 +41,7 @@
 
   .login-btn:hover {
     background: #F6F9FE;
-    color: #FE5F55;
+    color: #F87060;
   }
 
   .login-btn:active {
@@ -51,7 +51,7 @@
 
   .login-btn:focus {
     outline: none;
-    border: 2px solid #FE5F55;
+    border: 2px solid #F87060;
   }
 
   .login-btn:not(:disabled) {
@@ -83,7 +83,7 @@
     color:black;
   }
   .recipe-link:hover{
-    color:#FE5F55
+    color:#F87060
   }
   a {
     color: #1AC8ED;
@@ -92,7 +92,7 @@
     color:black;
   }
   .recipe-link:hover{
-    color:#FE5F55
+    color:#F87060
   }
 	.cards {
 		display: grid;
@@ -190,6 +190,8 @@
 							
             {% if image.image %}
             <img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+            {% else %}
+            <img class="card-img-top" src="{% static 'recipes/plate.png' %}" width = "fit" height = "fit" alt="Card image cap">
             {% endif %}
             <div class="card-body">
               <div>

@@ -16,9 +16,9 @@ Including another URLconf
 
 # Importing from Django library
 from django.contrib import admin
-from django.contrib.auth.views import LogoutView
 from django.urls import include, path
 from django.views.generic import TemplateView
+from django.contrib.auth.views import LogoutView
 
 from . import views
 
@@ -28,6 +28,7 @@ urlpatterns = [
 
     path('', views.HomeIndex.as_view(), name ="index"),
     path('accounts/', include('allauth.urls')),
-    path('logout', LogoutView.as_view()),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    
+    path('login-redirect/', views.login_redirect_view, name='login'),
 ]
-

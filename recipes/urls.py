@@ -5,6 +5,7 @@
 
 # Imports from Django library
 from django.urls import path
+from django.contrib.auth.views import LogoutView
 
 # Importing views from current directory
 from . import views
@@ -21,5 +22,5 @@ urlpatterns = [
     path('<int:pk>/recipe_like/', views.recipe_like, name='recipe_like'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('search/', views.SearchResults.as_view(), name='SearchResults'),
+    path('logout', LogoutView.as_view()),
 ]
-

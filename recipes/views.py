@@ -4,6 +4,7 @@
 
 # Imports from Django library
 from re import template
+from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -36,6 +37,12 @@ class ProfileView(ListView):
         # Add any other variables to the context here
         ...
         return context
+    
+    # This way of making sure the profile page requires you to be logged in comes from
+    # https://docs.djangoproject.com/en/1.8/topics/class-based-views/intro/#decorating-the-class
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ProfileView, self).dispatch(*args, **kwargs)
 
 
 class RecipeIndex(ListView):
