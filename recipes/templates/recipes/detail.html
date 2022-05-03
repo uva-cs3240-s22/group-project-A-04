@@ -24,7 +24,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6"> 
             <p style = "color: #F87060; font-family: Tahoma; text-align: center;"> Recipe Description: </p>
-            <h3>{{recipe.description}}</h3>
+            <p>{{recipe.description}}</p>
         </div>
 
         <div class="text-center">
@@ -35,7 +35,7 @@
             {% endfor %}
         </div>
 
-        <div class=""col-md-6"">
+        <div class="col-md-6">
             <p style = "color: #F87060; font-family: Tahoma;"> Ingredients: </p>
             {% for ingredient in recipe.ingredient_set.all %}
                 {% if ingredient.ingredient_name %}
@@ -51,7 +51,7 @@
         {% comment %} "col-md-6" {% endcomment %}
         <div class="col-md-6">
             <p style = "color: #F87060; font-family: Tahoma; text-align: center;"> Recipe Procedure: </p>
-            <h3>{{recipe.procedure}}</h3>
+            <p>{{recipe.procedure | linebreaks}}</p>
         </div>
 
     </div>
