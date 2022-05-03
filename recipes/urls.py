@@ -23,4 +23,5 @@ urlpatterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('search/', views.SearchResults.as_view(), name='SearchResults'),
     path('logout', LogoutView.as_view()),
+    path('random_recipe/', views.RandomRecipe.as_view(), name='random_recipe'),
 ]

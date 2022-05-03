@@ -11,6 +11,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView
 from django.http import HttpResponseRedirect
 from django.db.models import Q
+import random
 
 
 # Importing models from current directory
@@ -51,6 +52,29 @@ class RecipeIndex(ListView):
 
     def get_queryset(self):
         return Recipe.objects.order_by('-pub_date')[:]
+
+class RandomRecipe(ListView):
+
+    template_name = 'recipes/random.html'
+    context_object_name = 'random_recipe'
+
+    def get_queryset(self):
+        # There better be at least 3 items in the database or else there will be repeats
+        all = list(Recipe.objects.all())
+        random_rec = random.choice(all)
+        random_rec2 = random.choice(all)
+        if (len(all)>1):
+            while random_rec == random_rec2:
+                random_rec2 = random.choice(all)
+        random_rec3 = random.choice(all)
+        if (len(all) > 2):
+            while random_rec == random_rec3:
+                random_rec3 = random.choice(all)
+            while random_rec2 == random_rec3:
+                random_rec3 = random.choice(all)
+
+        return random_rec, random_rec2, random_rec3
+
 
 # Gotten from tutorial here https://learndjango.com/tutorials/django-search-tutorial
 class SearchResults(ListView):
