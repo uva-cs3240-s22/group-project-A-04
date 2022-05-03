@@ -168,7 +168,7 @@
 			
 			
 			
-			<div id="welcome-message">
+			<div id="welcome-message-container">
 				<h1 
 				class="text-center welcome-message" 
 				style="color: #F87060; font-family: Tahoma; text-align: center"
@@ -191,7 +191,7 @@
 					<a class="login-btn" href="logout">Logout</a>
 				</div>
 				{% else %}
-				<a class="login-btn" href="{% provider_login_url "google" %}">Login With Google</a>  
+				<a class="login-btn" href="{% provider_login_url 'google' %}">Login With Google</a>
 				{% endif %} {% endcomment %}
 			</div><!-- welcome-message -->
 			
@@ -210,22 +210,22 @@
 					<h2 class="p-3">Latest Recipes</h2>
 					{% endif %}
 
-					<a class = "login-btn" href="{% url "recipes:index" %}">Go to Recipes</a>
+					<a class = "login-btn" href="{% url 'recipes:index' %}">Go to Recipes</a>
 				</div>
 
 				{% if latest_recipe_list %}
 				
-				{%  for recipe in latest_recipe_list  %}
+				{% for recipe in latest_recipe_list  %}
 				{% for image in recipe.recipeimage_set.all %}
 
-				{% if forloop.parentloop.counter == 4 %}
+				{% comment %} {% if forloop.parentloop.counter == 4 %}
 				
 				<div 
 					class="row align-items-left"
 					style="color: #F87060; font-family: Tahoma;"
 				>
 					<h2 class="p-3">Popular Recipes</h2>
-				</div>{% endif %}
+				</div>{% endif %} {% endcomment %}
 				
 				{% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
 					
@@ -236,6 +236,8 @@
 							
 							{% if image.image %}
 							<img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+							{% else %}
+            				<img class="card-img-top" src="{% static 'recipes/plate.png' %}" width = "fit" height = "fit" alt="Card image cap">
 							{% endif %}
 							<div class="card-body">
 								<div>
@@ -269,19 +271,19 @@
 						Mission Statement
 					</dt>
 					<dd>
-						Do our best to get max xp from this final.
+						Help everyone eat good food by sharing recipes!
 					</dd>
 					<dt>
-						Context
+						About eats.
 					</dt>
 					<dd>
-						This is our <emphasis>Word of Mouth</emphasis> website.
+						A place to post recipes, but without the pages and pages of backstory that all cooking webpages now have to force you to scroll through ads. Recipes would include a set of ingredients and directions, as well as images, possible videos, etc.
 					</dd>
 				</dl>
 
 
 				<h3>Developers</h3>
-				<div class="row d-flex justify-content-between">
+				<div class="d-flex flex-row flex-wrap justify-content-between">
 					<div class="col-1"></div>
 
 					<div class="col-xs-2">
@@ -289,45 +291,40 @@
 							src="{% static 'recipes/sam.png' %}"
 							class="dev-pictures"
 						/>
-						<h5>Samuel Ahn - Scrum Master</h5>
-						<p><q>I think I was Scrum Master</q></p>
-						<p>The reality is I'm actually 40% DevOps, 40% UX/UI, and 20% more UX/UI. Who the heck did my job?</p>
+						<h5>Samuel Ahn</h5>
+						<p>Scrum Master</p>
 					</div>
 					<div class="col-xs-2">
 						<img
 							src="{% static 'recipes/daniel.png' %}"
 							class="dev-pictures"
 						/>
-						<h5>Daniel Xue - Testing Manager</h5>
-						<p><q>I don't know, because there aren't any tests...</q></p>
-						<p>I think we should put down, "Algorithms" as the biggest obstacle to our web development.</p>
+						<h5>Daniel Xue</h5>
+						<p>Testing Manager</p>
 					</div>
 					<div class="col-xs-2">
 						<img
 							src="{% static 'recipes/matthew.png' %}"
-							class="dev-pictures"
+							class="d-flex flex-column dev-pictures justify-content-center"
 						/>
-						<h5>Matthew Bonner - Requirements Manager</h5>
-						<p><q>It was a mess really. No one really knew what they were doing.</q></p>
-						<p>Our website is required to work. I think it is capable of doing that.</p>
+						<h5>Matthew Bonner</h5>
+						<p>Requirements Manager</p>
 					</div>
 					<div class="col-xs-2">
 						<img
 							src="{% static 'recipes/alex_new.png' %}"
 							class="dev-pictures"
 						/>
-						<h5>Alex Yu - DevOps</h5>
-						<p><q>Hey guys, I got the thing working.</q></p>
-						<p>Just casually fixed a few parts of our website. The cards? That was me.</p>
+						<h5>Alex Yu</h5>
+						<p>DevOps</p>
 					</div>
 					<div class="col-xs-2">
 						<img
 							src="{% static 'recipes/asher.png' %}"
 							class="dev-pictures"
 						/>
-						<h5>Asher Saunders - UX/UI</h5>
-						<p><q>MIA</q></p>
-						<p>We haven't heard from Asher in a while. We hope he's doing alright.</p>
+						<h5>Asher Saunders</h5>
+						<p>UX/UI</p>
 					</div>
 
 					<div class="col-1"></div>
@@ -355,7 +352,7 @@
 
 		<div class="text-center col-md-4 footer-color p-5" id="footer-left-column">
 			<p>
-				If you have any qualms with our <strike>shitty</strike> website, please contact us by <a href="tel:123-456-7890">Telephone</a> or <a href="mailto:a04@virginia.edu">Email</a>
+				If you have any questions or concerns with our website, please contact us by <a href="tel:123-456-7890">Telephone</a> or <a href="mailto:a04@virginia.edu">Email</a>
 			</p>
 		</div>
 
