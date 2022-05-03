@@ -15,7 +15,7 @@ from django.db.models import Q
 
 # Importing models from current directory
 from .models import Recipe, Ingredient, RecipeImage
-from .forms import RecipeForm, RecipeImageForm, IngredientInlineFormset
+from .forms import RecipeForm, RecipeImageForm, IngredientForm, IngredientInlineFormset
 
 
 # make login required before any of these views can be accessed

@@ -3,6 +3,12 @@
 {% load socialaccount %}
 {% if user.is_authenticated %}
 
+<style>
+    .hidden {
+        display: none
+    }
+</style>
+
 <div class="text-center">
     <h1>Recipe Form</h1>
 
@@ -24,51 +30,78 @@
         {% if ingredient_formset %}
         <h4>Add Ingredients:</h4>
         {{ ingredient_formset.management_form }}
-        {% for ingredient_form in ingredient_formset %}
-        <div class="ingredient-form">
-            {{ ingredient_form.as_table }}
-    <!--        <button id="delete-form" type="button">Remove Row</button>-->
+        <div id="ingredient-formset">
+            {% for ingredient_form in ingredient_formset %}
+                <div class="ingredient-form">
+                    {{ ingredient_form.as_table }}
+            <!--        <button id="delete-form" type="button">Remove Row</button>-->
+                </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-        <button id="add-form" type="button">Add Another Ingredient</button>
+
+        <div id='empty-ingredient-form' class="hidden">
+            {{ ingredient_formset.empty_form }}
+        </div>
+
+        <button id="add-ingredient" type="button">
+            Add Another Ingredient
+        </button>
+
         {% endif %}
         <input type = "submit" class="btn btn-primary" value = "Submit" >
     </form>
 
-    <!--    script cited from here: https://www.brennantymrak.com/articles/django-dynamic-formsets-javascript.html-->
-
     <script>
-        let ingredientForm = document.querySelectorAll(".ingredient-form")
-        let container = document.querySelector("#form-container")
-        let addButton = document.querySelector("#add-form")
-    // <!--    let deleteButton = document.querySelector("#delete-form")-->
-        let totalForms = document.querySelector("#id_ingredient_set-TOTAL_FORMS")
+    // get number of total new forms
+    const totalNewForms = document.getElementById('id_ingredient_set-TOTAL_FORMS')
 
-        let formNum = ingredientForm.length-1
-        addButton.addEventListener('click', addForm)
-    // <!--    deleteButton.addEventListener('click', deleteForm)-->
+    // get add ingredient button by id
+    const addIngredientBtn = document.getElementById('add-ingredient')
 
-        function addForm(e) {
-            e.preventDefault()
+    // add event listener to call add ingredient form on click
+    addIngredientBtn.addEventListener('click', addIngredientForm)
 
-            let newForm = ingredientForm[ingredientForm.length-1].cloneNode(true)
-            let formRegex = RegExp(`form-(\\d){1}-`, 'g')
+    // defines the addIngredientForm function
+    function addIngredientForm(args) {
 
-            formNum++
-            newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
-            container.insertBefore(newForm, addButton)
+        // print out arguments to test listener
+        // console.log(args)
+        // print length of currentIngredientForms for testing
+        // console.log(currentIngredientForms.length)
 
-            totalForms.setAttribute('value', `${formNum+1}`)
+        // prevents console.log printing and other bad stuff
+        if (event) {
+            event.preventDefault()
         }
 
-    // <!--    function deleteForm(e) {-->
-    // <!--        e.preventDefault()-->
+        // get total number of ingredient forms
+        const currentIngredientForms = document.getElementsByClassName('ingredient-form')
 
-    // <!--        e.target.parentElement.remove()-->
-    // <!--        formNum&#45;&#45;-->
-    // <!--        totalForms.setAttribute('value', `${formNum+1}`)-->
-    // <!--    }-->
+        // get current amount of forms from class data and increment it
+        const currentFormCount = currentIngredientForms.length
 
+        // get the target
+        const ingredientFormset = document.getElementById('ingredient-formset')
+
+        // get and copy empty form element by id
+        const emptyIngredientFormCopy = document.getElementById('empty-ingredient-form').cloneNode(true)
+        // set it to the right class
+        emptyIngredientFormCopy.setAttribute('class', 'ingredient-form')
+        // set each new form to have its own id
+        emptyIngredientFormCopy.setAttribute('id', `form-${currentFormCount}`)
+
+        // regex for replacing prefixes
+        const regex = new RegExp('__prefix__', 'g')
+        // replace prefix with the index
+        emptyIngredientFormCopy.innerHTML = emptyIngredientFormCopy.innerHTML.replace(regex, currentFormCount)
+
+        // now add a new empty form
+        ingredientFormset.append(emptyIngredientFormCopy)
+
+        // increment total forms
+        totalNewForms.setAttribute('value', `${currentFormCount+1}`)
+
+    }
     </script>
 
     {% else %}
@@ -76,3 +109,39 @@
     {% endif %}
     {% endblock %}
 </div>
+
+    <!--    script cited from here: https://www.brennantymrak.com/articles/django-dynamic-formsets-javascript.html-->
+
+<!--    <script>-->
+<!--        let ingredientForm = document.querySelectorAll(".ingredient-form")-->
+<!--        let container = document.querySelector("#form-container")-->
+<!--        let addButton = document.querySelector("#add-ingredient")-->
+<!--    // &lt;!&ndash;    let deleteButton = document.querySelector("#delete-form")&ndash;&gt;-->
+<!--        let totalForms = document.querySelector("#id_ingredient_set-TOTAL_FORMS")-->
+
+<!--        let formNum = ingredientForm.length-1-->
+<!--        addButton.addEventListener('click', addForm)-->
+<!--    // &lt;!&ndash;    deleteButton.addEventListener('click', deleteForm)&ndash;&gt;-->
+
+<!--        function addForm(e) {-->
+<!--            e.preventDefault()-->
+
+<!--            let newForm = ingredientForm[ingredientForm.length-1].cloneNode(true)-->
+<!--            let formRegex = RegExp(`form-(\\d){1}-`, 'g')-->
+
+<!--            formNum++-->
+<!--            newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)-->
+<!--            container.insertBefore(newForm, addButton)-->
+
+<!--            totalForms.setAttribute('value', `${formNum+1}`)-->
+<!--        }-->
+
+<!--    // &lt;!&ndash;    function deleteForm(e) {&ndash;&gt;-->
+<!--    // &lt;!&ndash;        e.preventDefault()&ndash;&gt;-->
+
+<!--    // &lt;!&ndash;        e.target.parentElement.remove()&ndash;&gt;-->
+<!--    // &lt;!&ndash;        formNum&#45;&#45;&ndash;&gt;-->
+<!--    // &lt;!&ndash;        totalForms.setAttribute('value', `${formNum+1}`)&ndash;&gt;-->
+<!--    // &lt;!&ndash;    }&ndash;&gt;-->
+
+<!--    </script>-->
