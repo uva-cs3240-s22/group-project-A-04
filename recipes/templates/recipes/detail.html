@@ -1,5 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
+
+<style>
+	.main-content {
+		margin: 0 auto;
+		background-color: #FFF275;
+		height: 100%;
+	}
+	.welcome-message {
+		color: #F87060;
+		font-family: Tahoma;
+		text-align: center;
+		display: flex;
+		flex-flow: column;
+	}
+	.margin-color {
+		background-color: #F6F6F6;
+	}
+	.footer-color {
+		background-color: #36393B;
+		color: #F6F6F6;
+	}
+	.small-font {
+		font-size: 9px;
+	}
+    .image-settings {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
+    }
+</style>
+
 <div class="px-5">
 <div class = "bg-light">
 <div class="text-center">
@@ -91,6 +121,178 @@
 </div>
 
 
+
+<div id="content-margin">
+
+
+
+    <div class="col-md-2" id="left-margin">
+    </div><!-- left-margin -->
+
+
+
+    <div class="col-md-8 main-content" id="main-content">
+
+
+
+        <div class="d-flex flex-row justify-content-center" id="recipe-information">
+
+            <div class="col-md-2" id="info-left-margin">
+                <p>left-margin</p>
+            </div><!-- info-left-margin -->
+
+
+
+            <div class="col-md-8" id="info-content">
+
+                <h1 
+                    id="recipe-name"
+                    class="text-center" 
+                    style="color: #F87060; font-family: Tahoma; text-align: center;"
+                >
+                    {{ recipe.recipe_name }}
+                </h1>
+
+                <h3 
+                    id="recipe author"
+                    class="text-center" 
+                    style="color: #F87060; font-family: Tahoma; text-align: center"
+                >
+                    By: {{ recipe.author }}
+                </h3>
+
+                {% if recipe.parent is not None %}
+                <h3
+                    id="fork-cite"
+                    class="text-center"
+                    style="color: #F87060; font-family: Tahoma; text-align: center"
+                >
+                    Forked from: <a href="{% url 'recipe:detail' pk=recipe.parent.pk %}">
+                        {{ recipe.parent.recipe_name }}
+                    </a>
+                </h3>
+                {% endif %}
+
+
+
+                <div class="d-flex flex-row justify-content-evenly" id="stat-bar">
+
+                    <div id="likes">
+                        <p>Likes: {{ recipe.number_of_likes }}</p>
+                    </div><!-- likes -->
+
+
+
+                    <div id="forks">
+                        <p>Forks: {{ recipe.number_of_forks }} </p>
+                    </div><!-- forks -->
+
+                </div><!-- stat-bar -->
+
+            </div><!-- info-content -->
+
+
+
+            <div class="col-md-2" id="info-right-margin">
+                <h5>Date Published:</h5>
+                <p>{{ recipe.mod_date }}</p>
+                <p>right-margin</p>
+            </div><!-- info-right-margin -->
+
+        </div><!-- recipe-information -->
+
+
+
+        <div class="d-flex flex-row justify-content-center" id="recipe-body">
+
+            <div class="col-md-3" id="recipe-body-left-margin">
+                <p>left-margin</p>
+            </div><!-- recipe-body-left-margin -->
+
+
+
+            <div class="col-md-6" id="recipe-body-content">
+
+
+
+                <div class="d-flex flex-column" id="recipe-image">
+                    {% for image in recipe.recipeimage_set.all %}
+                    {% if image.image %}
+                    <img class="image-settings" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+
+
+                <div class="d-flex flex-column" id="recipe-description">
+
+                    <div id="recipe-description-header">
+                        <h3 class="d-flex justify-content-center" style="color: #F87060; font-family: Tahoma; text-align: center">Recipe Description:</h3>
+                        <p>{{ recipe.description }}</p>
+                    </div><!-- recipe-description-header -->
+                </div>
+
+
+
+            </div><!-- recipe-body-content -->
+
+
+
+            <div class="col-md-3" id="recipe-body-right-margin">
+                <p>right-margin</p>
+            </div><!-- recipe-body-right-margin -->
+
+
+        </div><!-- recipe-body -->
+
+
+
+    </div><!-- main-content -->
+
+
+
+    <div class="col-md-2" id="right-margin">
+    </div><!-- right-margin -->
+
+
+
+    <div class="row">
+		<div class="col-md-2 footer-color p-5" id="footer-left-margin">
+		</div>
+
+
+
+		<div class="text-center col-md-4 footer-color p-5" id="footer-left-column">
+			<p>
+				If you have any qualms with our <strike>shitty</strike> website, please contact us by <a href="tel:123-456-7890">Telephone</a> or <a href="mailto:a04@virginia.edu">Email</a>
+			</p>
+		</div><!-- footer-left-column -->
+
+
+
+		<div class="text-center col-md-4 footer-color p-5 small-font" id="footer-right-column">
+			<p>
+				Copyright 2022, University of Virginia
+			</p>
+
+			<p>
+				Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+				The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+				THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			</p>
+		</div><!-- footer-right-column -->
+
+
+
+		<div class="col-md-2 footer-color p-5" id="footer-right-margin">
+		</div>
+
+
+
+</div><!-- content-margin -->
 
 
 
