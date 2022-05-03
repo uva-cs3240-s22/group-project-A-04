@@ -161,98 +161,145 @@
     }
 </style>
 
-<div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%">
-  <p>Welcome, {{ user.username }}!</p>
- <div class="flexbox-container" style="display:flex;">
-        <div class="sidebar" style="flex:1;">
 
-            <h3>Liked Recipes</h3>
-        {% if liked_recipe_list %}
+<div id="content-margin">
 
-            <ul>
-                {% for recipe in liked_recipe_list %}
-                    {% for image in recipe.recipeimage_set.all %}
-            {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
-                <div class="col-md-4 cards">
-                    <div class="card card-animation card-custom-border">
-                        <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
-                        -->
-                        
-                        {% if image.image %}
-                        <img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
-                        {% else %}
-                        <img class="card-img-top" src="{% static 'recipes/plate.png' %}" width = "fit" height = "fit" alt="Card image cap">
-                        {% endif %}
-                        <div class="card-body">
-                            <div>
-                                <h4><a class="card-title stretched-link" href="/recipes/{{ recipe.id }}/">
-                                    {{ recipe.recipe_name }}
-                                </a></h4>
-                            </div>
-                            <div class="card-information d-flex flex-column">
-                                <h6>{{recipe.number_of_likes}} likes</h6>
-                                <h6>{{recipe.number_of_forks}} forks</h6>
-                            </div>
-                        </div><!-- card body -->
-                    </div><!-- card -->
-                </div><!-- col-md-4 -->
-        {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
-        {%  endfor %}
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>You have no liked recipes.</p>
+        
+        <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%">
+          <p>Welcome, {{ user.username }}!</p>
+         <div class="flexbox-container" style="display:flex;">
+                <div class="sidebar" style="flex:1;">
+        
+                    <h3>Liked Recipes</h3>
+                {% if liked_recipe_list %}
+        
+                    <ul>
+                        {% for recipe in liked_recipe_list %}
+                            {% for image in recipe.recipeimage_set.all %}
+                    {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
+                        <div class="col-md-4 cards">
+                            <div class="card card-animation card-custom-border">
+                                <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
+                                -->
+                                
+                                {% if image.image %}
+                                <img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+                                {% else %}
+                                <img class="card-img-top" src="{% static 'recipes/plate.png' %}" width = "fit" height = "fit" alt="Card image cap">
+                                {% endif %}
+                                <div class="card-body">
+                                    <div>
+                                        <h4><a class="card-title stretched-link" href="/recipes/{{ recipe.id }}/">
+                                            {{ recipe.recipe_name }}
+                                        </a></h4>
+                                    </div>
+                                    <div class="card-information d-flex flex-column">
+                                        <h6>{{recipe.number_of_likes}} likes</h6>
+                                        <h6>{{recipe.number_of_forks}} forks</h6>
+                                    </div>
+                                </div><!-- card body -->
+                            </div><!-- card -->
+                        </div><!-- col-md-4 -->
+                {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
+                {%  endfor %}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>You have no liked recipes.</p>
+                {% endif %}
+        
+                        </div>
+                        <div class="main" style="flex:1;">
+                        <h3>Your Recipes</h3>
+                            {% if created_recipe_list %}
+        
+                    <ul>
+                        {% for recipe in created_recipe_list %}
+                            {% for image in recipe.recipeimage_set.all %}
+                    {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
+                        <div class="col-md-4 cards">
+                            <div class="card card-animation card-custom-border">
+                                <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
+                                -->
+                                
+                                {% if image.image %}
+                                <img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+                                {% else %}
+                                <img class="card-img-top" src="{% static 'recipes/plate.png' %}" width = "fit" height = "fit" alt="Card image cap">
+                                {% endif %}
+                                <div class="card-body">
+                                    <div>
+                                        <h4><a class="card-title stretched-link" href="/recipes/{{ recipe.id }}/">
+                                            {{ recipe.recipe_name }}
+                                        </a></h4>
+                                    </div>
+                                    <div class="card-information d-flex flex-column">
+                                        <h6>{{recipe.number_of_likes}} likes</h6>
+                                        <h6>{{recipe.number_of_forks}} forks</h6>
+                                    </div>
+                                </div><!-- card body -->
+                            </div><!-- card -->
+                        </div><!-- col-md-4 -->
+                {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
+                {%  endfor %}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>You have no created recipes.</p>
+                {% endif %}
+        
+            </div>
+        </div>
+        
+        
+        {% comment %} {% else %}
+        <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100vh"> 
+          <div style = "margin-top: 20%;"></div>
+            <a class = "login-btn" href="{% provider_login_url 'google' %}">Login With Google</a>
+          </div> {% endcomment %}
         {% endif %}
 
-                </div>
-                <div class="main" style="flex:1;">
-                <h3>Your Recipes</h3>
-                    {% if created_recipe_list %}
 
-            <ul>
-                {% for recipe in created_recipe_list %}
-                    {% for image in recipe.recipeimage_set.all %}
-            {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
-                <div class="col-md-4 cards">
-                    <div class="card card-animation card-custom-border">
-                        <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
-                        -->
-                        
-                        {% if image.image %}
-                        <img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
-                        {% else %}
-                        <img class="card-img-top" src="{% static 'recipes/plate.png' %}" width = "fit" height = "fit" alt="Card image cap">
-                        {% endif %}
-                        <div class="card-body">
-                            <div>
-                                <h4><a class="card-title stretched-link" href="/recipes/{{ recipe.id }}/">
-                                    {{ recipe.recipe_name }}
-                                </a></h4>
-                            </div>
-                            <div class="card-information d-flex flex-column">
-                                <h6>{{recipe.number_of_likes}} likes</h6>
-                                <h6>{{recipe.number_of_forks}} forks</h6>
-                            </div>
-                        </div><!-- card body -->
-                    </div><!-- card -->
-                </div><!-- col-md-4 -->
-        {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
-        {%  endfor %}
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>You have no created recipes.</p>
-        {% endif %}
-
-    </div>
-</div>
+    </div><!-- main-content -->
 
 
-{% comment %} {% else %}
-<div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100vh"> 
-  <div style = "margin-top: 20%;"></div>
-    <a class = "login-btn" href="{% provider_login_url 'google' %}">Login With Google</a>
-  </div> {% endcomment %}
-{% endif %}
+    <div class="row">
+		<div class="col-md-2 footer-color p-5" id="footer-left-margin">
+		</div>
+
+
+
+		<div class="text-center col-md-4 footer-color p-5" id="footer-left-column">
+			<p>
+				If you have any questions or concerns with our website, please contact us by <a href="tel:123-456-7890">Telephone</a> or <a href="mailto:a04@virginia.edu">Email</a>
+			</p>
+		</div>
+
+
+
+		<div class="text-center col-md-4 footer-color p-5 small-font" id="footer-right-column">
+			<p>
+				Copyright 2022, University of Virginia
+			</p>
+
+			<p>
+				Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+				The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+				THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			</p>
+		</div>
+
+
+
+		<div class="col-md-2 footer-color p-5" id="footer-right-margin">
+		</div>
+
+
+
+	</div><!-- row -->
+</div><!-- content-margin -->
+
 
 {% endblock %}
