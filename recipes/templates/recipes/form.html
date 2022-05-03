@@ -109,39 +109,3 @@
     {% endif %}
     {% endblock %}
 </div>
-
-    <!--    script cited from here: https://www.brennantymrak.com/articles/django-dynamic-formsets-javascript.html-->
-
-<!--    <script>-->
-<!--        let ingredientForm = document.querySelectorAll(".ingredient-form")-->
-<!--        let container = document.querySelector("#form-container")-->
-<!--        let addButton = document.querySelector("#add-ingredient")-->
-<!--    // &lt;!&ndash;    let deleteButton = document.querySelector("#delete-form")&ndash;&gt;-->
-<!--        let totalForms = document.querySelector("#id_ingredient_set-TOTAL_FORMS")-->
-
-<!--        let formNum = ingredientForm.length-1-->
-<!--        addButton.addEventListener('click', addForm)-->
-<!--    // &lt;!&ndash;    deleteButton.addEventListener('click', deleteForm)&ndash;&gt;-->
-
-<!--        function addForm(e) {-->
-<!--            e.preventDefault()-->
-
-<!--            let newForm = ingredientForm[ingredientForm.length-1].cloneNode(true)-->
-<!--            let formRegex = RegExp(`form-(\\d){1}-`, 'g')-->
-
-<!--            formNum++-->
-<!--            newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)-->
-<!--            container.insertBefore(newForm, addButton)-->
-
-<!--            totalForms.setAttribute('value', `${formNum+1}`)-->
-<!--        }-->
-
-<!--    // &lt;!&ndash;    function deleteForm(e) {&ndash;&gt;-->
-<!--    // &lt;!&ndash;        e.preventDefault()&ndash;&gt;-->
-
-<!--    // &lt;!&ndash;        e.target.parentElement.remove()&ndash;&gt;-->
-<!--    // &lt;!&ndash;        formNum&#45;&#45;&ndash;&gt;-->
-<!--    // &lt;!&ndash;        totalForms.setAttribute('value', `${formNum+1}`)&ndash;&gt;-->
-<!--    // &lt;!&ndash;    }&ndash;&gt;-->
-
-<!--    </script>-->
