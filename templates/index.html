@@ -191,7 +191,7 @@
 					<a class="login-btn" href="logout">Logout</a>
 				</div>
 				{% else %}
-				<a class="login-btn" href="{% provider_login_url "google" %}">Login With Google</a>  
+				<a class="login-btn" href="{% provider_login_url 'google' %}">Login With Google</a>
 				{% endif %} {% endcomment %}
 			</div><!-- welcome-message -->
 			
@@ -210,7 +210,7 @@
 					<h2 class="p-3">Latest Recipes</h2>
 					{% endif %}
 
-					<a class = "login-btn" href="{% url "recipes:index" %}">Go to Recipes</a>
+					<a class = "login-btn" href="{% url 'recipes:index' %}">Go to Recipes</a>
 				</div>
 
 				{% if latest_recipe_list %}
