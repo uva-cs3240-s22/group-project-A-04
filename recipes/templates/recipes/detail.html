@@ -25,100 +25,14 @@
 		font-size: 9px;
 	}
     .image-settings {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
+        width: 100%;
+    }
+    .tahoma-script {
+        color: #F87060;
+         font-family: Tahoma; 
+         text-align: center;
     }
 </style>
-
-<div class="px-5">
-<div class = "bg-light">
-<div class="text-center">
-    <h1 style = "color: #F87060; font-family: Tahoma; text-align: center;">{{ recipe.recipe_name }}</h1>
-    <h3 style = "color: #F87060; font-family: Tahoma; text-align: center;">By: {{ recipe.author }}</h3>
-    {% if recipe.parent is not None %}
-    <h3 style = "color: #F87060; font-family: Tahoma; text-align: center;">
-        Forked from:
-        <a href="{% url 'recipes:detail' pk=recipe.parent.pk %}">
-            {{ recipe.parent.recipe_name }}
-        </a>
-    </h3>
-    {% endif %}
-    <p>Number of Forks: {{ recipe.number_of_forks }}</p>
-    <p>Number of Likes: {{ recipe.number_of_likes }}</p>
-</div>
-<div class="text-end">
-    <p style = "color: #F87060; font-family: Tahoma;"> Date Published: </p>
-    <h5>{{recipe.mod_date}}</h5>
-</div>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6"> 
-            <p style = "color: #F87060; font-family: Tahoma; text-align: center;"> Recipe Description: </p>
-            <p>{{recipe.description}}</p>
-        </div>
-
-        <div class="text-center">
-            {% for image in recipe.recipeimage_set.all %}
-            {% if image.image %}
-            <img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
-            {% endif %}
-            {% endfor %}
-        </div>
-
-        <div class="col-md-6">
-            <p style = "color: #F87060; font-family: Tahoma;"> Ingredients: </p>
-            {% for ingredient in recipe.ingredient_set.all %}
-                {% if ingredient.ingredient_name %}
-                    {% if ingredient.quantity %}
-                        <p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}</p>
-                    {% else %}
-                        <p>{{ingredient.ingredient_name}}</p>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-        </div>
-        
-        {% comment %} "col-md-6" {% endcomment %}
-        <div class="col-md-6">
-            <p style = "color: #F87060; font-family: Tahoma; text-align: center;"> Recipe Procedure: </p>
-            <p>{{recipe.procedure | linebreaks}}</p>
-        </div>
-
-    </div>
-</div>
-
-    {% comment %} "text-center" {% endcomment %}
-    <div class="text-center">
-        <a href="{% url 'recipes:index' %}">Back to index</a>
-
-        {% if user == recipe.author %}
-        <a href="{% url 'recipes:edit' pk=recipe.pk %}">Edit Recipe</a>
-        <a href="{% url 'recipes:delete' pk=recipe.pk %}">Delete Recipe</a>
-        {% else %}
-        <a href="{% url 'recipes:fork' pk=recipe.pk %}">Fork Recipe</a>
-        {% endif %}
-
-            <div>
-                {% if user.is_authenticated %}
-                <form action="{% url 'recipes:recipe_like' object.id %}" method="POST">
-                {% csrf_token %}
-
-                {% if post_is_liked %}
-                <button type="submit" name="recipe_id" value="{{object.id}}" class="btn btn-info">Unlike</button>
-                {% else %}
-                <button type="submit" name="recipe_id" value="{{object.id}}" class="btn btn-info">Like</button>
-                {% endif %}
-                </form>
-                {% else %}
-                <a class="btn btn-outline-info" href="/">Log in to like this recipe!</a><br>
-                {% endif %}
-                <strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
-            </div>
-
-    </div>
-
-</div>
-</div>
 
 
 
@@ -137,13 +51,13 @@
 
         <div class="d-flex flex-row justify-content-center" id="recipe-information">
 
-            <div class="col-md-2" id="info-left-margin">
-                <p>left-margin</p>
+            <div class="col-md-3" id="info-left-margin">
+                {% comment %} <p>left-margin</p> {% endcomment %}
             </div><!-- info-left-margin -->
 
 
 
-            <div class="col-md-8" id="info-content">
+            <div class="col-md-6 d-flex flex-column align-items-center" id="info-content">
 
                 <h1 
                     id="recipe-name"
@@ -167,7 +81,7 @@
                     class="text-center"
                     style="color: #F87060; font-family: Tahoma; text-align: center"
                 >
-                    Forked from: <a href="{% url 'recipe:detail' pk=recipe.parent.pk %}">
+                    Forked from: <a href="{% url 'recipes:detail' pk=recipe.parent.pk %}">
                         {{ recipe.parent.recipe_name }}
                     </a>
                 </h3>
@@ -175,15 +89,15 @@
 
 
 
-                <div class="d-flex flex-row justify-content-evenly" id="stat-bar">
+                <div class="d-flex flex-row justify-content-between" id="stat-bar">
 
-                    <div id="likes">
+                    <div class="p-2" id="likes">
                         <p>Likes: {{ recipe.number_of_likes }}</p>
                     </div><!-- likes -->
 
 
 
-                    <div id="forks">
+                    <div class="p-2" id="forks">
                         <p>Forks: {{ recipe.number_of_forks }} </p>
                     </div><!-- forks -->
 
@@ -193,29 +107,31 @@
 
 
 
-            <div class="col-md-2" id="info-right-margin">
-                <h5>Date Published:</h5>
-                <p>{{ recipe.mod_date }}</p>
-                <p>right-margin</p>
+            <div class="col-md-3 d-flex align-items-end" id="info-right-margin">
+                <div class="d-flex flex-column" id="pub-date">
+                    <h5 class="tahoma-script">Date Published:</h5>
+                    <p>{{ recipe.mod_date }}</p>
+                </div>
+                {% comment %} <p>right-margin</p> {% endcomment %}
             </div><!-- info-right-margin -->
 
         </div><!-- recipe-information -->
 
 
 
-        <div class="d-flex flex-row justify-content-center" id="recipe-body">
+        <div class="d-flex flex-row justify-content-center" id="image-body">
 
-            <div class="col-md-3" id="recipe-body-left-margin">
-                <p>left-margin</p>
-            </div><!-- recipe-body-left-margin -->
-
-
-
-            <div class="col-md-6" id="recipe-body-content">
+            <div class="col-md-3" id="image-body-left-margin">
+                {% comment %} <p>left-margin</p> {% endcomment %}
+            </div><!-- image-body-left-margin -->
 
 
 
-                <div class="d-flex flex-column" id="recipe-image">
+            <div class="col-md-6" id="image-body-content">
+
+
+
+                <div class="d-flex flex-column justify-content-center" id="recipe-image">
                     {% for image in recipe.recipeimage_set.all %}
                     {% if image.image %}
                     <img class="image-settings" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
@@ -225,23 +141,158 @@
 
 
 
-                <div class="d-flex flex-column" id="recipe-description">
+            </div><!-- image-body-content -->
 
-                    <div id="recipe-description-header">
+
+
+            <div class="col-md-3" id="image-body-right-margin">
+                {% comment %} <p>right-margin</p> {% endcomment %}
+            </div><!-- image-body-right-margin -->
+
+
+        </div><!-- image-body -->
+
+
+
+        <div class="d-flex flex-row justify-content-center" id="recipe-body">
+
+            <div class="col-md-1" id="recipe-body-left-margin">
+                {% comment %} <p>left-margin</p> {% endcomment %}
+            </div><!-- recipe-body-left-margin -->
+
+
+
+            <div class="col-md-10" id="recipe-body-content">
+
+
+
+                <div class="d-flex flex-column" id="recipe-content">
+
+                    <div id="recipe-description">
                         <h3 class="d-flex justify-content-center" style="color: #F87060; font-family: Tahoma; text-align: center">Recipe Description:</h3>
-                        <p>{{ recipe.description }}</p>
+                        <p style="text-align: center">{{ recipe.description }}</p>
                     </div><!-- recipe-description-header -->
+
+
+
+                    <div class="d-flex flex-row justify-content-between flex-wrap" id="ingredients-procedure-row">
+
+                        <div class="d-flex flex-column w-50 p-3" id="ingredients-content">
+
+                            <div class="d-flex justify-content-center" id="ingredients-header">
+                                <h3 class="tahoma-script">
+                                    Ingredients:
+                                </h3>
+                            </div>
+
+                            <div class="d-flex flex-column p-1" id="ingredients-text">
+                                {% for ingredient in recipe.ingredient_set.all %}
+                                    {% if ingredient.ingredient_name %}
+                                        {% if ingredient.quantity%}
+
+                                        <div class="d-flex flex-row justify-content-between" id="ingredient">
+
+                                            <div id="ingredient_name">
+                                                <p><strong>{{ ingredient.ingredient_name }}</strong></p>
+                                            </div>
+
+                                            <div id="ingredient_quantity">
+                                                <p>{{ ingredient.quantity }}</p>
+                                            </div>
+
+                                        </div>
+
+                                        {% else %}
+                                        
+                                        <div class="d-flex flex-row justify-content-between" id="ingredient">
+
+                                            <div id="ingredient_name">
+                                                <p><strong>{{ ingredient.ingredient_name }}</strong></p>
+                                            </div>
+
+                                        </div>
+
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div><!-- ingredients-text -->
+
+                        </div><!-- ingredients-content -->
+
+
+
+                        <div class="d-flex flex-column w-50 p-3" id="procedure-content">
+
+                            <div class="d-flex justify-content-center" id="procedure-header">
+                                <h3 class="tahoma-script">
+                                    Procedure:
+                                </h3>
+                            </div>
+
+                            <div id="procedure-text">
+                                <p>{{ recipe.procedure | linebreaks }}</p>
+                            </div><!-- procedure-text -->
+
+                        </div><!-- procedure-content -->
+
+                    </div><!-- ingredient-procedure-row -->
+
+                </div><!-- recipe-content -->
+
+
+
+                <div class="text-center d-flex flex-column">
+                    
+                    
+                    <div class="d-flex flex-row justify-content-center p-2" id="buttons">
+                        <div>
+                            {% if user.is_authenticated %}
+                            <form action="{% url 'recipes:recipe_like' object.id %}" method="POST">
+                                {% csrf_token %}
+                                
+                                {% if post_is_liked %}
+                                <button type="submit" name="recipe_id" value="{{object.id}}" class="btn btn-info">Unlike</button>
+                                {% else %}
+                                <button type="submit" name="recipe_id" value="{{object.id}}" class="btn btn-info">Like</button>
+                                {% endif %}
+                            </form>
+                            {% else %}
+                            <a class="btn btn-outline-info" href="/">Log in to like this recipe!</a><br>
+                            {% endif %}
+                            <strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+                        </div>
+                    </div><!-- buttons -->
+                    
+                    <div class="d-flex flex-row justify-content-center p-2" id="buttons">
+                        {% if user == recipe.author %}
+                        <button type="button" class="btn btn-primary"><a style="color: #F6F6F6;" href="{% url 'recipes:edit' pk=recipe.pk %}">Edit Recipe</a></button>
+                        
+
+                        <button type="button" class="btn btn-danger"><a style="color: #F6F6F6;" href="{% url 'recipes:delete' pk=recipe.pk %}">Delete Recipe</a></button>
+                        
+                        {% else %}
+
+                        <button type="button" class="btn btn-primary"><a style="color: #F6F6F6;" href="{% url 'recipes:fork' pk=recipe.pk %}">Fork Recipe</a></button>
+                        
+                        {% endif %}
+                    </div><!-- buttons -->
+
+                    <div class="d-flex flex-row justify-content-center p-2" id="buttons">
+                        <button type="button" class="btn btn-primary"><a style="color: #F6F6F6;" href="{% url 'recipes:index' %}">Back to index</a></button>
+                    </div><!-- buttons -->
+                    
+
+
                 </div>
-
-
 
             </div><!-- recipe-body-content -->
 
 
 
-            <div class="col-md-3" id="recipe-body-right-margin">
-                <p>right-margin</p>
+            <div class="col-md-1" id="recipe-body-right-margin">
+                {% comment %} <p>right-margin</p> {% endcomment %}
             </div><!-- recipe-body-right-margin -->
+
 
 
         </div><!-- recipe-body -->
