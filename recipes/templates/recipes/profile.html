@@ -2,11 +2,163 @@
 {% block content %}
 {% load socialaccount %}
 {% if user.is_authenticated %}
+{% load static %}
 
 <style>
-h1 {text-align: center;}
-p {text-align: center;}
-div {text-align: center;}
+    h1 {text-align: center;}
+    p {text-align: center;}
+    div {text-align: center;}
+    .login-btn {
+        align-items: center;
+        appearance: none;
+        background-color: #fff;
+        border-radius: 24px;
+        border-style: none;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+            rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
+        box-sizing: border-box;
+        color: #3c4043;
+        cursor: pointer;
+        display: inline-flex;
+        fill: currentcolor;
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        height: 48px;
+        justify-content: center;
+        letter-spacing: 0.25px;
+        line-height: normal;
+        max-width: 100%;
+        overflow: visible;
+        padding: 2px 24px;
+        position: relative;
+        text-align: center;
+        text-transform: none;
+        transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+            opacity 15ms linear 30ms,
+            transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        width: auto;
+        will-change: transform, opacity;
+        z-index: 0;
+        text-decoration: none;
+    }
+
+    .login-btn:hover {
+        background: #f6f9fe;
+        color: #F87060;
+    }
+
+    .login-btn:active {
+        box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%),
+            0 8px 12px 6px rgb(60 64 67 / 15%);
+        outline: none;
+    }
+
+    .login-btn:focus {
+        outline: none;
+        border: 2px solid #F87060;
+    }
+
+    .login-btn:not(:disabled) {
+        box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+            rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+    }
+
+    .login-btn:not(:disabled):hover {
+        box-shadow: rgba(60, 64, 67, 0.3) 0 2px 3px 0,
+            rgba(60, 64, 67, 0.15) 0 6px 10px 4px;
+    }
+
+    .login-btn:not(:disabled):focus {
+        box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+            rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+    }
+
+    .login-btn:not(:disabled):active {
+        box-shadow: rgba(60, 64, 67, 0.3) 0 4px 4px 0,
+            rgba(60, 64, 67, 0.15) 0 8px 12px 6px;
+    }
+
+    .login-btn:disabled {
+        box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+            rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+    }
+
+    a {
+    color: #1AC8ED;
+    }
+    .recipe-link{
+        color:black;
+    }
+    .recipe-link:hover{
+        color:#F87060
+    }
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+        gap: 20px;
+        min-height: 200px;
+        min-width: 33%;
+
+    }
+    .card:hover .card-img-top {
+        transform: scale(1.02);
+    }
+
+    .card-img-top {
+        border-radius: 10px;
+        width: 100%;
+        min-height: 150px;
+        height: 15vw;
+        object-fit: cover;
+        outline: 1px solid #F6F6F6;
+        outline-offset: -8px;
+        transition: transform 0.75s;
+    }
+    .card-custom-border {
+        border-radius: 18px;
+        border-width: 8px;
+        border-style: solid;
+        border-color: #F87060;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        max-width: 90%;
+        transition: transform 0.75s;
+    }
+    .card-information {
+        margin-top: 1px;
+        margin-bottom: 1px;
+        transition: transform 0.75s;
+    }
+    .main-content {
+        margin: 0 auto;
+        background-color: #FFF275;
+        height: 100%;
+    }
+    .welcome-message {
+        color: #F87060;
+        font-family: Tahoma;
+        text-align: center;
+        display: flex;
+        flex-flow: column;
+    }
+    .margin-color {
+        background-color: #F6F6F6;
+    }
+    .footer-color {
+        background-color: #36393B;
+        color: #F6F6F6;
+    }
+    .small-font {
+        font-size: 9px;
+    }
+    .dev-pictures {
+        height: 100px;
+        width: 100px;
+    }
 </style>
 
 <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%">
@@ -17,77 +169,83 @@ div {text-align: center;}
             <h3>Liked Recipes</h3>
         {% if liked_recipe_list %}
 
-    <ul>
-        {% for recipe in liked_recipe_list %}
-            {% for image in recipe.recipeimage_set.all %}
-      {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
-        <div class="col-md-4 d-flex justify-content-around align-items-center">
-            <div class="card card-custom-border" >
-                <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
-                 -->
-                {% if image.image %}
-				<img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
-				{% endif %}
-                <div class="card-body">
-					<div>
-						<h4><a class="card-title" href="/recipes/{{ recipe.id }}/">
-							{{ recipe.recipe_name }}
-						</a></h4>
-					</div>
-					<div class="card-information d-flex flex-column">
-						<h6>{{recipe.number_of_likes}} likes</h6>
-						<h6>{{recipe.number_of_forks}} forks</h6>
-					</div>
-                </div><!-- card body -->
-            </div><!-- card -->
-        </div><!-- col-md-4 -->
-  {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
-  {%  endfor %}
-        {% endfor %}
-    </ul>
-  {% else %}
-      <p>You have no liked recipes.</p>
-  {% endif %}
+            <ul>
+                {% for recipe in liked_recipe_list %}
+                    {% for image in recipe.recipeimage_set.all %}
+            {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
+                <div class="col-md-4 cards">
+                    <div class="card card-animation card-custom-border">
+                        <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
+                        -->
+                        
+                        {% if image.image %}
+                        <img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+                        {% else %}
+                        <img class="card-img-top" src="{% static 'recipes/plate.png' %}" width = "fit" height = "fit" alt="Card image cap">
+                        {% endif %}
+                        <div class="card-body">
+                            <div>
+                                <h4><a class="card-title stretched-link" href="/recipes/{{ recipe.id }}/">
+                                    {{ recipe.recipe_name }}
+                                </a></h4>
+                            </div>
+                            <div class="card-information d-flex flex-column">
+                                <h6>{{recipe.number_of_likes}} likes</h6>
+                                <h6>{{recipe.number_of_forks}} forks</h6>
+                            </div>
+                        </div><!-- card body -->
+                    </div><!-- card -->
+                </div><!-- col-md-4 -->
+        {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
+        {%  endfor %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You have no liked recipes.</p>
+        {% endif %}
 
-        </div>
-        <div class="main" style="flex:1;">
-        <h3>Your Recipes</h3>
-            {% if created_recipe_list %}
+                </div>
+                <div class="main" style="flex:1;">
+                <h3>Your Recipes</h3>
+                    {% if created_recipe_list %}
 
-    <ul>
-        {% for recipe in created_recipe_list %}
-            {% for image in recipe.recipeimage_set.all %}
-      {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
-        <div class="col-md-4 d-flex justify-content-around align-items-center">
-            <div class="card card-custom-border" >
-                <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
-                 -->
-                {% if image.image %}
-				<img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
-				{% endif %}
-                <div class="card-body">
-					<div>
-						<h4><a class="card-title" href="/recipes/{{ recipe.id }}/">
-							{{ recipe.recipe_name }}
-						</a></h4>
-					</div>
-					<div class="card-information d-flex flex-column">
-						<h6>{{recipe.number_of_likes}} likes</h6>
-						<h6>{{recipe.number_of_forks}} forks</h6>
-					</div>
-                </div><!-- card body -->
-            </div><!-- card -->
-        </div><!-- col-md-4 -->
-  {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
-  {%  endfor %}
-        {% endfor %}
-    </ul>
-  {% else %}
-      <p>You have no created recipes.</p>
-  {% endif %}
+            <ul>
+                {% for recipe in created_recipe_list %}
+                    {% for image in recipe.recipeimage_set.all %}
+            {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
+                <div class="col-md-4 cards">
+                    <div class="card card-animation card-custom-border">
+                        <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
+                        -->
+                        
+                        {% if image.image %}
+                        <img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+                        {% else %}
+                        <img class="card-img-top" src="{% static 'recipes/plate.png' %}" width = "fit" height = "fit" alt="Card image cap">
+                        {% endif %}
+                        <div class="card-body">
+                            <div>
+                                <h4><a class="card-title stretched-link" href="/recipes/{{ recipe.id }}/">
+                                    {{ recipe.recipe_name }}
+                                </a></h4>
+                            </div>
+                            <div class="card-information d-flex flex-column">
+                                <h6>{{recipe.number_of_likes}} likes</h6>
+                                <h6>{{recipe.number_of_forks}} forks</h6>
+                            </div>
+                        </div><!-- card body -->
+                    </div><!-- card -->
+                </div><!-- col-md-4 -->
+        {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
+        {%  endfor %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You have no created recipes.</p>
+        {% endif %}
 
-        </div>
-        </div>
+    </div>
+</div>
 
 
 {% comment %} {% else %}
