@@ -215,17 +215,17 @@
 
 				{% if latest_recipe_list %}
 				
-				{%  for recipe in latest_recipe_list  %}
+				{% for recipe in latest_recipe_list  %}
 				{% for image in recipe.recipeimage_set.all %}
 
-				{% if forloop.parentloop.counter == 4 %}
+				{% comment %} {% if forloop.parentloop.counter == 4 %}
 				
 				<div 
 					class="row align-items-left"
 					style="color: #F87060; font-family: Tahoma;"
 				>
 					<h2 class="p-3">Popular Recipes</h2>
-				</div>{% endif %}
+				</div>{% endif %} {% endcomment %}
 				
 				{% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
 					
@@ -357,7 +357,7 @@
 
 		<div class="text-center col-md-4 footer-color p-5" id="footer-left-column">
 			<p>
-				If you have any qualms with our <strike>shitty</strike> website, please contact us by <a href="tel:123-456-7890">Telephone</a> or <a href="mailto:a04@virginia.edu">Email</a>
+				If you have any questions or concerns with our website, please contact us by <a href="tel:123-456-7890">Telephone</a> or <a href="mailto:a04@virginia.edu">Email</a>
 			</p>
 		</div>
 

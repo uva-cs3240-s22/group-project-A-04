@@ -26,9 +26,8 @@ class HomeIndex(ListView):
 
     def get_queryset(self):
         l3 = Recipe.objects.all()
-        l1 = l3.order_by('likes')[:3]
         l2 = l3.order_by('-pub_date')[:3]
-        return list(chain(l2,l1))
+        return list(l2)
     
     # def get_context_data(self, **kwargs):
     #     context = super(HomeIndex, self).get_context_data(**kwargs)

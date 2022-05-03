@@ -4,11 +4,11 @@
 <style>
 	.main-content {
 		margin: 0 auto;
-		background-color: #FFF275;
+		background-color: #1AC8ED;
 		height: 100%;
 	}
 	.welcome-message {
-		color: #F87060;
+		color: #FFF275;
 		font-family: Tahoma;
 		text-align: center;
 		display: flex;
@@ -28,7 +28,7 @@
         width: 100%;
     }
     .tahoma-script {
-        color: #F87060;
+        color: #FFF275;
          font-family: Tahoma; 
          text-align: center;
     }
@@ -62,7 +62,7 @@
                 <h1 
                     id="recipe-name"
                     class="text-center" 
-                    style="color: #F87060; font-family: Tahoma; text-align: center;"
+                    style="color: #FFF275; font-family: Tahoma; text-align: center;"
                 >
                     {{ recipe.recipe_name }}
                 </h1>
@@ -70,7 +70,7 @@
                 <h3 
                     id="recipe author"
                     class="text-center" 
-                    style="color: #F87060; font-family: Tahoma; text-align: center"
+                    style="color: #FFF275; font-family: Tahoma; text-align: center"
                 >
                     By: {{ recipe.author }}
                 </h3>
@@ -79,7 +79,7 @@
                 <h3
                     id="fork-cite"
                     class="text-center"
-                    style="color: #F87060; font-family: Tahoma; text-align: center"
+                    style="color: #FFF275; font-family: Tahoma; text-align: center"
                 >
                     Forked from: <a href="{% url 'recipes:detail' pk=recipe.parent.pk %}">
                         {{ recipe.parent.recipe_name }}
@@ -169,7 +169,7 @@
                 <div class="d-flex flex-column" id="recipe-content">
 
                     <div id="recipe-description">
-                        <h3 class="d-flex justify-content-center" style="color: #F87060; font-family: Tahoma; text-align: center">Recipe Description:</h3>
+                        <h3 class="d-flex justify-content-center" style="color: #FFF275; font-family: Tahoma; text-align: center">Recipe Description:</h3>
                         <p style="text-align: center">{{ recipe.description }}</p>
                     </div><!-- recipe-description-header -->
 
@@ -190,7 +190,7 @@
                                     {% if ingredient.ingredient_name %}
                                         {% if ingredient.quantity%}
 
-                                        <div class="d-flex flex-row justify-content-between" id="ingredient">
+                                        <div class="d-flex flex-row justify-content-around" id="ingredient">
 
                                             <div id="ingredient_name">
                                                 <p><strong>{{ ingredient.ingredient_name }}</strong></p>

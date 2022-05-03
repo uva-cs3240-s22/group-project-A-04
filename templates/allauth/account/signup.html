@@ -4,18 +4,210 @@
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
+
 {% block content %}
-<h1>{% trans "Sign Up" %}</h1>
 
-<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
 
-<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
-</form>
+
+<style>
+	.main-content {
+		margin: 0 auto;
+		background-color: #1AC8ED;
+		height: 100%;
+	}
+	.welcome-message {
+        color: #FFF275;
+		font-family: Tahoma;
+		text-align: center;
+		display: flex;
+		flex-flow: column;
+	}
+	.margin-color {
+		background-color: #F6F6F6;
+	}
+	.footer-color {
+		background-color: #36393B;
+		color: #F6F6F6;
+	}
+	.small-font {
+        font-size: 9px;
+	}
+    .image-settings {
+        width: 100%;
+    }
+    .tahoma-script {
+        color: #FFF275;
+         font-family: Tahoma; 
+         text-align: center;
+    }
+</style>
+
+
+
+
+<div id="content-margin">
+
+  
+  
+  <div class="col-md-4" id="left-margin">
+    </div><!-- left-margin -->
+    
+    
+    
+    <div class="col-md-4 main-content" id="main-content">
+      <div class="col text-center">
+      <h1>{% trans "Sign Up" %}</h1>
+      
+      <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+      
+      <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+      </form>
+      </div>
+      
+      
+      <div class="d-flex flex-column"> 
+            <p>
+              
+            </p>
+            <p>
+              
+            </p>
+            <p>
+              
+            </p>
+            <p>
+              
+            </p>
+            <p>
+                
+            </p>
+            <p>
+
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            <p>
+                
+            </p>
+            
+            
+
+        </div>
+
+    </div><!-- main-content -->
+
+
+
+    <div class="col-md-4" id="right-margin">
+    </div><!-- right-margin -->
+
+<div class="row">
+		<div class="col-md-2 footer-color p-5" id="footer-left-margin">
+		</div>
+
+
+
+		<div class="text-center col-md-4 footer-color p-5" id="footer-left-column">
+			<p>
+				If you have any qualms with our <strike>shitty</strike> website, please contact us by <a href="tel:123-456-7890">Telephone</a> or <a href="mailto:a04@virginia.edu">Email</a>
+			</p>
+		</div>
+
+
+
+		<div class="text-center col-md-4 footer-color p-5 small-font" id="footer-right-column">
+			<p>
+				Copyright 2022, University of Virginia
+			</p>
+
+			<p>
+				Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+				The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+				THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			</p>
+		</div>
+
+
+
+		<div class="col-md-2 footer-color p-5" id="footer-right-margin">
+		</div>
+
+
+
+	</div><!-- row -->
+
+</div><!-- content-margin -->
 
 {% endblock %}
