@@ -3,10 +3,10 @@
 <div class="px-5">
 <div class = "bg-light">
 <div class="text-center">
-    <h1 style = "color: #FE5F55; font-family: Tahoma; text-align: center;">{{ recipe.recipe_name }}</h1>
-    <h3 style = "color: #FE5F55; font-family: Tahoma; text-align: center;">By: {{ recipe.author }}</h3>
+    <h1 style = "color: #F87060; font-family: Tahoma; text-align: center;">{{ recipe.recipe_name }}</h1>
+    <h3 style = "color: #F87060; font-family: Tahoma; text-align: center;">By: {{ recipe.author }}</h3>
     {% if recipe.parent is not None %}
-    <h3 style = "color: #FE5F55; font-family: Tahoma; text-align: center;">
+    <h3 style = "color: #F87060; font-family: Tahoma; text-align: center;">
         Forked from:
         <a href="{% url 'recipes:detail' pk=recipe.parent.pk %}">
             {{ recipe.parent.recipe_name }}
@@ -17,34 +17,40 @@
     <p>Number of Likes: {{ recipe.number_of_likes }}</p>
 </div>
 <div class="text-end">
-    <p style = "color: #FE5F55; font-family: Tahoma;"> Date Published: </p>
+    <p style = "color: #F87060; font-family: Tahoma;"> Date Published: </p>
     <h5>{{recipe.mod_date}}</h5>
 </div>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6"> 
-            <p style = "color: #FE5F55; font-family: Tahoma; text-align: center;"> Recipe Description: </p>
+            <p style = "color: #F87060; font-family: Tahoma; text-align: center;"> Recipe Description: </p>
             <h3>{{recipe.description}}</h3>
         </div>
 
         <div class="text-center">
             {% for image in recipe.recipeimage_set.all %}
             {% if image.image %}
-            <img src="{{image.image.url}}">
+            <img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
             {% endif %}
             {% endfor %}
         </div>
 
         <div class=""col-md-6"">
-            <p style = "color: #FE5F55; font-family: Tahoma;"> Ingredients: </p>
+            <p style = "color: #F87060; font-family: Tahoma;"> Ingredients: </p>
             {% for ingredient in recipe.ingredient_set.all %}
-            <p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}</p>
+                {% if ingredient.ingredient_name %}
+                    {% if ingredient.quantity %}
+                        <p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}</p>
+                    {% else %}
+                        <p>{{ingredient.ingredient_name}}</p>
+                    {% endif %}
+                {% endif %}
             {% endfor %}
         </div>
         
         {% comment %} "col-md-6" {% endcomment %}
-        <div class=""col-md-6"">
-            <p style = "color: #FE5F55; font-family: Tahoma; text-align: center;"> Recipe Procedure: </p>
+        <div class="col-md-6">
+            <p style = "color: #F87060; font-family: Tahoma; text-align: center;"> Recipe Procedure: </p>
             <h3>{{recipe.procedure}}</h3>
         </div>
 
@@ -83,5 +89,9 @@
 
 </div>
 </div>
+
+
+
+
 
 {% endblock %}

@@ -16,6 +16,8 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Project path for recipe app
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -66,6 +68,9 @@ INSTALLED_APPS = [
 
     # for testing on https connections
     "sslserver",
+    
+    # for styling using SCSS
+    # 'sass_processor',
 ]
 
 MIDDLEWARE = [
@@ -84,12 +89,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'mysite.urls'
 
-# Over riding allauth came from
-# https://stackoverflow.com/questions/39009638/how-to-edit-django-allauth-default-templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'allauth')],
+        # 'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'), 
+            os.path.join(BASE_DIR, 'templates', 'allauth')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -186,6 +193,27 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'mysite/static'),
 ]
 
+# for using SCSS in Django
+# STATICFILES_FINDERS = [
+#     'django.contrib.staticfiles.finders.FileSystemFinder',
+#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#     'sass_processor.finders.CssFinder',
+# ]
+
+# SASS_PROCESSOR_ROOT = BASE_DIR / 'static'
+
+# SASS_PROCESSOR_INCLUDE_DIRS = [
+#     BASE_DIR / 'node_modules',
+# ]
+
+# SASS_PRECISION = 8
+
+# SASS_PROCESSOR_INCLUDE_DIRS = [
+#     os.path.join(BASE_DIR, 'mysite/static'),
+#     os.path.join(BASE_DIR, 'node_modules'),
+# ]
+
+
 # Enable gzip
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -244,3 +272,5 @@ SECURE_HSTS_PRELOAD = True      # allows site to be submitted to the browser pre
 # only available in Django 2.1+
 # SESSION_COOKIE_SAMESITE
 # CSRF_COOKIE_SAMESITE
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'

@@ -4,6 +4,7 @@
 
 # Imports from Django library
 from re import template
+from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -14,9 +15,7 @@ from django.db.models import Q
 
 # Importing models from current directory
 from .models import Recipe, Ingredient, RecipeImage
-from .forms import RecipeForm, RecipeImageForm, IngredientInlineFormset
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+from .forms import RecipeForm, RecipeImageForm, IngredientForm, IngredientInlineFormset
 
 
 # make login required before any of these views can be accessed
@@ -38,6 +37,7 @@ class ProfileView(ListView):
         # Add any other variables to the context here
         ...
         return context
+    
     # This way of making sure the profile page requires you to be logged in comes from
     # https://docs.djangoproject.com/en/1.8/topics/class-based-views/intro/#decorating-the-class
     @method_decorator(login_required)
@@ -104,20 +104,16 @@ def recipe_create_view(request):
 
     # make a form for recipes and ingredients
     recipe_form = RecipeForm(request.POST or None)
+    recipe_image_form = RecipeImageForm(request.POST or None, request.FILES)
 
     # make instance of Formset
     ingredient_formset = IngredientInlineFormset(request.POST or None)
 
-    recipe_image_form = RecipeImageForm(request.POST or None, request.FILES)
-
-
-
     # for loading html
     context = {
         "recipe_form": recipe_form,
-        "ingredient_formset": ingredient_formset,
         "recipe_image_form": recipe_image_form,
-
+        "ingredient_formset": ingredient_formset,
     }
 
     # check that the form is valid, if so, submit
@@ -194,8 +190,38 @@ def recipe_fork_view(request, pk=None):
         "parent_recipe": parent_recipe,
     }
 
-    # check that the forms are valid, if so, submit
-    return validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset, parent_recipe)
+    # check that the form is valid, if so, submit
+    if all([recipe_form.is_valid(), recipe_image_form.is_valid(), ingredient_formset.is_valid()]):
+        recipe = recipe_form.save(commit=False)  # commit = False does not add to DB
+        recipe_image = recipe_image_form.save(commit=False)
+
+        recipe.author = request.user
+        recipe.parent = parent_recipe
+        recipe.save()
+
+        # if forking, clone image
+        recipe_image.pk = None
+        recipe_image.recipe = recipe
+        recipe_image.save()
+
+        for ingredient_form in ingredient_formset:
+            if ingredient_form.is_valid():
+                ingredient = ingredient_form.save(commit=False)
+                # if forking, clone ingredient
+                ingredient.pk = None
+                ingredient.recipe = recipe
+                ingredient.save()
+
+        ingredient_formset.instance = recipe
+        ingredient_formset.save()
+
+        # confirmation message
+        context['message'] = 'Recipe saved!'
+
+        return redirect(reverse('recipes:detail', kwargs={"pk": recipe.pk}))
+
+    # otherwise, redirect to original form
+    return render(request, template, context)
 
 @login_required
 def validate_and_save_recipe_form(request, template, context, recipe_form, recipe_image_form, ingredient_formset, parent=None):
@@ -209,22 +235,11 @@ def validate_and_save_recipe_form(request, template, context, recipe_form, recip
         recipe.parent = parent
         recipe.save()
 
-        # if forking, clone image
-        if parent is not None:
-            recipe_image.pk = None
-
         recipe_image.recipe = recipe
         recipe_image.save()
 
-        for ingredient_form in ingredient_formset:
-            ingredient = ingredient_form.save(commit=False)
-
-            # if forking, clone ingredient
-            if parent is not None:
-                ingredient.pk = None
-
-            ingredient.recipe = recipe
-            ingredient.save()
+        ingredient_formset.instance = recipe
+        ingredient_formset.save()
 
         # confirmation message
         context['message'] = 'Recipe saved!'
