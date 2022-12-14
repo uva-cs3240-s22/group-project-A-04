@@ -1,0 +1,305 @@
+{% extends "base.html" %}
+{% block content %}
+{% load socialaccount %}
+{% if user.is_authenticated %}
+{% load static %}
+
+<style>
+    h1 {text-align: center;}
+    p {text-align: center;}
+    div {text-align: center;}
+    .login-btn {
+        align-items: center;
+        appearance: none;
+        background-color: #fff;
+        border-radius: 24px;
+        border-style: none;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+            rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
+        box-sizing: border-box;
+        color: #3c4043;
+        cursor: pointer;
+        display: inline-flex;
+        fill: currentcolor;
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        height: 48px;
+        justify-content: center;
+        letter-spacing: 0.25px;
+        line-height: normal;
+        max-width: 100%;
+        overflow: visible;
+        padding: 2px 24px;
+        position: relative;
+        text-align: center;
+        text-transform: none;
+        transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+            opacity 15ms linear 30ms,
+            transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        width: auto;
+        will-change: transform, opacity;
+        z-index: 0;
+        text-decoration: none;
+    }
+
+    .login-btn:hover {
+        background: #f6f9fe;
+        color: #F87060;
+    }
+
+    .login-btn:active {
+        box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%),
+            0 8px 12px 6px rgb(60 64 67 / 15%);
+        outline: none;
+    }
+
+    .login-btn:focus {
+        outline: none;
+        border: 2px solid #F87060;
+    }
+
+    .login-btn:not(:disabled) {
+        box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+            rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+    }
+
+    .login-btn:not(:disabled):hover {
+        box-shadow: rgba(60, 64, 67, 0.3) 0 2px 3px 0,
+            rgba(60, 64, 67, 0.15) 0 6px 10px 4px;
+    }
+
+    .login-btn:not(:disabled):focus {
+        box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+            rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+    }
+
+    .login-btn:not(:disabled):active {
+        box-shadow: rgba(60, 64, 67, 0.3) 0 4px 4px 0,
+            rgba(60, 64, 67, 0.15) 0 8px 12px 6px;
+    }
+
+    .login-btn:disabled {
+        box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+            rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+    }
+
+    a {
+    color: #1AC8ED;
+    }
+    .recipe-link{
+        color:black;
+    }
+    .recipe-link:hover{
+        color:#F87060
+    }
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+        gap: 20px;
+        min-height: 200px;
+        min-width: 33%;
+
+    }
+    .card:hover .card-img-top {
+        transform: scale(1.02);
+    }
+
+    .card-img-top {
+        border-radius: 10px;
+        width: 100%;
+        min-height: 150px;
+        height: 15vw;
+        object-fit: cover;
+        outline: 1px solid #F6F6F6;
+        outline-offset: -8px;
+        transition: transform 0.75s;
+    }
+    .card-custom-border {
+        border-radius: 18px;
+        border-width: 8px;
+        border-style: solid;
+        border-color: #F87060;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        max-width: 90%;
+        transition: transform 0.75s;
+    }
+    .card-information {
+        margin-top: 1px;
+        margin-bottom: 1px;
+        transition: transform 0.75s;
+    }
+    .main-content {
+        margin: 0 auto;
+        background-color: #FFF275;
+        height: 100%;
+    }
+    .welcome-message {
+        color: #F87060;
+        font-family: Tahoma;
+        text-align: center;
+        display: flex;
+        flex-flow: column;
+    }
+    .margin-color {
+        background-color: #F6F6F6;
+    }
+    .footer-color {
+        background-color: #36393B;
+        color: #F6F6F6;
+    }
+    .small-font {
+        font-size: 9px;
+    }
+    .dev-pictures {
+        height: 100px;
+        width: 100px;
+    }
+</style>
+
+
+<div id="content-margin">
+
+        
+        <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100%">
+          <p>Welcome, {{ user.username }}!</p>
+         <div class="flexbox-container" style="display:flex;">
+                <div class="sidebar" style="flex:1;">
+        
+                    <h3>Liked Recipes</h3>
+                {% if liked_recipe_list %}
+        
+                    <ul>
+                        {% for recipe in liked_recipe_list %}
+                            {% for image in recipe.recipeimage_set.all %}
+                    {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
+                        <div class="col-md-4 cards">
+                            <div class="card card-animation card-custom-border">
+                                <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
+                                -->
+                                
+                                {% if image.image %}
+                                <img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+                                {% else %}
+                                <img class="card-img-top" src="{% static 'recipes/plate.png' %}" width = "fit" height = "fit" alt="Card image cap">
+                                {% endif %}
+                                <div class="card-body">
+                                    <div>
+                                        <h4><a class="card-title stretched-link" href="/recipes/{{ recipe.id }}/">
+                                            {{ recipe.recipe_name }}
+                                        </a></h4>
+                                    </div>
+                                    <div class="card-information d-flex flex-column">
+                                        <h6>{{recipe.number_of_likes}} likes</h6>
+                                        <h6>{{recipe.number_of_forks}} forks</h6>
+                                    </div>
+                                </div><!-- card body -->
+                            </div><!-- card -->
+                        </div><!-- col-md-4 -->
+                {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
+                {%  endfor %}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>You have no liked recipes.</p>
+                {% endif %}
+        
+                        </div>
+                        <div class="main" style="flex:1;">
+                        <h3>Your Recipes</h3>
+                            {% if created_recipe_list %}
+        
+                    <ul>
+                        {% for recipe in created_recipe_list %}
+                            {% for image in recipe.recipeimage_set.all %}
+                    {% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
+                        <div class="col-md-4 cards">
+                            <div class="card card-animation card-custom-border">
+                                <!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
+                                -->
+                                
+                                {% if image.image %}
+                                <img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+                                {% else %}
+                                <img class="card-img-top" src="{% static 'recipes/plate.png' %}" width = "fit" height = "fit" alt="Card image cap">
+                                {% endif %}
+                                <div class="card-body">
+                                    <div>
+                                        <h4><a class="card-title stretched-link" href="/recipes/{{ recipe.id }}/">
+                                            {{ recipe.recipe_name }}
+                                        </a></h4>
+                                    </div>
+                                    <div class="card-information d-flex flex-column">
+                                        <h6>{{recipe.number_of_likes}} likes</h6>
+                                        <h6>{{recipe.number_of_forks}} forks</h6>
+                                    </div>
+                                </div><!-- card body -->
+                            </div><!-- card -->
+                        </div><!-- col-md-4 -->
+                {%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>{%  endif %}
+                {%  endfor %}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>You have no created recipes.</p>
+                {% endif %}
+        
+            </div>
+        </div>
+        
+        
+        {% comment %} {% else %}
+        <div class="d-flex flex-column align-items-center" style = "margin-left:15%; margin-right: 15%; background-color:white; height:100vh"> 
+          <div style = "margin-top: 20%;"></div>
+            <a class = "login-btn" href="{% provider_login_url 'google' %}">Login With Google</a>
+          </div> {% endcomment %}
+        {% endif %}
+
+
+    </div><!-- main-content -->
+
+
+    <div class="row">
+		<div class="col-md-2 footer-color p-5" id="footer-left-margin">
+		</div>
+
+
+
+		<div class="text-center col-md-4 footer-color p-5" id="footer-left-column">
+			<p>
+				If you have any questions or concerns with our website, please contact us by <a href="tel:123-456-7890">Telephone</a> or <a href="mailto:a04@virginia.edu">Email</a>
+			</p>
+		</div>
+
+
+
+		<div class="text-center col-md-4 footer-color p-5 small-font" id="footer-right-column">
+			<p>
+				Copyright 2022, University of Virginia
+			</p>
+
+			<p>
+				Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+				The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+				THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			</p>
+		</div>
+
+
+
+		<div class="col-md-2 footer-color p-5" id="footer-right-margin">
+		</div>
+
+
+
+	</div><!-- row -->
+</div><!-- content-margin -->
+
+
+{% endblock %}

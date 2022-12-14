@@ -1,9 +1,350 @@
-<h1>{{ recipe.recipe_name }}</h1>
-<h2>{{recipe.mod_date}}</h2>
+{% extends "base.html" %}
+{% block content %}
 
-<h2>{{recipe.description}}</h2>
-<h2>{{recipe.procedure}}</h2>
+<style>
+	.main-content {
+		margin: 0 auto;
+		background-color: #1AC8ED;
+		height: 100%;
+	}
+	.welcome-message {
+		color: #FFF275;
+		font-family: Tahoma;
+		text-align: center;
+		display: flex;
+		flex-flow: column;
+	}
+	.margin-color {
+		background-color: #F6F6F6;
+	}
+	.footer-color {
+		background-color: #36393B;
+		color: #F6F6F6;
+	}
+	.small-font {
+		font-size: 9px;
+	}
+    .image-settings {
+        width: 100%;
+    }
+    .tahoma-script {
+        color: #FFF275;
+         font-family: Tahoma; 
+         text-align: center;
+    }
+</style>
 
-{% for ingredient in recipe.ingredient_set.all %}
-<p>{{ingredient.ingredient_name}} - {{ingredient.quantity}}<p>
-{% endfor %}
+
+
+<div id="content-margin">
+
+
+
+    <div class="col-md-2" id="left-margin">
+    </div><!-- left-margin -->
+
+
+
+    <div class="col-md-8 main-content" id="main-content">
+
+
+
+        <div class="d-flex flex-row justify-content-center" id="recipe-information">
+
+            <div class="col-md-3" id="info-left-margin">
+                {% comment %} <p>left-margin</p> {% endcomment %}
+            </div><!-- info-left-margin -->
+
+
+
+            <div class="col-md-6 d-flex flex-column align-items-center" id="info-content">
+
+                <h1 
+                    id="recipe-name"
+                    class="text-center" 
+                    style="color: #FFF275; font-family: Tahoma; text-align: center;"
+                >
+                    {{ recipe.recipe_name }}
+                </h1>
+
+                <h3 
+                    id="recipe author"
+                    class="text-center" 
+                    style="color: #FFF275; font-family: Tahoma; text-align: center"
+                >
+                    By: {{ recipe.author }}
+                </h3>
+
+                {% if recipe.parent is not None %}
+                <h3
+                    id="fork-cite"
+                    class="text-center"
+                    style="color: #FFF275; font-family: Tahoma; text-align: center"
+                >
+                    Forked from: <a href="{% url 'recipes:detail' pk=recipe.parent.pk %}">
+                        {{ recipe.parent.recipe_name }}
+                    </a>
+                </h3>
+                {% endif %}
+
+
+
+                <div class="d-flex flex-row justify-content-between" id="stat-bar">
+
+                    <div class="p-2" id="likes">
+                        <p>Likes: {{ recipe.number_of_likes }}</p>
+                    </div><!-- likes -->
+
+
+
+                    <div class="p-2" id="forks">
+                        <p>Forks: {{ recipe.number_of_forks }} </p>
+                    </div><!-- forks -->
+
+                </div><!-- stat-bar -->
+
+            </div><!-- info-content -->
+
+
+
+            <div class="col-md-3 d-flex align-items-end" id="info-right-margin">
+                <div class="d-flex flex-column" id="pub-date">
+                    <h5 class="tahoma-script">Date Published:</h5>
+                    <p>{{ recipe.mod_date }}</p>
+                </div>
+                {% comment %} <p>right-margin</p> {% endcomment %}
+            </div><!-- info-right-margin -->
+
+        </div><!-- recipe-information -->
+
+
+
+        <div class="d-flex flex-row justify-content-center" id="image-body">
+
+            <div class="col-md-3" id="image-body-left-margin">
+                {% comment %} <p>left-margin</p> {% endcomment %}
+            </div><!-- image-body-left-margin -->
+
+
+
+            <div class="col-md-6" id="image-body-content">
+
+
+
+                <div class="d-flex flex-column justify-content-center" id="recipe-image">
+                    {% for image in recipe.recipeimage_set.all %}
+                    {% if image.image %}
+                    <img class="image-settings" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+
+
+            </div><!-- image-body-content -->
+
+
+
+            <div class="col-md-3" id="image-body-right-margin">
+                {% comment %} <p>right-margin</p> {% endcomment %}
+            </div><!-- image-body-right-margin -->
+
+
+        </div><!-- image-body -->
+
+
+
+        <div class="d-flex flex-row justify-content-center" id="recipe-body">
+
+            <div class="col-md-1" id="recipe-body-left-margin">
+                {% comment %} <p>left-margin</p> {% endcomment %}
+            </div><!-- recipe-body-left-margin -->
+
+
+
+            <div class="col-md-10" id="recipe-body-content">
+
+
+
+                <div class="d-flex flex-column" id="recipe-content">
+
+                    <div id="recipe-description">
+                        <h3 class="d-flex justify-content-center" style="color: #FFF275; font-family: Tahoma; text-align: center">Recipe Description:</h3>
+                        <p style="text-align: center">{{ recipe.description }}</p>
+                    </div><!-- recipe-description-header -->
+
+
+
+                    <div class="d-flex flex-row justify-content-between flex-wrap" id="ingredients-procedure-row">
+
+                        <div class="d-flex flex-column w-50 p-3" id="ingredients-content">
+
+                            <div class="d-flex justify-content-center" id="ingredients-header">
+                                <h3 class="tahoma-script">
+                                    Ingredients:
+                                </h3>
+                            </div>
+
+                            <div class="d-flex flex-column p-1" id="ingredients-text">
+                                {% for ingredient in recipe.ingredient_set.all %}
+                                    {% if ingredient.ingredient_name %}
+                                        {% if ingredient.quantity%}
+
+                                        <div class="d-flex flex-row justify-content-around" id="ingredient">
+
+                                            <div id="ingredient_name">
+                                                <p><strong>{{ ingredient.ingredient_name }}</strong></p>
+                                            </div>
+
+                                            <div id="ingredient_quantity">
+                                                <p>{{ ingredient.quantity }}</p>
+                                            </div>
+
+                                        </div>
+
+                                        {% else %}
+                                        
+                                        <div class="d-flex flex-row justify-content-between" id="ingredient">
+
+                                            <div id="ingredient_name">
+                                                <p><strong>{{ ingredient.ingredient_name }}</strong></p>
+                                            </div>
+
+                                        </div>
+
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div><!-- ingredients-text -->
+
+                        </div><!-- ingredients-content -->
+
+
+
+                        <div class="d-flex flex-column w-50 p-3" id="procedure-content">
+
+                            <div class="d-flex justify-content-center" id="procedure-header">
+                                <h3 class="tahoma-script">
+                                    Procedure:
+                                </h3>
+                            </div>
+
+                            <div id="procedure-text">
+                                <p>{{ recipe.procedure | linebreaks }}</p>
+                            </div><!-- procedure-text -->
+
+                        </div><!-- procedure-content -->
+
+                    </div><!-- ingredient-procedure-row -->
+
+                </div><!-- recipe-content -->
+
+
+
+                <div class="text-center d-flex flex-column">
+                    
+                    
+                    <div class="d-flex flex-row justify-content-center p-2" id="buttons">
+                        <div>
+                            {% if user.is_authenticated %}
+                            <form action="{% url 'recipes:recipe_like' object.id %}" method="POST">
+                                {% csrf_token %}
+                                
+                                {% if post_is_liked %}
+                                <button type="submit" name="recipe_id" value="{{object.id}}" class="btn btn-info">Unlike</button>
+                                {% else %}
+                                <button type="submit" name="recipe_id" value="{{object.id}}" class="btn btn-info">Like</button>
+                                {% endif %}
+                            </form>
+                            {% else %}
+                            <a class="btn btn-outline-info" href="/">Log in to like this recipe!</a><br>
+                            {% endif %}
+                            <strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+                        </div>
+                    </div><!-- buttons -->
+                    
+                    <div class="d-flex flex-row justify-content-center p-2" id="buttons">
+                        {% if user == recipe.author %}
+                        <button type="button" class="btn btn-primary"><a style="color: #F6F6F6;" href="{% url 'recipes:edit' pk=recipe.pk %}">Edit Recipe</a></button>
+                        
+
+                        <button type="button" class="btn btn-danger"><a style="color: #F6F6F6;" href="{% url 'recipes:delete' pk=recipe.pk %}">Delete Recipe</a></button>
+                        
+                        {% else %}
+
+                        <button type="button" class="btn btn-primary"><a style="color: #F6F6F6;" href="{% url 'recipes:fork' pk=recipe.pk %}">Fork Recipe</a></button>
+                        
+                        {% endif %}
+                    </div><!-- buttons -->
+
+                    <div class="d-flex flex-row justify-content-center p-2" id="buttons">
+                        <button type="button" class="btn btn-primary"><a style="color: #F6F6F6;" href="{% url 'recipes:index' %}">Back to index</a></button>
+                    </div><!-- buttons -->
+                    
+
+
+                </div>
+
+            </div><!-- recipe-body-content -->
+
+
+
+            <div class="col-md-1" id="recipe-body-right-margin">
+                {% comment %} <p>right-margin</p> {% endcomment %}
+            </div><!-- recipe-body-right-margin -->
+
+
+
+        </div><!-- recipe-body -->
+
+
+
+    </div><!-- main-content -->
+
+
+
+    <div class="col-md-2" id="right-margin">
+    </div><!-- right-margin -->
+
+
+
+    <div class="row">
+		<div class="col-md-2 footer-color p-5" id="footer-left-margin">
+		</div>
+
+
+
+		<div class="text-center col-md-4 footer-color p-5" id="footer-left-column">
+			<p>
+				If you have any questions or concerns with our website, please contact us by <a href="tel:123-456-7890">Telephone</a> or <a href="mailto:a04@virginia.edu">Email</a>
+			</p>
+		</div>
+
+
+
+		<div class="text-center col-md-4 footer-color p-5 small-font" id="footer-right-column">
+			<p>
+				Copyright 2022, University of Virginia
+			</p>
+
+			<p>
+				Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+				The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+				THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			</p>
+		</div><!-- footer-right-column -->
+
+
+
+		<div class="col-md-2 footer-color p-5" id="footer-right-margin">
+		</div>
+
+
+
+</div><!-- content-margin -->
+
+
+
+{% endblock %}

@@ -1,0 +1,10 @@
+
+<h1>Search Results</h1>
+
+<ul>
+  {% for recipe in object_list %}
+    <li>
+      {{ recipe.recipe_name }}, {{ recipe.description }}
+    </li>
+  {% endfor %}
+</ul>

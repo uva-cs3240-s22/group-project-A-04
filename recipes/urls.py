@@ -4,8 +4,7 @@
 
 
 # Imports from Django library
-from django.urls import path, include
-from django.views.generic import TemplateView
+from django.urls import path
 from django.contrib.auth.views import LogoutView
 
 # Importing views from current directory
@@ -15,8 +14,14 @@ app_name = 'recipes'
 
 urlpatterns = [
     path('', views.RecipeIndex.as_view(), name='index'),
-    path('<int:pk>/', views.RecipeDetail.as_view(), name='detail'),
-    path('<int:pk>/edit/', views.RecipeModify.as_view(), name='edit'),
     path('create/', views.recipe_create_view, name="create"),
+    path('<int:pk>/', views.RecipeDetail.as_view(), name='detail'),
+    path('<int:pk>/fork/', views.recipe_fork_view, name='fork'),
+    path('<int:pk>/edit/', views.recipe_update_view, name='edit'),
+    path('<int:pk>/delete/', views.RecipeDelete.as_view(), name='delete'),
+    path('<int:pk>/recipe_like/', views.recipe_like, name='recipe_like'),
+    path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('search/', views.SearchResults.as_view(), name='SearchResults'),
+    path('logout', LogoutView.as_view()),
+    path('random_recipe/', views.RandomRecipe.as_view(), name='random_recipe'),
 ]
-

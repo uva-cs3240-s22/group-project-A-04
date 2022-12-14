@@ -1,8 +1,11 @@
 from django import forms
 
-from .models import Recipe, Ingredient
+# model form for query sets
+from django.forms.models import inlineformset_factory
+# cited from this youtube tutorial:
+# https://youtu.be/6wHx-X1tEiY
 
-
+from .models import Recipe, Ingredient, RecipeImage
 # The code for these forms were taken from this youtube video:
 # https://youtu.be/PICYTJqj__o
 
@@ -17,3 +20,15 @@ class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
         fields = ['ingredient_name', 'quantity']
+
+
+IngredientInlineFormset = inlineformset_factory(Recipe, Ingredient,
+                                                form=IngredientForm,
+                                                extra=0,
+                                                can_delete=True)
+
+
+class RecipeImageForm(forms.ModelForm):
+    class Meta:
+        model = RecipeImage
+        fields = ['image', ]

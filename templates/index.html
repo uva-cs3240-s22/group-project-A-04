@@ -1,13 +1,385 @@
-{% load socialaccount %}
-<html>
-<body>
-<h1>My Google OAuth Project </h1>
-{% if user.is_authenticated %}
-  <p>Welcome, You are logged in as {{ user.username }}</p>
-  <a href="{% url 'recipes:index' %}">Go to Recipes</a> <br>
-  <a href="logout">Logout</a>
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
-</body>
-</html>
+{% extends "base.html" %} {% block content %} {% load socialaccount %} {% load static %}
+
+<style>
+	.login-btn {
+		align-items: center;
+		appearance: none;
+		background-color: #fff;
+		border-radius: 24px;
+		border-style: none;
+		box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+			rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
+		box-sizing: border-box;
+		color: #3c4043;
+		cursor: pointer;
+		display: inline-flex;
+		fill: currentcolor;
+		font-family: "Google Sans", Roboto, Arial, sans-serif;
+		font-size: 14px;
+		font-weight: 500;
+		height: 48px;
+		justify-content: center;
+		letter-spacing: 0.25px;
+		line-height: normal;
+		max-width: 100%;
+		overflow: visible;
+		padding: 2px 24px;
+		position: relative;
+		text-align: center;
+		text-transform: none;
+		transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 15ms linear 30ms,
+			transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+		user-select: none;
+		-webkit-user-select: none;
+		touch-action: manipulation;
+		width: auto;
+		will-change: transform, opacity;
+		z-index: 0;
+		text-decoration: none;
+	}
+
+	.login-btn:hover {
+		background: #f6f9fe;
+		color: #F87060;
+	}
+
+	.login-btn:active {
+		box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%),
+			0 8px 12px 6px rgb(60 64 67 / 15%);
+		outline: none;
+	}
+
+	.login-btn:focus {
+		outline: none;
+		border: 2px solid #F87060;
+	}
+
+	.login-btn:not(:disabled) {
+		box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+			rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+	}
+
+	.login-btn:not(:disabled):hover {
+		box-shadow: rgba(60, 64, 67, 0.3) 0 2px 3px 0,
+			rgba(60, 64, 67, 0.15) 0 6px 10px 4px;
+	}
+
+	.login-btn:not(:disabled):focus {
+		box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+			rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+	}
+
+	.login-btn:not(:disabled):active {
+		box-shadow: rgba(60, 64, 67, 0.3) 0 4px 4px 0,
+			rgba(60, 64, 67, 0.15) 0 8px 12px 6px;
+	}
+
+	.login-btn:disabled {
+		box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+			rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+	}
+
+	a {
+    color: #1AC8ED;
+	}
+  	.recipe-link{
+        color:black;
+    }
+    .recipe-link:hover{
+        color:#F87060
+    }
+	.cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+		gap: 20px;
+		min-height: 200px;
+		min-width: 33%;
+
+	}
+	.card:hover .card-img-top {
+		transform: scale(1.02);
+	}
+
+	.card-img-top {
+		border-radius: 10px;
+		width: 100%;
+		min-height: 300px;
+		height: 15vw;
+		object-fit: cover;
+		outline: 1px solid #F6F6F6;
+		outline-offset: -8px;
+		transition: transform 0.75s;
+	}
+	.card-custom-border {
+		border-radius: 18px;
+		border-width: 8px;
+		border-style: solid;
+		border-color: #F87060;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		max-width: 90%;
+		transition: transform 0.75s;
+	}
+	.card-information {
+		margin-top: 1px;
+		margin-bottom: 1px;
+		transition: transform 0.75s;
+	}
+	.main-content {
+		margin: 0 auto;
+		background-color: #FFF275;
+		height: 100%;
+	}
+	.welcome-message {
+		color: #F87060;
+		font-family: Tahoma;
+		text-align: center;
+		display: flex;
+		flex-flow: column;
+	}
+	.margin-color {
+		background-color: #F6F6F6;
+	}
+	.footer-color {
+		background-color: #36393B;
+		color: #F6F6F6;
+	}
+	.small-font {
+		font-size: 9px;
+	}
+	.dev-pictures {
+		height: 100px;
+		width: 100px;
+	}
+</style>
+
+
+
+
+<div class="container-fluid margin-color" id="main-container">
+	
+	
+	
+	<div class="row">
+		<div class="col-md-2" id="left-margin">
+		</div>
+		<div class="col-md-8 main-content p-5" id="main-content">
+			
+			
+			
+			<div id="welcome-message-container">
+				<h1 
+				class="text-center welcome-message" 
+				style="color: #F87060; font-family: Tahoma; text-align: center"
+				id="welcome-message"
+				>
+				Welcome to eats.
+				</h1>
+				<h3 
+				class="text-center" 
+				style="color: #F87060; font-family: Tahoma; text-align: center"
+				id="site-description"
+				>
+				An app to store and share your recipes!
+				</h3> 
+				{% comment %} {% if user.is_authenticated %}
+				<p style = "text-align: center;">
+					Logged in as: {{ user.username }}
+				</p>
+				<div class ="d-flex justify-content-center">
+					<a class="login-btn" href="logout">Logout</a>
+				</div>
+				{% else %}
+				<a class="login-btn" href="{% provider_login_url 'google' %}">Login With Google</a>
+				{% endif %} {% endcomment %}
+			</div><!-- welcome-message -->
+			
+			
+	
+			<div id="latest-recipes">
+				
+
+				
+				{% if latest_recipe_list %}
+
+				<div 
+					class="d-flex justify-content-between"
+					style="color: #F87060; font-family: Tahoma;"
+				>
+					<h2 class="p-3">Latest Recipes</h2>
+					{% endif %}
+
+					<a class = "login-btn" href="{% url 'recipes:index' %}">Go to Recipes</a>
+				</div>
+
+				{% if latest_recipe_list %}
+				
+				{% for recipe in latest_recipe_list  %}
+				{% for image in recipe.recipeimage_set.all %}
+
+				{% comment %} {% if forloop.parentloop.counter == 4 %}
+				
+				<div 
+					class="row align-items-left"
+					style="color: #F87060; font-family: Tahoma;"
+				>
+					<h2 class="p-3">Popular Recipes</h2>
+				</div>{% endif %} {% endcomment %}
+				
+				{% if forloop.parentloop.counter0|divisibleby:3 %} <div class="row text-center"> {%  endif %}
+					
+					<div class="col-md-4 cards">
+						<div class="card card-animation card-custom-border">
+							<!-- <img src="https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg" alt="">
+							-->
+							
+							{% if image.image %}
+							<img class="card-img-top" src="{{image.image.url}}" width = "fit" height = "fit" alt="Card image cap">
+							{% else %}
+            				<img class="card-img-top" src="{% static 'recipes/plate.png' %}" width = "fit" height = "fit" alt="Card image cap">
+							{% endif %}
+							<div class="card-body">
+								<div>
+									<h4><a class="card-title stretched-link" href="/recipes/{{ recipe.id }}/">
+										{{ recipe.recipe_name }}
+									</a></h4>
+								</div>
+								<div class="card-information d-flex flex-column">
+									<h6>{{recipe.number_of_likes}} likes</h6>
+									<h6>{{recipe.number_of_forks}} forks</h6>
+								</div>
+							</div><!-- card body -->
+						</div><!-- card -->
+					</div><!-- col-md-4 -->
+				{%  if forloop.parentloop.counter|divisibleby:3 or forloop.parentloop.last %}</div><!-- row closing --><hr>
+				{%  endif %}
+				{%  endfor %}
+				{% endfor %}
+				
+
+				{% else %}
+				<p>No recipes are available.</p>
+				{% endif %}
+			</div><!-- latest-recipes -->
+
+
+
+			<div class="d-flex flex-column justify-content-center" id="about-section">
+				<dl>
+					<dt>
+						Mission Statement
+					</dt>
+					<dd>
+						Help everyone eat good food by sharing recipes!
+					</dd>
+					<dt>
+						About eats.
+					</dt>
+					<dd>
+						A place to post recipes, but without the pages and pages of backstory that all cooking webpages now have to force you to scroll through ads. Recipes would include a set of ingredients and directions, as well as images, possible videos, etc.
+					</dd>
+				</dl>
+
+
+				<h3>Developers</h3>
+				<div class="d-flex flex-row flex-wrap justify-content-between">
+					<div class="col-1"></div>
+
+					<div class="col-xs-2">
+						<img
+							src="{% static 'recipes/sam.png' %}"
+							class="dev-pictures"
+						/>
+						<h5>Samuel Ahn</h5>
+						<p>Scrum Master</p>
+					</div>
+					<div class="col-xs-2">
+						<img
+							src="{% static 'recipes/daniel.png' %}"
+							class="dev-pictures"
+						/>
+						<h5>Daniel Xue</h5>
+						<p>Testing Manager</p>
+					</div>
+					<div class="col-xs-2">
+						<img
+							src="{% static 'recipes/matthew.png' %}"
+							class="d-flex flex-column dev-pictures justify-content-center"
+						/>
+						<h5>Matthew Bonner</h5>
+						<p>Requirements Manager</p>
+					</div>
+					<div class="col-xs-2">
+						<img
+							src="{% static 'recipes/alex_new.png' %}"
+							class="dev-pictures"
+						/>
+						<h5>Alex Yu</h5>
+						<p>DevOps</p>
+					</div>
+					<div class="col-xs-2">
+						<img
+							src="{% static 'recipes/asher.png' %}"
+							class="dev-pictures"
+						/>
+						<h5>Asher Saunders</h5>
+						<p>UX/UI</p>
+					</div>
+
+					<div class="col-1"></div>
+
+				</div>
+			</div><!-- about-section -->
+		</div>
+
+
+		
+		<div class="col-md-2 margin-color" id="right-margin">
+		</div>
+
+
+
+	</div>
+
+
+
+	<div class="row">
+		<div class="col-md-2 footer-color p-5" id="footer-left-margin">
+		</div>
+
+
+
+		<div class="text-center col-md-4 footer-color p-5" id="footer-left-column">
+			<p>
+				If you have any questions or concerns with our website, please contact us by <a href="tel:123-456-7890">Telephone</a> or <a href="mailto:a04@virginia.edu">Email</a>
+			</p>
+		</div>
+
+
+
+		<div class="text-center col-md-4 footer-color p-5 small-font" id="footer-right-column">
+			<p>
+				Copyright 2022, University of Virginia
+			</p>
+
+			<p>
+				Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+				The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+				THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			</p>
+		</div>
+
+
+
+		<div class="col-md-2 footer-color p-5" id="footer-right-margin">
+		</div>
+
+
+
+	</div><!-- row -->
+</div>
+
+{% endblock %}
