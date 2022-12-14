@@ -151,8 +151,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-AWS_ACCESS_KEY_ID = 'AKIA2BMS6EZREKO4DBHS'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = ''          # aws iam user deleted for security reasons
+AWS_SECRET_ACCESS_KEY = ''      # access keys kept blank to reflect this
 AWS_STORAGE_BUCKET_NAME = 'group-project-a-04'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
