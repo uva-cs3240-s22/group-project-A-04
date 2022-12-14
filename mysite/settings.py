@@ -16,20 +16,15 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Project path for recipe app
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'chocolate$x81nyu0&9643eh)_7yz_ok3_%meq2yohp3rjpmjq!(^&v@+p*p$croissant'
+SECRET_KEY = 'django-insecure-ls6l6@@53^kfn+8851ls^@3q*8mt@j=u9rf+i9==b+hbxbmy#*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if 'HEROKU' in os.environ:
-    DEBUG = False
-else:
-    DEBUG = True
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', 'stormy-retreat-80978.herokuapp.com']
 
@@ -61,16 +56,6 @@ INSTALLED_APPS = [
 
     # Django storages for aws s3
     'storages',
-
-    # for security (https://www.laurencegellert.com/2019/01/tips-and-tools-for-securing-django/)
-    'django.contrib.sitemaps',
-    'django.contrib.redirects',
-
-    # for testing on https connections
-    "sslserver",
-    
-    # for styling using SCSS
-    # 'sass_processor',
 ]
 
 MIDDLEWARE = [
@@ -92,11 +77,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': [BASE_DIR / 'templates'],
-        'DIRS': [
-            os.path.join(BASE_DIR, 'templates'), 
-            os.path.join(BASE_DIR, 'templates', 'allauth')
-        ],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -170,52 +151,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-AWS_ACCESS_KEY_ID = 'AKIA2BMS6EZREKO4DBHS'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = ''          # aws iam user deleted for security reasons
+AWS_SECRET_ACCESS_KEY = ''      # access keys kept blank to reflect this
 AWS_STORAGE_BUCKET_NAME = 'group-project-a-04'
-AWS_DEFAULT_ACL = 'public-read'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
+AWS_LOCATION = 'static'
 
-AWS_STATIC_LOCATION = 'static'
-STATICFILES_STORAGE = 'mysite.storage_backends.StaticStorage'
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_STATIC_LOCATION)
-
-AWS_MEDIA_LOCATION = 'media'
-DEFAULT_FILE_STORAGE = 'mysite.storage_backends.MediaStorage'
-MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_MEDIA_LOCATION)
-
-
-STATICFILES_DIRS = [
+STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'mysite/static'),
-]
-
-# for using SCSS in Django
-# STATICFILES_FINDERS = [
-#     'django.contrib.staticfiles.finders.FileSystemFinder',
-#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#     'sass_processor.finders.CssFinder',
-# ]
-
-# SASS_PROCESSOR_ROOT = BASE_DIR / 'static'
-
-# SASS_PROCESSOR_INCLUDE_DIRS = [
-#     BASE_DIR / 'node_modules',
-# ]
-
-# SASS_PRECISION = 8
-
-# SASS_PROCESSOR_INCLUDE_DIRS = [
-#     os.path.join(BASE_DIR, 'mysite/static'),
-#     os.path.join(BASE_DIR, 'node_modules'),
-# ]
-
+)
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Enable gzip
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -250,27 +202,3 @@ SITE_ID = 3
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
-# security settings taken from
-# https://www.laurencegellert.com/2019/01/tips-and-tools-for-securing-django/
-# security settings
-CSRF_COOKIE_SECURE = True       # store CSRF token in session instead of cookie
-SESSION_COOKIE_SECURE = True    # only sends cookies under HTTPS connection
-SECURE_HSTS_SECONDS = 3600
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_SSL_HOST = 'stormy-retreat-80978.herokuapp.com'
-SECURE_SSL_REDIRECT = True      # redirects all http traffic to HTTPS
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
-
-# see also
-SECURE_HSTS_PRELOAD = True      # allows site to be submitted to the browser preload list
-# CSRF_USE_SESSIONS
-# CSRF_FAILURE_VIEW
-
-# only available in Django 2.1+
-# SESSION_COOKIE_SAMESITE
-# CSRF_COOKIE_SAMESITE
-
-ACCOUNT_EMAIL_VERIFICATION = 'none'
